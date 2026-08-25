@@ -9,6 +9,7 @@ import { Input } from './components/Input'
 import { Radio } from './components/Radio'
 import { Select } from './components/Select'
 import { Tabs } from './components/Tabs'
+import { Tooltip } from './components/Tooltip'
 
 const CheckIcon = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
@@ -107,9 +108,15 @@ function App() {
         </section>
 
         <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-          <IconButton variant="primary" icon={CheckIcon} aria-label="Accept" />
-          <IconButton variant="secondary" icon={CloseIcon} aria-label="Decline" />
-          <IconButton variant="ghost" icon={GearIcon} aria-label="Settings" />
+          <Tooltip content="Accept">
+            <IconButton variant="primary" icon={CheckIcon} aria-label="Accept" />
+          </Tooltip>
+          <Tooltip content="Decline">
+            <IconButton variant="secondary" icon={CloseIcon} aria-label="Decline" />
+          </Tooltip>
+          <Tooltip content="Settings">
+            <IconButton variant="ghost" icon={GearIcon} aria-label="Settings" />
+          </Tooltip>
           <IconButton variant="primary" size="sm" icon={CheckIcon} aria-label="Accept (small)" />
           <IconButton variant="primary" size="lg" icon={CheckIcon} aria-label="Accept (large)" />
           <IconButton variant="primary" icon={CheckIcon} aria-label="Accept (disabled)" disabled />
