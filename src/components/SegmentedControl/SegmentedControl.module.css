@@ -1,0 +1,59 @@
+.root {
+  display: inline-flex;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border-bottom);
+  overflow: hidden;
+  background: var(--control-secondary-top);
+}
+
+.option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.option:not(:last-child) {
+  border-right: 1px solid var(--glass-border-bottom);
+}
+
+.option:hover:not(.optionSelected):not(.optionDisabled) {
+  background: var(--glass-tint);
+  color: var(--text);
+}
+
+.option:focus-within {
+  outline: none;
+  box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+  z-index: 1;
+}
+
+.optionSelected {
+  background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+  color: var(--text);
+}
+
+.optionDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.optionDisabled .input {
+  cursor: not-allowed;
+}

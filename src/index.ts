@@ -57,3 +57,6 @@ export type { SpinnerProps } from './components/Spinner'
 
 export { Divider } from './components/Divider'
 export type { DividerProps, DividerOrientation } from './components/Divider'
+
+export { SegmentedControl } from './components/SegmentedControl'
+export type { SegmentedControlProps, SegmentedControlOptionProps } from './components/SegmentedControl'

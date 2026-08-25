@@ -12,6 +12,7 @@ import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
+import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
 import { Slider } from './components/Slider'
 import { Spinner } from './components/Spinner'
@@ -318,6 +319,16 @@ function App() {
 
         <section style={{ maxWidth: 320 }}>
           <Divider label="OR" />
+        </section>
+
+        <section>
+          <SegmentedControl defaultValue="list">
+            <SegmentedControl.Option value="list">List</SegmentedControl.Option>
+            <SegmentedControl.Option value="grid">Grid</SegmentedControl.Option>
+            <SegmentedControl.Option value="details" disabled>
+              Details
+            </SegmentedControl.Option>
+          </SegmentedControl>
         </section>
       </div>
     </main>
