@@ -13,6 +13,7 @@ import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { Select } from './components/Select'
 import { Slider } from './components/Slider'
+import { Spinner } from './components/Spinner'
 import { Tabs } from './components/Tabs'
 import { Text, type TextVariant } from './components/Text'
 import { Textarea } from './components/Textarea'
@@ -300,6 +301,15 @@ function App() {
             }
           >
             Trigger error toast
+          </Button>
+        </section>
+
+        <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
+          <Spinner />
+          <Spinner size={32} />
+          <Button variant="primary" disabled style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <Spinner size={14} label="Saving" />
+            Saving…
           </Button>
         </section>
       </div>

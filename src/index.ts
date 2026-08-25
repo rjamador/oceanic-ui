@@ -51,3 +51,6 @@ export type { TextProps, TextVariant, TextColor, TextAs } from './components/Tex
 
 export { Icon, CheckIcon, CloseIcon, ChevronRightIcon, ChevronDownIcon, GearIcon } from './components/Icon'
 export type { IconProps } from './components/Icon'
+
+export { Spinner } from './components/Spinner'
+export type { SpinnerProps } from './components/Spinner'
