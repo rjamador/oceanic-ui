@@ -6,6 +6,7 @@ import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
 import { Dialog } from './components/Dialog'
+import { CheckIcon, CloseIcon, GearIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { Progress } from './components/Progress'
@@ -13,32 +14,24 @@ import { Radio } from './components/Radio'
 import { Select } from './components/Select'
 import { Slider } from './components/Slider'
 import { Tabs } from './components/Tabs'
+import { Text, type TextVariant } from './components/Text'
 import { Textarea } from './components/Textarea'
 import { Tooltip } from './components/Tooltip'
 import { useToast } from './components/Toast'
 
-const CheckIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
-    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
-
-const CloseIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
-    <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
-
-const GearIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-    <circle cx="12" cy="12" r="3" />
-    <path
-      d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
+const TEXT_VARIANTS: TextVariant[] = [
+  'displayMedium',
+  'displaySmall',
+  'headingLarge',
+  'headingMedium',
+  'headingSmall',
+  'bodyLarge',
+  'bodyMedium',
+  'bodySmall',
+  'labelLarge',
+  'labelMedium',
+  'labelSmall',
+]
 
 function App() {
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -91,9 +84,20 @@ function App() {
           padding: 'var(--space-16) var(--space-6)',
         }}
       >
-        <h1 style={{ fontSize: 'var(--text-3xl)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+        <Text
+          variant="displayLarge"
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}
+        >
           aero-ui <Badge variant="accent">Beta</Badge>
-        </h1>
+        </Text>
+
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+          {TEXT_VARIANTS.map((variant) => (
+            <Text key={variant} variant={variant}>
+              {variant} — the quick brown fox
+            </Text>
+          ))}
+        </section>
 
         <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
           <Badge>Default</Badge>
@@ -124,35 +128,35 @@ function App() {
 
         <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
           <Tooltip content="Accept">
-            <IconButton variant="primary" icon={CheckIcon} aria-label="Accept" />
+            <IconButton variant="primary" icon={<CheckIcon />} aria-label="Accept" />
           </Tooltip>
           <Tooltip content="Decline">
-            <IconButton variant="secondary" icon={CloseIcon} aria-label="Decline" />
+            <IconButton variant="secondary" icon={<CloseIcon />} aria-label="Decline" />
           </Tooltip>
           <Tooltip content="Settings">
-            <IconButton variant="ghost" icon={GearIcon} aria-label="Settings" />
+            <IconButton variant="ghost" icon={<GearIcon />} aria-label="Settings" />
           </Tooltip>
-          <IconButton variant="primary" size="sm" icon={CheckIcon} aria-label="Accept (small)" />
-          <IconButton variant="primary" size="lg" icon={CheckIcon} aria-label="Accept (large)" />
-          <IconButton variant="primary" icon={CheckIcon} aria-label="Accept (disabled)" disabled />
+          <IconButton variant="primary" size="sm" icon={<CheckIcon />} aria-label="Accept (small)" />
+          <IconButton variant="primary" size="lg" icon={<CheckIcon />} aria-label="Accept (large)" />
+          <IconButton variant="primary" icon={<CheckIcon />} aria-label="Accept (disabled)" disabled />
         </section>
 
         <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
           <Card padding="lg" style={{ flex: '1 1 280px' }}>
-            <h2 style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-2)' }}>
+            <Text variant="headingSmall" style={{ marginBottom: 'var(--space-2)' }}>
               Glass panel
-            </h2>
-            <p style={{ color: 'var(--text-muted)', margin: '0 0 var(--space-4)' }}>
+            </Text>
+            <Text variant="bodyMedium" color="muted" style={{ margin: '0 0 var(--space-4)' }}>
               A frosted surface with a soft specular highlight across the top —
               the same gloss language as the buttons, scaled up.
-            </p>
+            </Text>
             <Button variant="primary" size="sm">
               Action
             </Button>
           </Card>
 
           <Card padding="sm" style={{ flex: '1 1 200px' }}>
-            <p style={{ margin: 0 }}>Compact padding variant.</p>
+            <Text variant="bodyMedium">Compact padding variant.</Text>
           </Card>
         </section>
 

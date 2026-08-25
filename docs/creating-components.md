@@ -159,8 +159,61 @@ passing does not guarantee the types are clean (see the `size`-collision
 note above; that class of bug only shows up in the type checker, not the
 test run).
 
+## Typography — the Text component
+
+Any text that isn't a control's own built-in label goes through
+`<Text variant="...">` (`src/components/Text`) instead of a raw
+`<h1>`/`<p>`/hardcoded `font-size`:
+
+```tsx
+export type TextVariant =
+  | 'displayLarge' | 'displayMedium' | 'displaySmall'
+  | 'headingLarge' | 'headingMedium' | 'headingSmall'
+  | 'bodyLarge'    | 'bodyMedium'    | 'bodySmall'
+  | 'labelLarge'   | 'labelMedium'   | 'labelSmall'
+```
+
+- Each variant maps to a `--type-*` token in `src/styles/typography.css`
+  (font size/weight/line-height/family) — never hardcode those properties
+  on an element instead of picking a variant.
+- `variant` picks the *style*; the rendered element is a separate concern.
+  Every variant has a sensible default element (`displayLarge` → `h1`,
+  `bodyMedium` → `p`, `labelSmall` → `span`, …), overridable via the `as`
+  prop when the semantic element and the visual style need to diverge
+  (e.g. a card title styled `headingSmall` that shouldn't be an `h2` in
+  the page's heading outline).
+- `color` is a separate prop (`default` | `muted` | `accent` | `danger`)
+  — don't reach for an inline `style={{ color: ... }}`.
+
+## Icons
+
+Every icon renders through the `Icon` shell
+(`src/components/Icon/Icon.tsx`) — pass raw SVG children (`<path>`,
+`<circle>`, …) and it handles the outer `<svg>` (24×24 viewBox,
+stroke-only, `size`/`strokeWidth` props, the `aria-hidden`/`role="img"`
+default). Pre-built icons live in `src/components/Icon/icons.tsx`
+(`CheckIcon`, `CloseIcon`, `ChevronRightIcon`, `ChevronDownIcon`,
+`GearIcon`) — import from there, never redeclare a `<svg>` inline in a
+component. Adding a new icon means adding one small function to
+`icons.tsx`:
+
+```tsx
+export function TrashIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="..." />
+    </Icon>
+  )
+}
+```
+
+`icon` props on components (`IconButton`, etc.) take a rendered element,
+not a component reference — `icon={<CheckIcon />}`, not `icon={CheckIcon}`.
+
 ## Reference implementation
 
 `Input` (recessed field) and `Button` (raised control) are the two
-canonical examples — read those two before building a new component, they
-establish every pattern above in practice.
+canonical examples for a typical control — read those two before building
+a new component, they establish every pattern above in practice. For a
+compound component, see `Tabs`; for a provider/hook pair, see `Toast`; for
+the typography/icon primitives themselves, see `Text` and `Icon`.

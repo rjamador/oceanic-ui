@@ -13,6 +13,7 @@ import {
 
 import { cn } from '@/lib/cn'
 
+import { ChevronRightIcon } from '../Icon'
 import styles from './Accordion.module.css'
 
 interface AccordionContextValue {
@@ -43,12 +44,6 @@ const AccordionRoot = forwardRef<HTMLDivElement, AccordionProps>(
 )
 AccordionRoot.displayName = 'Accordion'
 
-const ChevronGlyph = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-    <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
-
 export interface AccordionItemProps extends Omit<HTMLAttributes<HTMLDetailsElement>, 'title'> {
   title: ReactNode
   defaultOpen?: boolean
@@ -68,7 +63,7 @@ const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
       >
         <summary className={styles.summary}>
           <span className={styles.chevron} aria-hidden="true">
-            {ChevronGlyph}
+            <ChevronRightIcon />
           </span>
           {title}
         </summary>

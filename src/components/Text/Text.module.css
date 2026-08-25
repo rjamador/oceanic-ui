@@ -1,0 +1,107 @@
+.text {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+
+/* Display — hero-scale, display font, fluid */
+.displayLarge {
+  font-family: var(--font-display);
+  font-size: var(--type-display-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.displayMedium {
+  font-family: var(--font-display);
+  font-size: var(--type-display-md);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.displaySmall {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+/* Heading — section-scale, display font, fluid */
+.headingLarge {
+  font-family: var(--font-display);
+  font-size: var(--type-heading-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.headingMedium {
+  font-family: var(--font-display);
+  font-size: var(--type-heading-md);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+.headingSmall {
+  font-family: var(--font-display);
+  font-size: var(--type-heading-sm);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+/* Body — running text, body font, fixed size */
+.bodyLarge {
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+}
+
+.bodyMedium {
+  font-size: var(--type-body-md);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+}
+
+.bodySmall {
+  font-size: var(--type-body-sm);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+}
+
+/* Label — UI text (form labels, buttons, captions), body font, medium weight, fixed size */
+.labelLarge {
+  font-size: var(--type-label-lg);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.labelMedium {
+  font-size: var(--type-label-md);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.labelSmall {
+  font-size: var(--type-label-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+/* Color intent */
+.default {
+  color: var(--text);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.accent {
+  color: var(--sky-700);
+}
+
+.danger {
+  color: var(--danger);
+}

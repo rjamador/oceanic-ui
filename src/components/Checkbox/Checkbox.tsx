@@ -2,17 +2,12 @@ import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { CheckIcon } from '../Icon'
 import styles from './Checkbox.module.css'
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   label?: string
 }
-
-const CheckGlyph = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
-    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ label, className, disabled, id, ...rest }, ref) => {
@@ -34,7 +29,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {...rest}
           />
           <span className={styles.box} aria-hidden="true">
-            {CheckGlyph}
+            <CheckIcon />
           </span>
         </span>
         {label && <span className={styles.text}>{label}</span>}

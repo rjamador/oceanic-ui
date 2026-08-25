@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom'
 
 import { cn } from '@/lib/cn'
 
+import { CloseIcon } from '../Icon'
 import { IconButton } from '../IconButton'
 import styles from './Toast.module.css'
 
@@ -41,12 +42,6 @@ export function useToast() {
   }
   return context.toast
 }
-
-const CloseIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-    <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
@@ -84,7 +79,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               <IconButton
                 variant="ghost"
                 size="sm"
-                icon={CloseIcon}
+                icon={<CloseIcon />}
                 aria-label="Dismiss"
                 onClick={() => dismiss(item.id)}
               />

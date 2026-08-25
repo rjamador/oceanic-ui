@@ -1,18 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { CheckIcon } from '../Icon'
 import { IconButton } from './IconButton'
-
-const CheckIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
-    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
 
 const meta = {
   title: 'Components/IconButton',
   component: IconButton,
   args: {
-    icon: CheckIcon,
+    icon: <CheckIcon />,
     'aria-label': 'Accept',
   },
 } satisfies Meta<typeof IconButton>

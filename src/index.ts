@@ -45,3 +45,9 @@ export type { BadgeProps, BadgeVariant } from './components/Badge'
 
 export { Textarea } from './components/Textarea'
 export type { TextareaProps } from './components/Textarea'
+
+export { Text } from './components/Text'
+export type { TextProps, TextVariant, TextColor, TextAs } from './components/Text'
+
+export { Icon, CheckIcon, CloseIcon, ChevronRightIcon, ChevronDownIcon, GearIcon } from './components/Icon'
+export type { IconProps } from './components/Icon'

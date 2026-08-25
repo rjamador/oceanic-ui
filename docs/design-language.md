@@ -107,13 +107,27 @@ principle).
 - `--font-display`: **Baloo 2** — headings only.
 - `--font-body`: **Sora** — everything else, including all control labels.
 - `--font-mono`: **Space Mono** — code/technical strings.
-- Size scale `--text-xs` (12px) through `--text-3xl` (40px).
+- Raw size scale `--text-xs` (12px) through `--text-3xl` (40px) — used
+  directly by controls (`Button`, `Input`, …) that need one fixed size.
+- Semantic type scale `--type-display-lg/md/sm`, `--type-heading-lg/md/sm`,
+  `--type-body-lg/md/sm`, `--type-label-lg/md/sm` — rem-based, consumed by
+  the `Text` component (`src/components/Text`), not referenced directly by
+  other components. `display`/`heading` sizes are fluid
+  (`clamp(min, preferred, max)`) so they scale down on narrow viewports
+  without a breakpoint per size; `body`/`label` sizes are fixed — they're
+  already small enough that shrinking further would hurt readability.
 - Weights `--weight-regular` (400) through `--weight-bold` (700); controls
   use `--weight-medium`, never bold.
 
 Fonts load via Google Fonts `<link>` tags in `index.html` (app) and
 `.storybook/preview-head.html` (Storybook) — both must stay in sync if the
 font stack ever changes.
+
+Any text that isn't a control's own label (a heading, a paragraph, a
+caption) should go through `<Text variant="...">` rather than a raw
+`<h1>`/`<p>`/hardcoded `font-size` — see `docs/creating-components.md` for
+the variant list and the `as` prop for decoupling style from semantic
+element.
 
 ### `layers.css`
 
@@ -135,8 +149,22 @@ overlay instead of a magic number.
 
 ## Icons
 
-`lucide-react`-shaped inline SVGs (24×24 viewBox, `stroke="currentColor"`,
-round line caps/joins) sized down per control size via CSS
-(`.sm svg { width: 16px; height: 16px }` etc. — see `IconButton.module.css`).
-No icon font, no filled/solid icon style — stroke-only, in the same
-outline spirit as that era's toolbar icons, though not copied from them.
+Every icon is built on the `Icon` component (`src/components/Icon/Icon.tsx`)
+— a 24×24 outline `<svg>` shell (`stroke="currentColor"`, round line
+caps/joins, `fill="none"`). No icon font, no filled/solid icon style —
+stroke-only, in the same outline spirit as that era's toolbar icons,
+though not copied from them.
+
+`size` and `strokeWidth` are props, not CSS — a control that needs a
+smaller icon (`IconButton`'s `sm`) passes `<CheckIcon size={16} />` rather
+than relying on a `.sm svg { width: ... }` override. `Icon` is
+`aria-hidden` by default (most icons sit inside an already-labeled
+control); pass `aria-label` yourself for a standalone icon and it becomes
+`role="img"` automatically.
+
+Pre-built icons live in `src/components/Icon/icons.tsx` — `CheckIcon`,
+`CloseIcon`, `ChevronRightIcon`, `ChevronDownIcon`, `GearIcon` as of this
+writing. Every component that needs one of these imports it from there;
+don't redeclare a `<svg>` locally, even for a one-off. Add a new icon to
+that file (a small component wrapping `<Icon>{...}</Icon>` with the path
+data) the first time a component genuinely needs one not already there.

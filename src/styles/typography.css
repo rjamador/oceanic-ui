@@ -18,4 +18,25 @@
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+
+  /* Semantic type scale for the Text component — rem-based, and fluid
+     (clamp()) for display/heading sizes so they scale down on narrow
+     viewports without a media query per breakpoint. body/label sizes are
+     fixed: they're already at the small end of comfortably readable, so
+     they don't shrink further on mobile. */
+  --type-display-lg: clamp(2rem, 1.7rem + 1.5vw, 2.75rem);
+  --type-display-md: clamp(1.75rem, 1.55rem + 1vw, 2.25rem);
+  --type-display-sm: clamp(1.5rem, 1.4rem + 0.5vw, 1.75rem);
+
+  --type-heading-lg: clamp(1.375rem, 1.3rem + 0.375vw, 1.5rem);
+  --type-heading-md: clamp(1.25rem, 1.2rem + 0.25vw, 1.375rem);
+  --type-heading-sm: clamp(1.125rem, 1.1rem + 0.125vw, 1.25rem);
+
+  --type-body-lg: 1rem;
+  --type-body-md: 0.9375rem;
+  --type-body-sm: 0.875rem;
+
+  --type-label-lg: 0.875rem;
+  --type-label-md: 0.8125rem;
+  --type-label-sm: 0.75rem;
 }
