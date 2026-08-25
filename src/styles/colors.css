@@ -67,6 +67,7 @@
   /* Validation */
   --danger: #d43d5c;
   --danger-glow: rgba(212, 61, 92, 0.45);
+  --danger-tint: rgba(212, 61, 92, 0.12);
 
   /* Scrim — dims the page behind a modal Dialog */
   --scrim: rgba(10, 44, 87, 0.35);

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Accordion } from './components/Accordion'
+import { Badge } from './components/Badge'
 import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
@@ -89,7 +90,15 @@ function App() {
           padding: 'var(--space-16) var(--space-6)',
         }}
       >
-        <h1 style={{ fontSize: 'var(--text-3xl)' }}>aero-ui</h1>
+        <h1 style={{ fontSize: 'var(--text-3xl)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+          aero-ui <Badge variant="accent">Beta</Badge>
+        </h1>
+
+        <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+          <Badge>Default</Badge>
+          <Badge variant="accent">12</Badge>
+          <Badge variant="danger">Expired</Badge>
+        </section>
 
         <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
           <Button variant="primary">Primary</Button>

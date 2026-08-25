@@ -39,3 +39,6 @@ export type { SliderProps } from './components/Slider'
 
 export { ToastProvider, useToast } from './components/Toast'
 export type { ToastOptions, ToastVariant } from './components/Toast'
+
+export { Badge } from './components/Badge'
+export type { BadgeProps, BadgeVariant } from './components/Badge'
