@@ -10,6 +10,7 @@ import { Input } from './components/Input'
 import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { Select } from './components/Select'
+import { Slider } from './components/Slider'
 import { Tabs } from './components/Tabs'
 import { Tooltip } from './components/Tooltip'
 
@@ -253,6 +254,12 @@ function App() {
               Covered for 1 year against manufacturing defects.
             </Accordion.Item>
           </Accordion>
+        </section>
+
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', maxWidth: 320 }}>
+          <Slider label="Volume" defaultValue={65} />
+          <Slider label="Brightness" min={0} max={10} step={1} defaultValue={4} />
+          <Slider label="Disabled" defaultValue={30} disabled />
         </section>
       </div>
     </main>

@@ -33,3 +33,6 @@ export type { ProgressProps } from './components/Progress'
 
 export { Accordion } from './components/Accordion'
 export type { AccordionProps, AccordionItemProps } from './components/Accordion'
+
+export { Slider } from './components/Slider'
+export type { SliderProps } from './components/Slider'

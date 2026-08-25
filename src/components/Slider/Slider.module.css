@@ -1,0 +1,99 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.slider:focus-visible {
+  outline: none;
+}
+
+/* Recessed track — same carved-in language as Progress/Input */
+.slider::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--recessed-surface);
+  box-shadow: inset 0 1px 3px var(--recessed-shadow);
+}
+
+.slider::-moz-range-track {
+  height: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--recessed-surface);
+  box-shadow: inset 0 1px 3px var(--recessed-shadow);
+}
+
+/* Raised thumb — same 3-stop sphere gradient as Button's primary variant */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -5px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--control-primary-border);
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  box-shadow: inset 0 1px 0 var(--control-highlight);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--control-primary-border);
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  box-shadow: inset 0 1px 0 var(--control-highlight);
+  cursor: pointer;
+}
+
+.slider:disabled::-webkit-slider-thumb,
+.slider:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight),
+    0 0 0 3px var(--aero-accent-glow);
+}
+
+.slider:focus-visible::-moz-range-thumb {
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight),
+    0 0 0 3px var(--aero-accent-glow);
+}
