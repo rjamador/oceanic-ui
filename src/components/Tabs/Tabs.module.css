@@ -1,0 +1,69 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-bottom: 1px solid var(--glass-border-bottom);
+}
+
+/* Folder-tab effect: the selected tab visually merges into the panel below
+   it (shares its background, no border between them) — the rest sit
+   flatter, recessed behind the strip's bottom border. */
+.tab {
+  position: relative;
+  top: 1px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tab:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--glass-tint);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--aero-accent-glow);
+}
+
+.tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.tabSelected {
+  color: var(--text);
+  background: var(--control-secondary-top);
+  border-color: var(--glass-border-bottom);
+  border-bottom-color: var(--control-secondary-top);
+}
+
+.panel {
+  padding: var(--space-5);
+  border: 1px solid var(--glass-border-bottom);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--control-secondary-top);
+  color: var(--text);
+}
+
+.panel:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+}

@@ -8,6 +8,7 @@ import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { Radio } from './components/Radio'
 import { Select } from './components/Select'
+import { Tabs } from './components/Tabs'
 
 const CheckIcon = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
@@ -196,6 +197,27 @@ function App() {
               </Button>
             </div>
           </Dialog>
+        </section>
+
+        <section style={{ maxWidth: 420 }}>
+          <Tabs defaultValue="general">
+            <Tabs.List>
+              <Tabs.Tab value="general">General</Tabs.Tab>
+              <Tabs.Tab value="advanced">Advanced</Tabs.Tab>
+              <Tabs.Tab value="locked" disabled>
+                Locked
+              </Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value="general">
+              <p style={{ margin: 0 }}>General settings go here.</p>
+            </Tabs.Panel>
+            <Tabs.Panel value="advanced">
+              <p style={{ margin: 0 }}>Advanced settings go here.</p>
+            </Tabs.Panel>
+            <Tabs.Panel value="locked">
+              <p style={{ margin: 0 }}>Unreachable.</p>
+            </Tabs.Panel>
+          </Tabs>
         </section>
       </div>
     </main>

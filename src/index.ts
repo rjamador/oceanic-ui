@@ -21,3 +21,6 @@ export type { SelectProps, SelectSize } from './components/Select'
 
 export { Dialog } from './components/Dialog'
 export type { DialogProps } from './components/Dialog'
+
+export { Tabs } from './components/Tabs'
+export type { TabsProps, TabsListProps, TabsTabProps, TabsPanelProps } from './components/Tabs'

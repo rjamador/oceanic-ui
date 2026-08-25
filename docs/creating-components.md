@@ -29,6 +29,32 @@ Nothing is public unless it's re-exported from `src/index.ts`. A
 component's own `index.ts` should only export the component and its
 `Props`/variant types — never internal helper components or hooks.
 
+## Compound components
+
+Some components have parts that must share state — `Tabs`/`Tabs.List`/
+`Tabs.Tab`/`Tabs.Panel` is the reference example. These still live in a
+**single file** inside the component's folder (`Tabs/Tabs.tsx`), not one
+file per part:
+
+- A local `React.createContext` (not exported from the barrel) holds the
+  shared state, created at the top of the file.
+- Each part is its own component, assembled onto the root via
+  `Object.assign(Root, { List, Tab, Panel })` and exported as one named
+  export (`Tabs`).
+- Reaching for `Object.assign` here (over some manual-typing alternative)
+  is the one case in this codebase where that's the right call — it's how
+  you attach static properties to a `forwardRef` component while keeping
+  full prop types on both the root and every sub-component.
+- If state needs to be shared across parts *and* something a consumer
+  might genuinely want to control from outside (open tab, checked, value),
+  back it with `useControllableState` (`src/hooks/`) instead of plain
+  `useState` — see `Tabs`' `value`/`defaultValue`/`onValueChange` props.
+- `eslint-plugin-react-refresh` flags multiple component exports from one
+  file by default; a compound component is a deliberate, documented
+  exception — silence it with a single `eslint-disable` at the top of the
+  file with a `-- reason:` comment, don't split the file to satisfy the
+  linter.
+
 ## Naming
 
 | Thing | Convention |
