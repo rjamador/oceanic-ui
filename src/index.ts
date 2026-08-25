@@ -49,7 +49,16 @@ export type { TextareaProps } from './components/Textarea'
 export { Text } from './components/Text'
 export type { TextProps, TextVariant, TextColor, TextAs } from './components/Text'
 
-export { Icon, CheckIcon, CloseIcon, ChevronRightIcon, ChevronDownIcon, GearIcon, UserIcon } from './components/Icon'
+export {
+  Icon,
+  CheckIcon,
+  CloseIcon,
+  ChevronRightIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  GearIcon,
+  UserIcon,
+} from './components/Icon'
 export type { IconProps } from './components/Icon'
 
 export { Spinner } from './components/Spinner'
@@ -72,3 +81,6 @@ export type { SkeletonProps, SkeletonVariant } from './components/Skeleton'
 
 export { Avatar } from './components/Avatar'
 export type { AvatarProps, AvatarSize } from './components/Avatar'
+
+export { Pagination } from './components/Pagination'
+export type { PaginationProps } from './components/Pagination'

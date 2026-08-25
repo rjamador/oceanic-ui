@@ -12,6 +12,7 @@ import { CheckIcon, CloseIcon, GearIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { List } from './components/List'
+import { Pagination } from './components/Pagination'
 import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
@@ -42,6 +43,7 @@ const TEXT_VARIANTS: TextVariant[] = [
 
 function App() {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [page, setPage] = useState(4)
   const toast = useToast()
 
   return (
@@ -370,6 +372,10 @@ function App() {
             <Skeleton variant="text" />
             <Skeleton variant="text" width="80%" style={{ marginTop: 'var(--space-2)' }} />
           </Card>
+        </section>
+
+        <section>
+          <Pagination page={page} pageCount={12} onPageChange={setPage} />
         </section>
       </div>
     </main>

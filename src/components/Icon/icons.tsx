@@ -32,6 +32,14 @@ export function ChevronDownIcon(props: IconProps) {
   )
 }
 
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <Icon strokeWidth={2.5} {...props}>
+      <path d="M15 6l-6 6 6 6" />
+    </Icon>
+  )
+}
+
 export function UserIcon(props: IconProps) {
   return (
     <Icon {...props}>
