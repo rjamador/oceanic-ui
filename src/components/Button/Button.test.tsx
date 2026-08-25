@@ -32,7 +32,15 @@ describe('Button', () => {
 
   it('forwards a ref to the underlying button element', () => {
     let node: HTMLButtonElement | null = null
-    render(<Button ref={(el) => (node = el)}>Save</Button>)
+    render(
+      <Button
+        ref={(el) => {
+          node = el
+        }}
+      >
+        Save
+      </Button>,
+    )
 
     expect(node).toBeInstanceOf(HTMLButtonElement)
   })

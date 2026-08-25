@@ -6,7 +6,7 @@ import styles from './Input.module.css'
 
 export type InputSize = 'sm' | 'md' | 'lg'
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string
   helperText?: string
   errorMessage?: string

@@ -6,7 +6,7 @@ import styles from './Select.module.css'
 
 export type SelectSize = 'sm' | 'md' | 'lg'
 
-export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   label?: string
   helperText?: string
   errorMessage?: string
