@@ -13,6 +13,7 @@ import { Radio } from './components/Radio'
 import { Select } from './components/Select'
 import { Slider } from './components/Slider'
 import { Tabs } from './components/Tabs'
+import { Textarea } from './components/Textarea'
 import { Tooltip } from './components/Tooltip'
 import { useToast } from './components/Toast'
 
@@ -176,6 +177,10 @@ function App() {
           <div style={{ flex: '1 1 220px' }}>
             <Input label="Disabled" placeholder="Can't touch this" disabled />
           </div>
+        </section>
+
+        <section style={{ maxWidth: 460 }}>
+          <Textarea label="Bio" placeholder="Tell us about yourself…" helperText="Max 200 characters." />
         </section>
 
         <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-8)' }}>

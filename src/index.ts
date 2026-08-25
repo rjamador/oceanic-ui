@@ -42,3 +42,6 @@ export type { ToastOptions, ToastVariant } from './components/Toast'
 
 export { Badge } from './components/Badge'
 export type { BadgeProps, BadgeVariant } from './components/Badge'
+
+export { Textarea } from './components/Textarea'
+export type { TextareaProps } from './components/Textarea'
