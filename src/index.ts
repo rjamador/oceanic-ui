@@ -30,3 +30,6 @@ export type { TooltipProps, TooltipSide } from './components/Tooltip'
 
 export { Progress } from './components/Progress'
 export type { ProgressProps } from './components/Progress'
+
+export { Accordion } from './components/Accordion'
+export type { AccordionProps, AccordionItemProps } from './components/Accordion'

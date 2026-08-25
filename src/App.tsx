@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Accordion } from './components/Accordion'
 import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
@@ -238,6 +239,20 @@ function App() {
         >
           <Progress value={62} label="Copying files" />
           <Progress label="Connecting" />
+        </section>
+
+        <section style={{ maxWidth: 420 }}>
+          <Accordion exclusive>
+            <Accordion.Item title="Shipping" defaultOpen>
+              Ships in 3-5 business days via standard courier.
+            </Accordion.Item>
+            <Accordion.Item title="Returns">
+              Returns are accepted within 30 days of delivery.
+            </Accordion.Item>
+            <Accordion.Item title="Warranty">
+              Covered for 1 year against manufacturing defects.
+            </Accordion.Item>
+          </Accordion>
         </section>
       </div>
     </main>
