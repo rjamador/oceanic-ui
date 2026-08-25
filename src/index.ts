@@ -27,3 +27,6 @@ export type { TabsProps, TabsListProps, TabsTabProps, TabsPanelProps } from './c
 
 export { Tooltip } from './components/Tooltip'
 export type { TooltipProps, TooltipSide } from './components/Tooltip'
+
+export { Progress } from './components/Progress'
+export type { ProgressProps } from './components/Progress'

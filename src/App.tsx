@@ -6,6 +6,7 @@ import { Checkbox } from './components/Checkbox'
 import { Dialog } from './components/Dialog'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
+import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { Select } from './components/Select'
 import { Tabs } from './components/Tabs'
@@ -225,6 +226,18 @@ function App() {
               <p style={{ margin: 0 }}>Unreachable.</p>
             </Tabs.Panel>
           </Tabs>
+        </section>
+
+        <section
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--space-4)',
+            maxWidth: 320,
+          }}
+        >
+          <Progress value={62} label="Copying files" />
+          <Progress label="Connecting" />
         </section>
       </div>
     </main>
