@@ -6,6 +6,7 @@ import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
 import { Dialog } from './components/Dialog'
+import { Divider } from './components/Divider'
 import { CheckIcon, CloseIcon, GearIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
@@ -304,6 +305,8 @@ function App() {
           </Button>
         </section>
 
+        <Divider />
+
         <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
           <Spinner />
           <Spinner size={32} />
@@ -311,6 +314,10 @@ function App() {
             <Spinner size={14} label="Saving" />
             Saving…
           </Button>
+        </section>
+
+        <section style={{ maxWidth: 320 }}>
+          <Divider label="OR" />
         </section>
       </div>
     </main>

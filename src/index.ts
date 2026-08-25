@@ -54,3 +54,6 @@ export type { IconProps } from './components/Icon'
 
 export { Spinner } from './components/Spinner'
 export type { SpinnerProps } from './components/Spinner'
+
+export { Divider } from './components/Divider'
+export type { DividerProps, DividerOrientation } from './components/Divider'
