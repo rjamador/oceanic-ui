@@ -36,3 +36,6 @@ export type { AccordionProps, AccordionItemProps } from './components/Accordion'
 
 export { Slider } from './components/Slider'
 export type { SliderProps } from './components/Slider'
+
+export { ToastProvider, useToast } from './components/Toast'
+export type { ToastOptions, ToastVariant } from './components/Toast'

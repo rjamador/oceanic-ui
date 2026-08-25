@@ -13,6 +13,7 @@ import { Select } from './components/Select'
 import { Slider } from './components/Slider'
 import { Tabs } from './components/Tabs'
 import { Tooltip } from './components/Tooltip'
+import { useToast } from './components/Toast'
 
 const CheckIcon = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
@@ -39,6 +40,7 @@ const GearIcon = (
 
 function App() {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const toast = useToast()
 
   return (
     <main
@@ -260,6 +262,27 @@ function App() {
           <Slider label="Volume" defaultValue={65} />
           <Slider label="Brightness" min={0} max={10} step={1} defaultValue={4} />
           <Slider label="Disabled" defaultValue={30} disabled />
+        </section>
+
+        <section style={{ display: 'flex', gap: 'var(--space-4)' }}>
+          <Button
+            variant="primary"
+            onClick={() => toast({ title: 'Saved', description: 'Your changes were saved.' })}
+          >
+            Trigger success toast
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() =>
+              toast({
+                title: 'Upload failed',
+                description: 'The file exceeds the 10MB limit.',
+                variant: 'danger',
+              })
+            }
+          >
+            Trigger error toast
+          </Button>
         </section>
       </div>
     </main>
