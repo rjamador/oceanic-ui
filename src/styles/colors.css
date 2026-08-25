@@ -1,0 +1,54 @@
+/* Vista Glass — clear-sky blues + aqua glow. */
+:root {
+  /* Sky — primary blue scale, light to deep */
+  --sky-50: #eef8ff;
+  --sky-100: #dbeeff;
+  --sky-200: #b3ddff;
+  --sky-300: #7fc4ff;
+  --sky-400: #47a4fb;
+  --sky-500: #1e85f0;
+  --sky-600: #1367c7;
+  --sky-700: #0f4f9c;
+  --sky-800: #0d3d78;
+  --sky-900: #0a2c57;
+
+  /* Aero accent — the aqua glow */
+  --aero-accent: #33d6e0;
+  --aero-accent-strong: #12b8c4;
+  --aero-accent-glow: rgba(51, 214, 224, 0.55);
+
+  /* Glass surfaces */
+  --glass-white: rgba(255, 255, 255, 0.55);
+  --glass-white-strong: rgba(255, 255, 255, 0.78);
+  --glass-tint: rgba(200, 232, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-border-bottom: rgba(13, 61, 120, 0.18);
+  --glass-shadow:
+    0 8px 24px rgba(13, 61, 120, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+
+  /* Control surfaces — authentic Vista dialog-button/field gradients.
+     Text stays dark on every one of these; Vista never used white-on-blue
+     filled buttons, the "default" affordance is a stronger tint + glow. */
+  --control-primary-top: #eef6ff;
+  --control-primary-mid: #cfe4fa;
+  --control-primary-bottom: #b7d7f5;
+  --control-primary-border: #9dc3ea;
+
+  --control-secondary-top: #ffffff;
+  --control-secondary-mid: #f3f6fa;
+  --control-secondary-bottom: #e4eaf1;
+  --control-secondary-border: #c9d3dd;
+
+  /* Text */
+  --text: #0d3151;
+  --text-muted: #4c6b89;
+  --text-on-accent: #ffffff;
+
+  /* Validation */
+  --danger: #d43d5c;
+  --danger-glow: rgba(212, 61, 92, 0.45);
+
+  /* Page surface — clear sky gradient */
+  --bg: linear-gradient(180deg, #eaf6ff 0%, #ffffff 60%);
+}

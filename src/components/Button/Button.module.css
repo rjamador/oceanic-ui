@@ -1,0 +1,118 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease;
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--aero-accent-glow);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Variants — cool, near-white gradients with dark text throughout. The
+   "default" action reads as primary through a stronger blue tint + glow,
+   never through a solid color fill or white text. */
+
+.primary {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-primary-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.primary:hover:not(:disabled) {
+  border-color: var(--aero-accent-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 3px var(--aero-accent-glow);
+}
+
+.primary:active:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-bottom) 0%,
+    var(--control-primary-mid) 100%
+  );
+}
+
+.secondary {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-mid) 48%,
+    var(--control-secondary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-secondary-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--sky-300);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 3px rgba(127, 196, 255, 0.35);
+}
+
+.secondary:active:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-bottom) 0%,
+    var(--control-secondary-mid) 100%
+  );
+}
+
+.ghost {
+  background: transparent;
+  color: var(--sky-700);
+  border: 1px solid transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--glass-tint);
+  border-color: var(--glass-border-bottom);
+}
+
+/* Sizes */
+
+.sm {
+  height: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.md {
+  height: 38px;
+  padding: 0 var(--space-5);
+  font-size: var(--text-base);
+}
+
+.lg {
+  height: 46px;
+  padding: 0 var(--space-6);
+  font-size: var(--text-lg);
+}

@@ -1,0 +1,44 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--glass-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-bottom-color: var(--glass-border-bottom);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Static specular highlight across the top — softer than Button's, this is a
+   large surface, not a control */
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.sm {
+  padding: var(--space-4);
+}
+
+.md {
+  padding: var(--space-6);
+}
+
+.lg {
+  padding: var(--space-8);
+}

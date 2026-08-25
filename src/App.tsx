@@ -1,121 +1,180 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Button } from './components/Button'
+import { Card } from './components/Card'
+import { Checkbox } from './components/Checkbox'
+import { IconButton } from './components/IconButton'
+import { Input } from './components/Input'
+import { Radio } from './components/Radio'
+import { Select } from './components/Select'
+
+const CheckIcon = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
+    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
+const CloseIcon = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
+    <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
+const GearIcon = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <circle cx="12" cy="12" r="3" />
+    <path
+      d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main
+      style={{
+        position: 'relative',
+        minHeight: '100svh',
+        overflow: 'hidden',
+      }}
+    >
+      {/* decorative bokeh orbs so the glass blur has something to catch */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: -80,
+          left: -60,
+          width: 260,
+          height: 260,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, var(--sky-300), transparent 70%)',
+          filter: 'blur(4px)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: 120,
+          right: -40,
+          width: 220,
+          height: 220,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, var(--aero-accent), transparent 70%)',
+          filter: 'blur(4px)',
+        }}
+      />
 
-      <div className="ticks"></div>
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--space-10)',
+          maxWidth: 720,
+          margin: '0 auto',
+          padding: 'var(--space-16) var(--space-6)',
+        }}
+      >
+        <h1 style={{ fontSize: 'var(--text-3xl)' }}>aero-ui</h1>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="primary" disabled>
+            Disabled
+          </Button>
+        </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <Button variant="primary" size="sm">
+            Small
+          </Button>
+          <Button variant="primary" size="md">
+            Medium
+          </Button>
+          <Button variant="primary" size="lg">
+            Large
+          </Button>
+        </section>
+
+        <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <IconButton variant="primary" icon={CheckIcon} aria-label="Accept" />
+          <IconButton variant="secondary" icon={CloseIcon} aria-label="Decline" />
+          <IconButton variant="ghost" icon={GearIcon} aria-label="Settings" />
+          <IconButton variant="primary" size="sm" icon={CheckIcon} aria-label="Accept (small)" />
+          <IconButton variant="primary" size="lg" icon={CheckIcon} aria-label="Accept (large)" />
+          <IconButton variant="primary" icon={CheckIcon} aria-label="Accept (disabled)" disabled />
+        </section>
+
+        <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
+          <Card padding="lg" style={{ flex: '1 1 280px' }}>
+            <h2 style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-2)' }}>
+              Glass panel
+            </h2>
+            <p style={{ color: 'var(--text-muted)', margin: '0 0 var(--space-4)' }}>
+              A frosted surface with a soft specular highlight across the top —
+              the same gloss language as the buttons, scaled up.
+            </p>
+            <Button variant="primary" size="sm">
+              Action
+            </Button>
+          </Card>
+
+          <Card padding="sm" style={{ flex: '1 1 200px' }}>
+            <p style={{ margin: 0 }}>Compact padding variant.</p>
+          </Card>
+        </section>
+
+        <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+          <div style={{ flex: '1 1 220px' }}>
+            <Input label="Name" placeholder="Ada Lovelace" />
+          </div>
+          <div style={{ flex: '1 1 220px' }}>
+            <Input
+              label="Email"
+              placeholder="ada@example.com"
+              helperText="We'll never share your email."
+            />
+          </div>
+          <div style={{ flex: '1 1 220px' }}>
+            <Input
+              label="Username"
+              defaultValue="already taken"
+              errorMessage="That username is already taken."
+            />
+          </div>
+          <div style={{ flex: '1 1 220px' }}>
+            <Input label="Disabled" placeholder="Can't touch this" disabled />
+          </div>
+        </section>
+
+        <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-8)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <Checkbox label="Remember me" defaultChecked />
+            <Checkbox label="Subscribe to newsletter" />
+            <Checkbox label="Disabled" disabled />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <Radio name="plan" label="Free plan" defaultChecked />
+            <Radio name="plan" label="Pro plan" />
+            <Radio name="plan" label="Disabled" disabled />
+          </div>
+
+          <div style={{ flex: '1 1 220px' }}>
+            <Select label="Country" defaultValue="ar">
+              <option value="ar">Argentina</option>
+              <option value="mx">México</option>
+              <option value="es">España</option>
+              <option value="us">United States</option>
+            </Select>
+          </div>
+        </section>
+      </div>
+    </main>
   )
 }
 

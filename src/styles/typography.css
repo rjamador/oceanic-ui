@@ -1,0 +1,21 @@
+:root {
+  --font-display: 'Baloo 2', ui-rounded, 'Segoe UI', sans-serif;
+  --font-body: 'Sora', 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 40px;
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+}
