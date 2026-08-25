@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Accordion } from './components/Accordion'
+import { Avatar } from './components/Avatar'
 import { Badge } from './components/Badge'
 import { Button } from './components/Button'
 import { Card } from './components/Card'
@@ -349,6 +350,13 @@ function App() {
           <Switch label="Airplane mode" defaultChecked />
           <Switch label="Notifications" />
           <Switch label="Disabled" disabled />
+        </section>
+
+        <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <Avatar name="Ada Lovelace" size="sm" />
+          <Avatar name="Ada Lovelace" size="md" />
+          <Avatar name="Ada Lovelace" size="lg" />
+          <Avatar size="lg" />
         </section>
 
         <section>
