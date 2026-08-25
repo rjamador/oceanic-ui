@@ -68,6 +68,9 @@
   --danger: #d43d5c;
   --danger-glow: rgba(212, 61, 92, 0.45);
 
+  /* Scrim — dims the page behind a modal Dialog */
+  --scrim: rgba(10, 44, 87, 0.35);
+
   /* Page surface — clear sky gradient */
   --bg: linear-gradient(180deg, #eaf6ff 0%, #ffffff 60%);
 }

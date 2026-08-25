@@ -1,6 +1,9 @@
+import { useState } from 'react'
+
 import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
+import { Dialog } from './components/Dialog'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { Radio } from './components/Radio'
@@ -30,6 +33,8 @@ const GearIcon = (
 )
 
 function App() {
+  const [dialogOpen, setDialogOpen] = useState(false)
+
   return (
     <main
       style={{
@@ -172,6 +177,25 @@ function App() {
               <option value="us">United States</option>
             </Select>
           </div>
+        </section>
+
+        <section>
+          <Button variant="primary" onClick={() => setDialogOpen(true)}>
+            Delete file…
+          </Button>
+          <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} title="Delete file">
+            <p style={{ margin: '0 0 16px' }}>
+              Are you sure you want to delete this file? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <Button variant="secondary" onClick={() => setDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={() => setDialogOpen(false)}>
+                Delete
+              </Button>
+            </div>
+          </Dialog>
         </section>
       </div>
     </main>

@@ -18,3 +18,6 @@ export type { RadioProps } from './components/Radio'
 
 export { Select } from './components/Select'
 export type { SelectProps, SelectSize } from './components/Select'
+
+export { Dialog } from './components/Dialog'
+export type { DialogProps } from './components/Dialog'
