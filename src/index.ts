@@ -66,3 +66,6 @@ export type { ListProps, ListItemProps } from './components/List'
 
 export { Switch } from './components/Switch'
 export type { SwitchProps } from './components/Switch'
+
+export { Skeleton } from './components/Skeleton'
+export type { SkeletonProps, SkeletonVariant } from './components/Skeleton'

@@ -15,6 +15,7 @@ import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
+import { Skeleton } from './components/Skeleton'
 import { Slider } from './components/Slider'
 import { Spinner } from './components/Spinner'
 import { Switch } from './components/Switch'
@@ -348,6 +349,19 @@ function App() {
           <Switch label="Airplane mode" defaultChecked />
           <Switch label="Notifications" />
           <Switch label="Disabled" disabled />
+        </section>
+
+        <section>
+          <Card padding="md" style={{ maxWidth: 280 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
+              <Skeleton variant="circular" width={40} height={40} />
+              <div style={{ flex: 1 }}>
+                <Skeleton variant="text" width="60%" />
+              </div>
+            </div>
+            <Skeleton variant="text" />
+            <Skeleton variant="text" width="80%" style={{ marginTop: 'var(--space-2)' }} />
+          </Card>
         </section>
       </div>
     </main>
