@@ -3,6 +3,7 @@ import { forwardRef, useId, type SelectHTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
 import { ChevronDownIcon } from '../Icon'
+import { Text } from '../Text'
 import styles from './Select.module.css'
 
 export type SelectSize = 'sm' | 'md' | 'lg'
@@ -28,9 +29,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className={styles.wrapper}>
         {label && (
-          <label htmlFor={selectId} className={styles.label}>
+          <Text as="label" variant="labelLarge" htmlFor={selectId} className={styles.label}>
             {label}
-          </label>
+          </Text>
         )}
         <div className={styles.control}>
           <select
@@ -48,13 +49,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </span>
         </div>
         {errorMessage ? (
-          <p id={errorId} className={styles.error} role="alert">
+          <Text as="p" variant="labelSmall" color="danger" id={errorId} className={styles.helper} role="alert">
             {errorMessage}
-          </p>
+          </Text>
         ) : helperText ? (
-          <p id={helperId} className={styles.helper}>
+          <Text as="p" variant="labelSmall" color="muted" id={helperId} className={styles.helper}>
             {helperText}
-          </p>
+          </Text>
         ) : null}
       </div>
     )

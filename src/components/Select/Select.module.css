@@ -4,12 +4,10 @@
   width: 100%;
 }
 
+/* Typography comes from the Text component this class is applied to. */
 .label {
   display: block;
   margin-bottom: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--text);
 }
 
 .control {
@@ -84,14 +82,6 @@
 
 .helper {
   margin: var(--space-2) 0 0;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.error {
-  margin: var(--space-2) 0 0;
-  font-size: var(--text-xs);
-  color: var(--danger);
 }
 
 .sm {

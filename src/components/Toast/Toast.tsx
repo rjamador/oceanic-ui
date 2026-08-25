@@ -11,6 +11,7 @@ import { cn } from '@/lib/cn'
 
 import { CloseIcon } from '../Icon'
 import { IconButton } from '../IconButton'
+import { Text } from '../Text'
 import styles from './Toast.module.css'
 
 export type ToastVariant = 'default' | 'danger'
@@ -73,8 +74,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               className={cn(styles.toast, item.variant === 'danger' && styles.danger)}
             >
               <div className={styles.content}>
-                {item.title && <p className={styles.title}>{item.title}</p>}
-                <p className={styles.description}>{item.description}</p>
+                {item.title && (
+                  <Text
+                    as="p"
+                    variant="labelLarge"
+                    color={item.variant === 'danger' ? 'danger' : 'default'}
+                    className={styles.title}
+                  >
+                    {item.title}
+                  </Text>
+                )}
+                <Text as="p" variant="bodySmall" color="muted" className={styles.description}>
+                  {item.description}
+                </Text>
               </div>
               <IconButton
                 variant="ghost"

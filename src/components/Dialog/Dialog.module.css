@@ -25,12 +25,9 @@
   border-bottom: 1px solid var(--glass-border-bottom);
 }
 
+/* Typography comes from the Text component this class is applied to. */
 .title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
-  color: var(--text);
 }
 
 .content {

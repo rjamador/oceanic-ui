@@ -2,6 +2,7 @@ import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { Text } from '../Text'
 import styles from './Radio.module.css'
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -31,7 +32,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             <span className={styles.dot} />
           </span>
         </span>
-        {label && <span className={styles.text}>{label}</span>}
+        {label && (
+          <Text as="span" variant="bodySmall" className={styles.text}>
+            {label}
+          </Text>
+        )}
       </label>
     )
   },

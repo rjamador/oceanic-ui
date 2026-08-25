@@ -2,6 +2,7 @@ import { forwardRef, useId, type TextareaHTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { Text } from '../Text'
 import styles from './Textarea.module.css'
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -21,9 +22,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className={styles.wrapper}>
         {label && (
-          <label htmlFor={textareaId} className={styles.label}>
+          <Text as="label" variant="labelLarge" htmlFor={textareaId} className={styles.label}>
             {label}
-          </label>
+          </Text>
         )}
         <textarea
           ref={ref}
@@ -34,13 +35,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...rest}
         />
         {errorMessage ? (
-          <p id={errorId} className={styles.error} role="alert">
+          <Text as="p" variant="labelSmall" color="danger" id={errorId} className={styles.helper} role="alert">
             {errorMessage}
-          </p>
+          </Text>
         ) : helperText ? (
-          <p id={helperId} className={styles.helper}>
+          <Text as="p" variant="labelSmall" color="muted" id={helperId} className={styles.helper}>
             {helperText}
-          </p>
+          </Text>
         ) : null}
       </div>
     )

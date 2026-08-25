@@ -1,11 +1,10 @@
+/* Label typography comes from the Text component in .text — this only
+   owns layout/interaction. */
 .wrapper {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   cursor: pointer;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--text);
 }
 
 .wrapper.disabled {

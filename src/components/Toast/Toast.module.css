@@ -45,25 +45,17 @@
   min-width: 0;
 }
 
+/* Typography for .title/.description comes from the Text components they're
+   applied to (including the danger color, driven by the `variant` prop in
+   Toast.tsx) — these only own spacing. */
 .title {
   margin: 0 0 var(--space-1);
-  font-family: var(--font-body);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-sm);
-  color: var(--text);
 }
 
 .description {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--text-muted);
 }
 
 .danger {
   border-color: var(--danger);
-}
-
-.danger .title {
-  color: var(--danger);
 }

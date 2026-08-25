@@ -3,6 +3,7 @@ import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
 import { CheckIcon } from '../Icon'
+import { Text } from '../Text'
 import styles from './Checkbox.module.css'
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
@@ -32,7 +33,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             <CheckIcon />
           </span>
         </span>
-        {label && <span className={styles.text}>{label}</span>}
+        {label && (
+          <Text as="span" variant="bodySmall" className={styles.text}>
+            {label}
+          </Text>
+        )}
       </label>
     )
   },

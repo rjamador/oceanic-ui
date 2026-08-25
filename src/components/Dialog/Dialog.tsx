@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn'
 
 import { CloseIcon } from '../Icon'
 import { IconButton } from '../IconButton'
+import { Text } from '../Text'
 import styles from './Dialog.module.css'
 
 export interface DialogProps {
@@ -57,9 +58,9 @@ export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
       >
         {title && (
           <div className={styles.header}>
-            <h2 id={titleId} className={styles.title}>
+            <Text as="h2" variant="headingSmall" id={titleId} className={styles.title}>
               {title}
-            </h2>
+            </Text>
             <IconButton
               variant="ghost"
               size="sm"

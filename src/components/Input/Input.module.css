@@ -4,12 +4,11 @@
   width: 100%;
 }
 
+/* Typography (size/weight/color) comes from the Text component this class
+   is applied to — this only owns layout. */
 .label {
   display: block;
   margin-bottom: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--text);
 }
 
 /* Recessed glass — carved into the surface, opposite of Button's raised gloss */
@@ -65,14 +64,6 @@
 
 .helper {
   margin: var(--space-2) 0 0;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.error {
-  margin: var(--space-2) 0 0;
-  font-size: var(--text-xs);
-  color: var(--danger);
 }
 
 .sm {

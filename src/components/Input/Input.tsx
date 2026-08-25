@@ -2,6 +2,7 @@ import { forwardRef, useId, type InputHTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { Text } from '../Text'
 import styles from './Input.module.css'
 
 export type InputSize = 'sm' | 'md' | 'lg'
@@ -27,9 +28,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={styles.wrapper}>
         {label && (
-          <label htmlFor={inputId} className={styles.label}>
+          <Text as="label" variant="labelLarge" htmlFor={inputId} className={styles.label}>
             {label}
-          </label>
+          </Text>
         )}
         <input
           ref={ref}
@@ -40,13 +41,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...rest}
         />
         {errorMessage ? (
-          <p id={errorId} className={styles.error} role="alert">
+          <Text as="p" variant="labelSmall" color="danger" id={errorId} className={styles.helper} role="alert">
             {errorMessage}
-          </p>
+          </Text>
         ) : helperText ? (
-          <p id={helperId} className={styles.helper}>
+          <Text as="p" variant="labelSmall" color="muted" id={helperId} className={styles.helper}>
             {helperText}
-          </p>
+          </Text>
         ) : null}
       </div>
     )

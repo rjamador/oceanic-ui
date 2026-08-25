@@ -33,6 +33,9 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    *  independent (e.g. a card title styled `headingSmall` that should not
    *  be an actual heading for the surrounding document outline). */
   as?: TextAs
+  /** Only meaningful when `as="label"` — `HTMLAttributes` doesn't include
+   *  it since it's `LabelHTMLAttributes`-specific. */
+  htmlFor?: string
 }
 
 const DEFAULT_ELEMENT: Record<TextVariant, TextAs> = {
