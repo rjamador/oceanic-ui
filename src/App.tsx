@@ -10,6 +10,7 @@ import { Divider } from './components/Divider'
 import { CheckIcon, CloseIcon, GearIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
+import { List } from './components/List'
 import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
@@ -329,6 +330,17 @@ function App() {
               Details
             </SegmentedControl.Option>
           </SegmentedControl>
+        </section>
+
+        <section style={{ maxWidth: 260 }}>
+          <List defaultValue="doc1" aria-label="Files">
+            <List.Item value="doc1">Document.docx</List.Item>
+            <List.Item value="doc2">Photo.png</List.Item>
+            <List.Item value="doc3">Budget.xlsx</List.Item>
+            <List.Item value="doc4" disabled>
+              Locked.zip
+            </List.Item>
+          </List>
         </section>
       </div>
     </main>

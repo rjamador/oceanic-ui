@@ -1,0 +1,39 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: var(--space-2);
+  list-style: none;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--control-secondary-top);
+}
+
+.item {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text);
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+.item:hover:not(.itemSelected):not(.itemDisabled) {
+  background: var(--glass-tint);
+}
+
+.item:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+}
+
+.itemSelected {
+  background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+}
+
+.itemDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

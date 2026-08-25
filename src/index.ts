@@ -60,3 +60,6 @@ export type { DividerProps, DividerOrientation } from './components/Divider'
 
 export { SegmentedControl } from './components/SegmentedControl'
 export type { SegmentedControlProps, SegmentedControlOptionProps } from './components/SegmentedControl'
+
+export { List } from './components/List'
+export type { ListProps, ListItemProps } from './components/List'
