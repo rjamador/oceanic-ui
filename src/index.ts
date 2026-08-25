@@ -63,3 +63,6 @@ export type { SegmentedControlProps, SegmentedControlOptionProps } from './compo
 
 export { List } from './components/List'
 export type { ListProps, ListItemProps } from './components/List'
+
+export { Switch } from './components/Switch'
+export type { SwitchProps } from './components/Switch'

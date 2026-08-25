@@ -17,6 +17,7 @@ import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
 import { Slider } from './components/Slider'
 import { Spinner } from './components/Spinner'
+import { Switch } from './components/Switch'
 import { Tabs } from './components/Tabs'
 import { Text, type TextVariant } from './components/Text'
 import { Textarea } from './components/Textarea'
@@ -341,6 +342,12 @@ function App() {
               Locked.zip
             </List.Item>
           </List>
+        </section>
+
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <Switch label="Airplane mode" defaultChecked />
+          <Switch label="Notifications" />
+          <Switch label="Disabled" disabled />
         </section>
       </div>
     </main>
