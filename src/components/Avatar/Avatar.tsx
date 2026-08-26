@@ -1,11 +1,27 @@
 import { forwardRef, useState, type HTMLAttributes } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { UserIcon } from '../Icon'
-import styles from './Avatar.module.css'
 
-export type AvatarSize = 'sm' | 'md' | 'lg'
+const avatarVariants = cva(
+  'relative inline-flex flex-none items-center justify-center overflow-hidden rounded-full border border-[var(--glass-border-bottom)] bg-[var(--control-secondary-mid)] text-[var(--text-muted)]',
+  {
+    variants: {
+      size: {
+        sm: 'size-6 text-xs',
+        md: 'size-8 text-sm',
+        lg: 'size-10 text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  },
+)
+
+export type AvatarSize = NonNullable<VariantProps<typeof avatarVariants>['size']>
 
 const FALLBACK_ICON_SIZE: Record<AvatarSize, number> = { sm: 14, md: 18, lg: 22 }
 
@@ -35,12 +51,17 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
         ref={ref}
         role={name ? 'img' : undefined}
         aria-label={name}
-        className={cn(styles.avatar, styles[size], className)}
+        className={cn(avatarVariants({ size }), className)}
         {...rest}
       >
         <span aria-hidden="true" style={{ display: 'contents' }}>
           {showImage ? (
-            <img src={src} alt="" className={styles.image} onError={() => setErrored(true)} />
+            <img
+              src={src}
+              alt=""
+              className="h-full w-full object-cover"
+              onError={() => setErrored(true)}
+            />
           ) : name ? (
             getInitials(name)
           ) : (

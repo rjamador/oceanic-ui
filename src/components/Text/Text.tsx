@@ -1,24 +1,45 @@
 import { forwardRef, type HTMLAttributes } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Text.module.css'
+const textVariants = cva('m-0 font-[family-name:var(--font-body)]', {
+  variants: {
+    variant: {
+      displayLarge:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-display-lg)] font-bold leading-[1.15] tracking-[-0.02em]',
+      displayMedium:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-display-md)] font-bold leading-[1.15] tracking-[-0.02em]',
+      displaySmall:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-display-sm)] font-semibold leading-[1.15] tracking-[-0.01em]',
+      headingLarge:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-heading-lg)] font-semibold leading-[1.15]',
+      headingMedium:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-heading-md)] font-semibold leading-[1.15]',
+      headingSmall:
+        'font-[family-name:var(--font-display)] text-[length:var(--type-heading-sm)] font-semibold leading-[1.15]',
+      bodyLarge: 'text-[length:var(--type-body-lg)] font-normal leading-normal',
+      bodyMedium: 'text-[length:var(--type-body-md)] font-normal leading-normal',
+      bodySmall: 'text-[length:var(--type-body-sm)] font-normal leading-normal',
+      labelLarge: 'text-[length:var(--type-label-lg)] font-medium leading-[1.15]',
+      labelMedium: 'text-[length:var(--type-label-md)] font-medium leading-[1.15]',
+      labelSmall: 'text-[length:var(--type-label-sm)] font-medium leading-[1.15]',
+    },
+    color: {
+      default: 'text-[color:var(--text)]',
+      muted: 'text-[color:var(--text-muted)]',
+      accent: 'text-[color:var(--sky-700)]',
+      danger: 'text-[color:var(--danger)]',
+    },
+  },
+  defaultVariants: {
+    variant: 'bodyMedium',
+    color: 'default',
+  },
+})
 
-export type TextVariant =
-  | 'displayLarge'
-  | 'displayMedium'
-  | 'displaySmall'
-  | 'headingLarge'
-  | 'headingMedium'
-  | 'headingSmall'
-  | 'bodyLarge'
-  | 'bodyMedium'
-  | 'bodySmall'
-  | 'labelLarge'
-  | 'labelMedium'
-  | 'labelSmall'
-
-export type TextColor = 'default' | 'muted' | 'accent' | 'danger'
+export type TextVariant = NonNullable<VariantProps<typeof textVariants>['variant']>
+export type TextColor = NonNullable<VariantProps<typeof textVariants>['color']>
 
 /** Elements a Text variant is allowed to render as — kept to a fixed set
  *  rather than full polymorphic typing (any ElementType), which balloons
@@ -60,7 +81,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(
     return (
       <Component
         ref={ref as never}
-        className={cn(styles.text, styles[variant], styles[color], className)}
+        className={cn(textVariants({ variant, color }), className)}
         {...rest}
       >
         {children}

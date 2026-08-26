@@ -1,8 +1,20 @@
 import { forwardRef, type HTMLAttributes } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Progress.module.css'
+const progressTrackVariants = cva('aero-progress-track')
+const progressFillVariants = cva('aero-progress-fill', {
+  variants: {
+    indeterminate: {
+      true: 'aero-progress-indeterminate',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    indeterminate: false,
+  },
+})
 
 export interface ProgressProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Omit for an indeterminate (busy, unknown duration) progress bar. */
@@ -25,11 +37,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         aria-valuemin={0}
         aria-valuemax={max}
         aria-valuenow={clamped}
-        className={cn(styles.track, className)}
+        className={cn(progressTrackVariants(), className)}
         {...rest}
       >
         <div
-          className={cn(styles.fill, indeterminate && styles.indeterminate)}
+          className={cn(progressFillVariants({ indeterminate }))}
           style={indeterminate ? undefined : { width: `${(clamped! / max) * 100}%` }}
         />
       </div>

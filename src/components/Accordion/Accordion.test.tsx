@@ -54,4 +54,18 @@ describe('Accordion', () => {
 
     expect(screen.getByText('First').closest('details')).not.toHaveAttribute('name')
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(
+      <Accordion>
+        <Accordion.Item title="Shipping" className="bg-red-500">
+          Ships in 3-5 days.
+        </Accordion.Item>
+      </Accordion>,
+    )
+
+    const item = screen.getByText('Shipping').closest('details')
+    expect(item?.className).toContain('bg-red-500')
+    expect(item?.className).not.toContain('aero-accordion-item')
+  })
 })

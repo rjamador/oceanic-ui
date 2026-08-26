@@ -22,4 +22,12 @@ describe('IconButton', () => {
 
     expect(onClick).toHaveBeenCalledOnce()
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<IconButton icon={icon} aria-label="Close" variant="primary" className="bg-red-500" />)
+
+    const button = screen.getByRole('button', { name: 'Close' })
+    expect(button.className).toContain('bg-red-500')
+    expect(button.className).not.toContain('aero-icon-button-primary')
+  })
 })

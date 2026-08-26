@@ -2,8 +2,6 @@ import { forwardRef, type SVGAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Icon.module.css'
-
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
   size?: number | string
   strokeWidth?: number
@@ -37,7 +35,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(
         strokeLinejoin="round"
         role={hasLabel ? 'img' : undefined}
         aria-hidden={hasLabel ? undefined : true}
-        className={cn(styles.icon, className)}
+        className={cn('inline-flex flex-none', className)}
         {...rest}
       >
         {children}

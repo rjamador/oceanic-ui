@@ -10,11 +10,11 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { ChevronRightIcon } from '../Icon'
-import styles from './Accordion.module.css'
 
 interface AccordionContextValue {
   /** Shared `<details name>` — when set, only one item in the group can be
@@ -23,6 +23,9 @@ interface AccordionContextValue {
 }
 
 const AccordionContext = createContext<AccordionContextValue>({})
+
+const accordionRootVariants = cva('flex flex-col gap-2')
+const accordionItemVariants = cva('aero-accordion-item')
 
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
   /** When true, opening one item closes the others (native `<details name>` grouping). */
@@ -35,7 +38,7 @@ const AccordionRoot = forwardRef<HTMLDivElement, AccordionProps>(
 
     return (
       <AccordionContext.Provider value={{ name: exclusive ? generatedName : undefined }}>
-        <div ref={ref} className={cn(styles.root, className)} {...rest}>
+        <div ref={ref} className={cn(accordionRootVariants(), className)} {...rest}>
           {children}
         </div>
       </AccordionContext.Provider>
@@ -58,16 +61,19 @@ const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
         ref={ref}
         name={name}
         open={defaultOpen}
-        className={cn(styles.item, className)}
+        className={cn(accordionItemVariants(), className)}
         {...rest}
       >
-        <summary className={styles.summary}>
-          <span className={styles.chevron} aria-hidden="true">
-            <ChevronRightIcon />
+        <summary className="aero-accordion-summary">
+          <span
+            className="inline-flex flex-none text-[var(--text-muted)] transition-transform duration-150 ease-in-out [[open]_&]:rotate-90"
+            aria-hidden="true"
+          >
+            <ChevronRightIcon size={14} />
           </span>
           {title}
         </summary>
-        <div className={styles.content}>{children}</div>
+        <div className="px-4 pb-4 text-[var(--text-muted)] text-sm">{children}</div>
       </details>
     )
   },

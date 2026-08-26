@@ -68,4 +68,21 @@ describe('Tabs', () => {
     // controlled: panel does not change until the consumer feeds the new value back
     expect(screen.getByText('General panel')).toBeInTheDocument()
   })
+
+  it('lets a consumer className fully override the composed panel background', () => {
+    render(
+      <Tabs defaultValue="general">
+        <Tabs.List>
+          <Tabs.Tab value="general">General</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="general" className="bg-red-500">
+          General panel
+        </Tabs.Panel>
+      </Tabs>,
+    )
+
+    const panel = screen.getByRole('tabpanel')
+    expect(panel.className).toContain('bg-red-500')
+    expect(panel.className).not.toContain('aero-tabs-panel')
+  })
 })

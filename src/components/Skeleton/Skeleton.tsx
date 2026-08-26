@@ -1,10 +1,22 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Skeleton.module.css'
+const skeletonVariants = cva('aero-skeleton-base', {
+  variants: {
+    variant: {
+      text: 'aero-skeleton-radius-sm h-[1em]',
+      circular: 'rounded-full',
+      rectangular: 'aero-skeleton-radius-md',
+    },
+  },
+  defaultVariants: {
+    variant: 'text',
+  },
+})
 
-export type SkeletonVariant = 'text' | 'circular' | 'rectangular'
+export type SkeletonVariant = NonNullable<VariantProps<typeof skeletonVariants>['variant']>
 
 export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   variant?: SkeletonVariant
@@ -20,7 +32,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       <div
         ref={ref}
         aria-hidden="true"
-        className={cn(styles.skeleton, styles[variant], className)}
+        className={cn(skeletonVariants({ variant }), className)}
         style={dimensions}
         {...rest}
       />

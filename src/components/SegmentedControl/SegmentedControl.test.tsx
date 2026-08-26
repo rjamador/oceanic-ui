@@ -64,4 +64,12 @@ describe('SegmentedControl', () => {
     expect(onValueChange).toHaveBeenCalledWith('grid')
     expect(screen.getByRole('radio', { name: 'List' })).toBeChecked()
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<BasicSegmented className="bg-red-500" />)
+
+    const group = screen.getByRole('radiogroup')
+    expect(group.className).toContain('bg-red-500')
+    expect(group.className).not.toContain('aero-segmented-root')
+  })
 })

@@ -28,4 +28,12 @@ describe('Avatar', () => {
 
     expect(screen.getByTestId('avatar')).not.toHaveAttribute('role')
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<Avatar name="Ada Lovelace" className="bg-red-500" />)
+
+    const avatar = screen.getByRole('img', { name: 'Ada Lovelace' })
+    expect(avatar.className).toContain('bg-red-500')
+    expect(avatar.className).not.toContain('bg-[var(--control-secondary-mid)]')
+  })
 })

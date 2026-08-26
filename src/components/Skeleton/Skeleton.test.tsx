@@ -17,4 +17,12 @@ describe('Skeleton', () => {
     expect(el.style.width).toBe('120px')
     expect(el.style.height).toBe('16px')
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    const { container } = render(<Skeleton className="bg-red-500" />)
+
+    const el = container.firstChild as HTMLElement
+    expect(el.className).toContain('bg-red-500')
+    expect(el.className).not.toContain('aero-skeleton-base')
+  })
 })

@@ -13,11 +13,10 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { useControllableState } from '@/hooks/useControllableState'
 import { cn } from '@/lib/cn'
-
-import styles from './Tabs.module.css'
 
 interface TabsContextValue {
   value: string
@@ -34,6 +33,24 @@ function useTabsContext(component: string) {
   }
   return context
 }
+
+const tabsRootVariants = cva('flex flex-col')
+const tabsListVariants = cva('flex gap-1 px-2 border-b border-[var(--glass-border-bottom)]')
+const tabsTabVariants = cva(
+  'aero-tabs-tab [font-family:var(--font-body)] text-sm font-medium',
+  {
+    variants: {
+      selected: {
+        true: 'aero-tabs-tab-selected',
+        false: '',
+      },
+    },
+    defaultVariants: {
+      selected: false,
+    },
+  },
+)
+const tabsPanelVariants = cva('aero-tabs-panel')
 
 export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string
@@ -52,7 +69,7 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsProps>(
 
     return (
       <TabsContext.Provider value={{ value: current, setValue: setCurrent, idBase }}>
-        <div ref={ref} className={cn(styles.root, className)} {...rest}>
+        <div ref={ref} className={cn(tabsRootVariants(), className)} {...rest}>
           {children}
         </div>
       </TabsContext.Provider>
@@ -65,7 +82,7 @@ export type TabsListProps = HTMLAttributes<HTMLDivElement>
 
 function TabsList({ className, children, ...rest }: TabsListProps) {
   return (
-    <div role="tablist" className={cn(styles.list, className)} {...rest}>
+    <div role="tablist" className={cn(tabsListVariants(), className)} {...rest}>
       {children}
     </div>
   )
@@ -111,7 +128,7 @@ const TabsTab = forwardRef<HTMLButtonElement, TabsTabProps>(
         aria-controls={`${ctx.idBase}-panel-${value}`}
         tabIndex={selected ? 0 : -1}
         disabled={disabled}
-        className={cn(styles.tab, selected && styles.tabSelected, className)}
+        className={cn(tabsTabVariants({ selected }), className)}
         onClick={() => ctx.setValue(value)}
         onKeyDown={handleKeyDown}
         {...rest}
@@ -139,7 +156,7 @@ const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
         id={`${ctx.idBase}-panel-${value}`}
         aria-labelledby={`${ctx.idBase}-tab-${value}`}
         tabIndex={0}
-        className={cn(styles.panel, className)}
+        className={cn(tabsPanelVariants(), className)}
         {...rest}
       >
         {children}
