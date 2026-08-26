@@ -54,7 +54,7 @@ function App() {
         overflow: 'hidden',
       }}
     >
-      {/* decorative bokeh orbs so the glass blur has something to catch */}
+      {/* decorative background orbs */}
       <div
         aria-hidden="true"
         style={{
@@ -153,11 +153,11 @@ function App() {
         <section style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
           <Card padding="lg" style={{ flex: '1 1 280px' }}>
             <Text variant="headingSmall" style={{ marginBottom: 'var(--space-2)' }}>
-              Glass panel
+              Ocean panel
             </Text>
             <Text variant="bodyMedium" color="muted" style={{ margin: '0 0 var(--space-4)' }}>
-              A frosted surface with a soft specular highlight across the top —
-              the same gloss language as the buttons, scaled up.
+              An opaque surface with the same cool near-white-to-blue
+              gradient language as the buttons, scaled up.
             </Text>
             <Button variant="primary" size="sm">
               Action

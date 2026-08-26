@@ -1,6 +1,6 @@
 /* Tailwind v4 theme layer for aero-ui.
  *
- * Composed multi-property visual effects (Vista Glass gradients, glass
+ * Composed multi-property visual effects (Ocean gradients, panel
  * surfaces) are defined here as custom @utility classes instead of long
  * arbitrary-value chains in component JSX. They reference the source
  * design tokens (src/styles/colors.css, spacing.css, typography.css)
@@ -12,7 +12,7 @@
  * with it.
  *
  * A full @theme color/radius/font palette (so consumers can write plain
- * utilities like `bg-sky-500` against the Vista palette) is deferred to
+ * utilities like `bg-sky-500` against the Ocean palette) is deferred to
  * the batch migration of the remaining components — it needs a renaming
  * strategy for the source tokens first, since aliasing `--radius-lg` to
  * `var(--radius-lg)` under the same name inside @theme is a
@@ -118,8 +118,8 @@
   }
 }
 
-/* Static specular highlight across the top — softer than Button's, this is
-   a large surface, not a control */
+/* Card's opaque panel surface — a large container, not a control, so it
+   gets the softer of the two panel-surface tones. */
 @utility aero-panel {
   position: relative;
   isolation: isolate;
@@ -199,8 +199,9 @@
   }
 }
 
-/* Toolbar-style: invisible until hovered, then a soft glass square fades in
-   behind the icon — the real Vista/Explorer toolbar button behavior. */
+/* Toolbar-style: invisible until hovered, then a soft square fades in
+   behind the icon — a toolbar-button reveal, Explorer-flavored but not
+   literally copied. */
 @utility aero-icon-button-ghost {
   background: transparent;
   color: var(--sky-700);
@@ -235,7 +236,7 @@
   }
 }
 
-/* Checkbox — recessed glass box, sibling-driven :checked/:focus-visible
+/* Checkbox — recessed opaque box, sibling-driven :checked/:focus-visible
    states (the input is visually hidden but occupies the same box, so
    `input:checked ~ &` targets this element from its sibling's state). */
 @utility aero-checkbox-box {
@@ -279,7 +280,7 @@
   }
 }
 
-/* Radio — recessed glass circle + inner dot, same sibling-state pattern as
+/* Radio — recessed opaque circle + inner dot, same sibling-state pattern as
    Checkbox */
 @utility aero-radio-box {
   position: absolute;
@@ -372,7 +373,7 @@
   }
 }
 
-/* Input — recessed glass field. The error utility only overrides
+/* Input — recessed opaque field. The error utility only overrides
    border-color/focus glow, layered on top of the base field via cva. */
 @utility aero-input-field {
   width: 100%;

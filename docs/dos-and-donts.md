@@ -11,8 +11,8 @@ A fast checklist for reviewing or building UI in this library. Read
 | Cool near-white → pale-blue gradients on controls | Saturated, fully-colored fills |
 | Dark text (`--text`) on every control, always | White text on a filled/colored button |
 | A thin, light 1px border (`--control-*-border`) | A dark, saturated ring border around a shape |
-| A soft blue glow on `hover`/`:focus-visible` only | A permanent decorative highlight/reflection sitting on the control |
-| An elliptical specular highlight — but only on `Card` (real glass) | The same reflection trick on buttons/icon controls (that's the orb look we rejected) |
+| A soft blue glow on `hover`/`:focus-visible` only | A permanent decorative highlight/reflection sitting on any control or panel (that's the orb look we rejected) |
+| Every panel/field surface fully opaque | A translucent/`backdrop-filter` surface (that's a Windows Aero Glass idiom, not Ocean) |
 | Distinguish raised controls (buttons) from recessed fields (inputs) via gradient direction | Style every control the same way regardless of whether it's an action or an entry field |
 | `var(--token)` for every color/spacing/radius value | A hardcoded hex, px, or rgba() literal in a component's Tailwind classes or a `theme.css` `@utility` |
 

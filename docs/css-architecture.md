@@ -27,8 +27,8 @@ padding zeroing) and base element styles (`body`, `h1`–`h3`).
 The single source of truth for every design token, as plain CSS custom
 properties on `:root`:
 
-- **`colors.css`** — the Vista Glass palette: the `--sky-*` scale, the aero
-  accent, glass-surface tints, the raised-control gradients
+- **`colors.css`** — the Ocean palette: the `--sky-*` scale, the aero
+  accent, panel-surface tints, the raised-control gradients
   (`--control-primary-*`/`--control-secondary-*`), recessed-surface tints
   for form fields, text colors, validation colors, and the page background
   gradient.
@@ -47,7 +47,7 @@ Components reference these tokens directly via `var(--token-name)` inside
 Where composed, multi-property visual effects live as Tailwind `@utility`
 classes — gradients, multi-layer `box-shadow`s, `backdrop-filter` blur, and
 their `:hover`/`:focus-visible`/`:disabled`/`:checked` states (e.g.
-`aero-btn-primary`, `aero-glass`, `aero-checkbox-box`). Each one:
+`aero-btn-primary`, `aero-panel`, `aero-checkbox-box`). Each one:
 
 - References the source tokens above directly via `var(...)`.
 - Behaves as a real Tailwind utility (same cascade layer/specificity), so
@@ -91,7 +91,7 @@ If you ever find a stray `.module.css` (there shouldn't be any left):
    class name in the `bg-color` array in `src/lib/cn.ts` — **but only if
    it's a standalone/swappable background** (mutually exclusive variants
    like `aero-btn-primary`/`-secondary`/`-ghost`, or a lone override target
-   like `aero-glass`). Don't register a structural base class that a `cva`
+   like `aero-panel`). Don't register a structural base class that a `cva`
    call always renders together with one of its own modifier classes (e.g.
    a "selected" state) — `tailwind-merge` treats same-group classes as
    mutually exclusive alternatives and will silently drop whichever one

@@ -129,12 +129,12 @@ export type XVariant = 'primary' | 'secondary' | 'ghost'
 export type XSize = 'sm' | 'md' | 'lg'
 ```
 
-- `primary` — the raised/recessed glass surface using `--control-primary-*`
+- `primary` — the raised/recessed panel surface using `--control-primary-*`
   tokens, the default action.
 - `secondary` — same shape using `--control-secondary-*` (neutral, no blue
   tint).
 - `ghost` — transparent until hover, then a soft wash appears
-  (`--glass-tint` for buttons, `--control-secondary-*` for
+  (`--hover-wash` for buttons, `--control-secondary-*` for
   `IconButton`'s toolbar-style reveal).
 
 Sizes are shared across the whole system — don't invent a new height

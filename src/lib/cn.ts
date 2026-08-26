@@ -1,8 +1,8 @@
 import { clsx, type ClassValue } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
 
-// Composed multi-property effects defined in src/styles/theme.css (Vista
-// Glass gradients, glass surfaces) act as a single class but set
+// Composed multi-property effects defined in src/styles/theme.css (Ocean
+// gradients, panel surfaces) act as a single class but set
 // background/background-color like a plain bg-* utility. Registering them
 // here lets a consumer's plain utility (e.g. bg-red-500) deterministically
 // win over them via tailwind-merge's conflict resolution, instead of

@@ -1,4 +1,4 @@
-/* Vista Glass — clear-sky blues + aqua glow. */
+/* Ocean — clear-sky blues + aqua glow. */
 :root {
   /* Sky — primary blue scale, light to deep */
   --sky-50: #eef8ff;
@@ -17,7 +17,7 @@
   --aero-accent-strong: #12b8c4;
   --aero-accent-glow: rgba(51, 214, 224, 0.55);
 
-  /* Glass surfaces */
+  /* Panel surfaces */
   --panel-surface: #f7fcff;
   --panel-surface-strong: #fbfdff;
   --hover-wash: rgba(200, 232, 255, 0.35);
@@ -27,9 +27,9 @@
     0 8px 24px rgba(13, 61, 120, 0.16),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
 
-  /* Control surfaces — authentic Vista dialog-button/field gradients.
-     Text stays dark on every one of these; Vista never used white-on-blue
-     filled buttons, the "default" affordance is a stronger tint + glow. */
+  /* Control surfaces — Ocean-style dialog-button/field gradients. Text
+     stays dark on every one of these; the "default" affordance is a
+     stronger tint + glow, not a white-on-blue filled button. */
   --control-primary-top: #eef6ff;
   --control-primary-mid: #cfe4fa;
   --control-primary-bottom: #b7d7f5;

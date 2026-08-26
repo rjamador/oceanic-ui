@@ -7,11 +7,11 @@ describe('Card', () => {
   it('renders its children', () => {
     render(
       <Card>
-        <p>Glass panel</p>
+        <p>Ocean panel</p>
       </Card>,
     )
 
-    expect(screen.getByText('Glass panel')).toBeInTheDocument()
+    expect(screen.getByText('Ocean panel')).toBeInTheDocument()
   })
 
   it('spreads extra props onto the root element', () => {
