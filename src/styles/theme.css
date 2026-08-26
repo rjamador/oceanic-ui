@@ -617,6 +617,13 @@
 /* Dialog */
 
 @utility aero-dialog-panel {
+  /* The native <dialog> centers itself via the browser's own UA
+     stylesheet using `margin: auto` on all four sides (combined with
+     `inset: 0` from `dialog:modal`) — Tailwind's preflight resets
+     margin to 0 on every element, which breaks that centering (the
+     dialog ends up pinned to the top-left instead). Restore it
+     explicitly rather than reimplementing centering by hand. */
+  margin: auto;
   padding: 0;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
