@@ -54,11 +54,6 @@
   --recessed-surface-strong: rgba(255, 255, 255, 0.75);
   --recessed-shadow: rgba(13, 61, 120, 0.12);
 
-  /* Card's glass sheen — the one place a specular highlight is correct
-     (real frosted glass), see docs/design-language.md */
-  --glass-sheen-strong: rgba(255, 255, 255, 0.55);
-  --glass-sheen-mid: rgba(255, 255, 255, 0.08);
-
   /* Text */
   --text: #0d3151;
   --text-muted: #4c6b89;

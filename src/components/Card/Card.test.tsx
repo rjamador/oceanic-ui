@@ -20,19 +20,11 @@ describe('Card', () => {
     expect(screen.getByTestId('card')).toBeInTheDocument()
   })
 
-  it('lets a consumer className fully override the composed glass background', () => {
+  it('lets a consumer className fully override the composed panel background', () => {
     render(<Card className="bg-red-500">content</Card>)
 
-    const card = screen.getByText('content').parentElement
-    expect(card?.className).toContain('bg-red-500')
-    expect(card?.className).not.toContain('aero-panel')
-  })
-
-  it('renders the sheen and content layers', () => {
-    render(<Card data-testid="card">content</Card>)
-
-    const card = screen.getByTestId('card')
-    expect(card.querySelector('[aria-hidden="true"]')).toBeInTheDocument()
-    expect(screen.getByText('content')).toBeInTheDocument()
+    const card = screen.getByText('content')
+    expect(card.className).toContain('bg-red-500')
+    expect(card.className).not.toContain('aero-panel')
   })
 })

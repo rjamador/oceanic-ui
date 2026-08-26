@@ -26,8 +26,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ padding = 'md', className, children, ...rest }, ref) => {
     return (
       <div ref={ref} className={cn(cardVariants({ padding }), className)} {...rest}>
-        <span className="aero-sheen" aria-hidden="true" />
-        <div className="relative z-[1]">{children}</div>
+        {children}
       </div>
     )
   },

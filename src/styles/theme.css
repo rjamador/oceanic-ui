@@ -131,19 +131,6 @@
   box-shadow: var(--panel-shadow);
 }
 
-@utility aero-sheen {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(
-    180deg,
-    var(--glass-sheen-strong) 0%,
-    var(--glass-sheen-mid) 30%,
-    transparent 50%
-  );
-  pointer-events: none;
-}
-
 
 /* IconButton — same raised-control chrome as Button, without the label
    gap/padding (icon-only, square footprint sized via cva). */
