@@ -1,4 +1,8 @@
-# oceanic-ui
+<p align="center">
+  <img src=".github/assets/logo.png" alt="" width="120">
+</p>
+
+<h1 align="center">oceanic-ui</h1>
 
 A React component library inspired by **Ocean** — the blue Metal Look and
 Feel theme from Java Swing, default since Java 5 (2004): cool near-white-
@@ -7,9 +11,12 @@ every surface fully opaque. See
 [`docs/design-language.md`](docs/design-language.md) for the full visual
 language.
 
-> **Status:** pre-release. The API is still settling and this isn't
-> published to npm yet — use it by cloning the repo for now. See
-> [Using it before it's on npm](#using-it-before-its-on-npm) below.
+> **Status:** pre-1.0 — the API is still settling, expect breaking
+> changes between minor versions until `1.0.0`.
+
+```bash
+npm install oceanic-ui
+```
 
 ## Why Tailwind
 
@@ -43,7 +50,7 @@ Pagination.
 Every component is documented and browsable in Storybook (see below), and
 [`docs/roadmap.md`](docs/roadmap.md) tracks what's built vs. planned.
 
-## Using it before it's on npm
+## Local development
 
 ```bash
 git clone https://github.com/rjamador/oceanic-ui.git
@@ -55,17 +62,9 @@ npm install
 - `npm run storybook` — browse every component in isolation, with controls
 - `npm test` — Vitest + Testing Library
 - `npm run build` — typecheck + production build of the demo app
+- `npm run build:lib` — the actual publishable library build (ESM, type
+  declarations, and a distributable `styles.css`)
 - `npm run lint` — ESLint
-
-The library build (ESM, with type declarations and a distributable
-`styles.css`) is ready — `npm run build:lib` produces it — but the
-package isn't published to npm yet. Until it is, install it directly
-from a local tarball or a Git dependency:
-
-```bash
-npm run build:lib && npm pack
-npm install /path/to/oceanic-ui-<version>.tgz   # in a consumer project
-```
 
 ## Contributing
 
