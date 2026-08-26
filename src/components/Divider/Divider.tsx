@@ -1,11 +1,23 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { Text } from '../Text'
-import styles from './Divider.module.css'
 
-export type DividerOrientation = 'horizontal' | 'vertical'
+const dividerVariants = cva('m-0 border-none bg-[var(--glass-border-bottom)]', {
+  variants: {
+    orientation: {
+      horizontal: 'h-px w-full',
+      vertical: 'w-px self-stretch',
+    },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
+  },
+})
+
+export type DividerOrientation = NonNullable<VariantProps<typeof dividerVariants>['orientation']>
 
 export interface DividerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   orientation?: DividerOrientation
@@ -21,14 +33,14 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
           ref={ref}
           role="separator"
           aria-orientation="horizontal"
-          className={cn(styles.withLabel, className)}
+          className={cn('flex items-center gap-3', className)}
           {...rest}
         >
-          <span className={styles.line} aria-hidden="true" />
+          <span className="h-px flex-1 bg-[var(--glass-border-bottom)]" aria-hidden="true" />
           <Text as="span" variant="labelSmall" color="muted">
             {label}
           </Text>
-          <span className={styles.line} aria-hidden="true" />
+          <span className="h-px flex-1 bg-[var(--glass-border-bottom)]" aria-hidden="true" />
         </div>
       )
     }
@@ -38,7 +50,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
         ref={ref}
         role="separator"
         aria-orientation={orientation}
-        className={cn(orientation === 'vertical' ? styles.vertical : styles.horizontal, className)}
+        className={cn(dividerVariants({ orientation }), className)}
         {...rest}
       />
     )
