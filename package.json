@@ -1,8 +1,23 @@
 {
   "name": "oceanic-ui",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,11 +33,11 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
     "tailwind-merge": "^3.6.0"
   },
   "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
@@ -44,6 +59,8 @@
     "eslint-plugin-storybook": "^10.5.10",
     "globals": "^17.11.0",
     "jsdom": "^30.0.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "storybook": "^10.5.10",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
