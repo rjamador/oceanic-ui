@@ -145,3 +145,107 @@
   );
   pointer-events: none;
 }
+
+/* IconButton — same raised-control chrome as Button, without the label
+   gap/padding (icon-only, square footprint sized via cva). */
+
+@utility aero-icon-button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@utility aero-icon-button-primary {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-primary-border);
+  box-shadow: inset 0 1px 0 var(--control-highlight);
+
+  &:hover:not(:disabled) {
+    border-color: var(--aero-accent-strong);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+@utility aero-icon-button-secondary {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-mid) 48%,
+    var(--control-secondary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-secondary-border);
+  box-shadow: inset 0 1px 0 var(--control-highlight-strong);
+
+  &:hover:not(:disabled) {
+    border-color: var(--sky-300);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 0 0 3px var(--control-hover-glow);
+  }
+}
+
+/* Toolbar-style: invisible until hovered, then a soft glass square fades in
+   behind the icon — the real Vista/Explorer toolbar button behavior. */
+@utility aero-icon-button-ghost {
+  background: transparent;
+  color: var(--sky-700);
+  border: 1px solid transparent;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(180deg, var(--control-secondary-top), var(--control-secondary-bottom));
+    border-color: var(--control-secondary-border);
+    box-shadow: inset 0 1px 0 var(--control-highlight-strong);
+  }
+}
+
+/* Spinner — rotating ring, slowed (not stopped) under reduced-motion since
+   an indeterminate loading indicator still needs to communicate progress. */
+
+@keyframes aero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility aero-spinner {
+  display: inline-block;
+  flex: none;
+  border-radius: 50%;
+  border: 2.5px solid var(--glass-border-bottom);
+  border-top-color: var(--sky-600);
+  animation: aero-spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 1.6s;
+  }
+}

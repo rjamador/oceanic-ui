@@ -1,11 +1,29 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './IconButton.module.css'
+const iconButtonVariants = cva('aero-icon-button-base', {
+  variants: {
+    variant: {
+      primary: 'aero-icon-button-primary',
+      secondary: 'aero-icon-button-secondary',
+      ghost: 'aero-icon-button-ghost',
+    },
+    size: {
+      sm: 'size-8 [&_svg]:size-4',
+      md: 'h-[38px] w-[38px] [&_svg]:h-[18px] [&_svg]:w-[18px]',
+      lg: 'h-[46px] w-[46px] [&_svg]:h-[22px] [&_svg]:w-[22px]',
+    },
+  },
+  defaultVariants: {
+    variant: 'ghost',
+    size: 'md',
+  },
+})
 
-export type IconButtonVariant = 'primary' | 'secondary' | 'ghost'
-export type IconButtonSize = 'sm' | 'md' | 'lg'
+export type IconButtonVariant = NonNullable<VariantProps<typeof iconButtonVariants>['variant']>
+export type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>
 
 export interface IconButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> {
@@ -21,10 +39,10 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <button
         ref={ref}
-        className={cn(styles.button, styles[variant], styles[size], className)}
+        className={cn(iconButtonVariants({ variant, size }), className)}
         {...rest}
       >
-        <span className={styles.icon}>{icon}</span>
+        <span className="inline-flex items-center justify-center">{icon}</span>
       </button>
     )
   },
