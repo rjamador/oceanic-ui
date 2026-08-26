@@ -1,9 +1,21 @@
 import { forwardRef, useId, type TextareaHTMLAttributes } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { Text } from '../Text'
-import styles from './Textarea.module.css'
+
+const fieldVariants = cva('aero-textarea-field', {
+  variants: {
+    invalid: {
+      true: 'aero-textarea-field-error',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    invalid: false,
+  },
+})
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
@@ -20,26 +32,33 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const describedBy = [helperId, errorId].filter(Boolean).join(' ') || undefined
 
     return (
-      <div className={styles.wrapper}>
+      <div className="flex w-full flex-col">
         {label && (
-          <Text as="label" variant="labelLarge" htmlFor={textareaId} className={styles.label}>
+          <Text as="label" variant="labelLarge" htmlFor={textareaId} className="block mb-2">
             {label}
           </Text>
         )}
         <textarea
           ref={ref}
           id={textareaId}
-          className={cn(styles.field, errorMessage && styles.fieldError, className)}
+          className={cn(fieldVariants({ invalid: Boolean(errorMessage) }), className)}
           aria-invalid={errorMessage ? true : undefined}
           aria-describedby={describedBy}
           {...rest}
         />
         {errorMessage ? (
-          <Text as="p" variant="labelSmall" color="danger" id={errorId} className={styles.helper} role="alert">
+          <Text
+            as="p"
+            variant="labelSmall"
+            color="danger"
+            id={errorId}
+            className="mt-2"
+            role="alert"
+          >
             {errorMessage}
           </Text>
         ) : helperText ? (
-          <Text as="p" variant="labelSmall" color="muted" id={helperId} className={styles.helper}>
+          <Text as="p" variant="labelSmall" color="muted" id={helperId} className="mt-2">
             {helperText}
           </Text>
         ) : null}

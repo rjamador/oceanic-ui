@@ -40,4 +40,12 @@ describe('Textarea', () => {
       screen.getByText('Max 200 characters.').id,
     )
   })
+
+  it('lets a consumer className fully override the composed field background', () => {
+    render(<Textarea label="Bio" className="bg-red-500" />)
+
+    const field = screen.getByLabelText('Bio')
+    expect(field.className).toContain('bg-red-500')
+    expect(field.className).not.toContain('aero-textarea-field')
+  })
 })
