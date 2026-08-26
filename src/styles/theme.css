@@ -173,3 +173,30 @@
 @utility aero-list-item-selected {
   background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
 }
+
+/* Pagination */
+
+@utility aero-pagination-page {
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not([aria-current='page']) {
+    background: var(--glass-tint);
+    color: var(--text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &[aria-current='page'] {
+    background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+    border-color: var(--control-primary-border);
+    color: var(--text);
+  }
+}

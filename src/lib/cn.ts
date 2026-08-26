@@ -19,6 +19,7 @@ const twMerge = extendTailwindMerge({
         'aero-list-root',
         'aero-list-item',
         'aero-list-item-selected',
+        'aero-pagination-page',
       ],
     },
   },
