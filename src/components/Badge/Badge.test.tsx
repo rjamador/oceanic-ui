@@ -15,4 +15,12 @@ describe('Badge', () => {
 
     expect(screen.getByTestId('badge')).toBeInTheDocument()
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<Badge className="bg-red-500">New</Badge>)
+
+    const badge = screen.getByText('New')
+    expect(badge.className).toContain('bg-red-500')
+    expect(badge.className).not.toContain('bg-[var(--control-secondary-mid)]')
+  })
 })
