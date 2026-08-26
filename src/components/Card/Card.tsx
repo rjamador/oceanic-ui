@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-const cardVariants = cva('aero-glass', {
+const cardVariants = cva('aero-panel', {
   variants: {
     padding: {
       sm: 'p-4',
@@ -26,8 +26,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ padding = 'md', className, children, ...rest }, ref) => {
     return (
       <div ref={ref} className={cn(cardVariants({ padding }), className)} {...rest}>
-        <span className="aero-sheen" aria-hidden="true" />
-        <div className="relative z-[1]">{children}</div>
+        {children}
       </div>
     )
   },

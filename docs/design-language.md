@@ -1,34 +1,38 @@
-# Design language — Vista Glass
+# Design language — Ocean
 
-`aero-ui` is **inspired by** Windows Vista/7 dialog chrome (2006–2009 era
-"Aero Glass") — it borrows that era's visual *grammar* (restrained
-rounding, cool near-white gradients, recessed vs. raised surfaces, a glow
-instead of a gloss), not the broader/looser "Frutiger Aero" umbrella and
-specifically **not** the saturated "Web 2.0 glossy orb" button style
-(think old Skype/badge icons). Those two related-but-different looks were
-both tried and rejected during this project's early iterations — see
+`aero-ui` is **inspired by** Ocean — the blue theme of Java Swing's Metal
+Look and Feel, the default cross-platform Java desktop look since Java 5
+(2004). It borrows that toolkit's visual *grammar* (restrained rounding,
+cool near-white-to-blue gradients, recessed vs. raised surfaces, a glow
+instead of gloss), not a pixel-accurate recreation, and specifically
+**not** the saturated "Web 2.0 glossy orb" button style (think old
+Skype/badge icons) or the wider "Frutiger Aero" aesthetic umbrella. Both
+were tried and rejected during this project's early iterations — see
 [Rejected directions](#rejected-directions) below for what to avoid and
 why.
 
-**This is not a pixel-accurate clone of Windows Vista.** The font stack
-(Baloo 2 / Sora / Space Mono) is nothing like Vista's actual Segoe UI, the
-color palette is an original invention rather than sampled from any real
-Windows theme file, and nothing here does true translucent
-desktop-composited glass. These are our own design decisions, inspired by
-that era but not a spec we're required to match exactly — judge any
-change against the principles below (or a reference screenshot), not
-against "how Vista really did it."
+**This is not a pixel-accurate clone of any real Swing L&F.** The font
+stack (Baloo 2 / Sora / Space Mono) has nothing to do with Java's default
+fonts, the color palette is an original invention rather than sampled
+from Ocean's actual `UIManager` values, and — unlike an earlier direction
+this project tried — nothing here does translucent/`backdrop-filter`
+glass panels: every surface is fully opaque, same as real Ocean. These
+are our own design decisions, inspired by that toolkit's language but not
+a spec required to match exactly — judge any change against the
+principles below (or a reference screenshot), not against "how Ocean
+really did it."
 
-## What "Vista-inspired" means here
+## What "Ocean-inspired" means here
 
 - **Restrained rounding.** Corners are modest (3–10px), never liquid pills.
-  A rounded-rect reads as a real OS control; a full pill reads as a mobile
-  app or a 2008 web badge.
+  A rounded-rect reads as a real desktop control; a full pill reads as a
+  mobile app or a 2008 web badge.
 - **Cool, near-white gradients.** Controls go from almost-white at the top
   to a pale blue at the bottom — never a saturated, fully-colored fill.
-- **Text is always dark.** Vista never put white text on a filled button.
-  The "default"/primary action is communicated through a *stronger blue
-  tint + glow*, not through color-inversion or a solid brand-color fill.
+- **Text is always dark.** Ocean never put white text on a filled button
+  either. The "default"/primary action is communicated through a
+  *stronger blue tint + glow*, not through color-inversion or a solid
+  brand-color fill.
 - **Thin, light borders — not colored rings.** A 1px border in a pale
   blue-grey, not a dark saturated ring around the control.
 - **Glow, not gloss.** The only "shine" is a soft blue glow that appears on
@@ -40,13 +44,14 @@ against "how Vista really did it."
   fields (`Input`, `Select`, `Checkbox`, `Radio`) are *recessed* — an inset
   shadow carves them into the surface, the opposite gradient direction.
   Keep this distinction; it's how a user's eye tells "click me" from "type
-  here" apart at a glance — the same trick that era of OS chrome used, one
-  of the few things here that actually is a direct borrow rather than a
-  loose inspiration.
-- **Glass panels for containers.** `Card` uses `backdrop-filter: blur()`
-  with a soft white specular gradient across the top — this is the one
-  place a "reflection" motif is still correct, because it's mimicking
-  actual frosted window glass, not a candy-coated button.
+  here" apart at a glance — a real Swing/GUI-toolkit idiom, one of the few
+  things here that's a direct borrow rather than a loose inspiration.
+- **Every surface is opaque.** No `backdrop-filter`, no translucent panel
+  fill — `Card`, `Input`, `Textarea`, `Select`, `Dialog`, and `Toast` all
+  use a solid `--panel-surface`/`--panel-surface-strong`/
+  `--recessed-surface` background. An earlier direction for this library
+  used translucent "frosted glass" panels; that was dropped because it's
+  a Windows Aero Glass idiom that Ocean/Swing never had.
 
 ## Rejected directions
 
@@ -63,7 +68,7 @@ Two aesthetic branches were explored and explicitly turned down.
 
 To make something feel more prominent, reach for a **stronger glow or a
 slightly deeper gradient stop**, not a reflection or a dark ring — that's
-the line between "more Vista" and "back to the orb."
+the line between "more Ocean" and "back to the orb."
 
 ## Tokens
 
@@ -78,10 +83,10 @@ Tailwind classes or in a `theme.css` `@utility` block.
 | `--sky-50` … `--sky-900` | `#eef8ff` → `#0a2c57` | Blue scale — borders, hover states, ghost text |
 | `--aero-accent` / `--aero-accent-strong` | `#33d6e0` / `#12b8c4` | The focus/hover glow color |
 | `--aero-accent-glow` | `rgba(51,214,224,.55)` | Used directly in `box-shadow` for glow rings |
-| `--glass-white` / `--glass-white-strong` | `rgba(255,255,255,.55/.78)` | `Card` frosted surface |
-| `--glass-tint` | `rgba(200,232,255,.35)` | Ghost-button hover wash |
-| `--glass-border` / `--glass-border-bottom` | near-white / pale navy | `Card`'s top-lit border pair |
-| `--glass-shadow` | drop shadow + inset highlight | `Card`'s elevation |
+| `--panel-surface` / `--panel-surface-strong` | `#f7fcff` / `#fbfdff` | `Card`/`Dialog`/`Toast` opaque surface |
+| `--hover-wash` | `rgba(200,232,255,.35)` | Ghost-button/tab/list hover wash |
+| `--panel-border` / `--hairline` | near-white / pale navy | `Card`'s border pair; `--hairline` doubles as the general subtle-border/divider color used across most components |
+| `--panel-shadow` | drop shadow + inset highlight | `Card`'s elevation |
 | `--control-primary-top/mid/bottom/border` | `#eef6ff` → `#b7d7f5`, border `#9dc3ea` | `Button`/`IconButton` primary variant |
 | `--control-secondary-top/mid/bottom/border` | `#ffffff` → `#e4eaf1`, border `#c9d3dd` | `Button`/`IconButton` secondary variant |
 | `--text` / `--text-muted` | `#0d3151` / `#4c6b89` | Body text — always dark |

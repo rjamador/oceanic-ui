@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 
 import { Text } from '../Text'
 
-const dividerVariants = cva('m-0 border-none bg-[var(--glass-border-bottom)]', {
+const dividerVariants = cva('m-0 border-none bg-[var(--hairline)]', {
   variants: {
     orientation: {
       horizontal: 'h-px w-full',
@@ -36,11 +36,11 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
           className={cn('flex items-center gap-3', className)}
           {...rest}
         >
-          <span className="h-px flex-1 bg-[var(--glass-border-bottom)]" aria-hidden="true" />
+          <span className="h-px flex-1 bg-[var(--hairline)]" aria-hidden="true" />
           <Text as="span" variant="labelSmall" color="muted">
             {label}
           </Text>
-          <span className="h-px flex-1 bg-[var(--glass-border-bottom)]" aria-hidden="true" />
+          <span className="h-px flex-1 bg-[var(--hairline)]" aria-hidden="true" />
         </div>
       )
     }

@@ -1,4 +1,4 @@
-/* Vista Glass — clear-sky blues + aqua glow. */
+/* Ocean — clear-sky blues + aqua glow. */
 :root {
   /* Sky — primary blue scale, light to deep */
   --sky-50: #eef8ff;
@@ -17,19 +17,19 @@
   --aero-accent-strong: #12b8c4;
   --aero-accent-glow: rgba(51, 214, 224, 0.55);
 
-  /* Glass surfaces */
-  --glass-white: rgba(255, 255, 255, 0.55);
-  --glass-white-strong: rgba(255, 255, 255, 0.78);
-  --glass-tint: rgba(200, 232, 255, 0.35);
-  --glass-border: rgba(255, 255, 255, 0.8);
-  --glass-border-bottom: rgba(13, 61, 120, 0.18);
-  --glass-shadow:
+  /* Panel surfaces */
+  --panel-surface: #f7fcff;
+  --panel-surface-strong: #fbfdff;
+  --hover-wash: rgba(200, 232, 255, 0.35);
+  --panel-border: rgba(255, 255, 255, 0.8);
+  --hairline: rgba(13, 61, 120, 0.18);
+  --panel-shadow:
     0 8px 24px rgba(13, 61, 120, 0.16),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
 
-  /* Control surfaces — authentic Vista dialog-button/field gradients.
-     Text stays dark on every one of these; Vista never used white-on-blue
-     filled buttons, the "default" affordance is a stronger tint + glow. */
+  /* Control surfaces — Ocean-style dialog-button/field gradients. Text
+     stays dark on every one of these; the "default" affordance is a
+     stronger tint + glow, not a white-on-blue filled button. */
   --control-primary-top: #eef6ff;
   --control-primary-mid: #cfe4fa;
   --control-primary-bottom: #b7d7f5;
@@ -50,14 +50,9 @@
   --control-hover-glow: rgba(127, 196, 255, 0.35);
 
   /* Recessed surfaces — Input/Select field background, Checkbox/Radio box */
-  --recessed-surface: rgba(255, 255, 255, 0.65);
-  --recessed-surface-strong: rgba(255, 255, 255, 0.75);
+  --recessed-surface: #f9fdff;
+  --recessed-surface-strong: #fbfdff;
   --recessed-shadow: rgba(13, 61, 120, 0.12);
-
-  /* Card's glass sheen — the one place a specular highlight is correct
-     (real frosted glass), see docs/design-language.md */
-  --glass-sheen-strong: rgba(255, 255, 255, 0.55);
-  --glass-sheen-mid: rgba(255, 255, 255, 0.08);
 
   /* Text */
   --text: #0d3151;

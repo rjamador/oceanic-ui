@@ -31,10 +31,10 @@ export const WithContent: Story = {
     children: (
       <>
         <h2 style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-2)' }}>
-          Glass panel
+          Ocean panel
         </h2>
         <p style={{ color: 'var(--text-muted)', margin: '0 0 var(--space-4)' }}>
-          A frosted surface with a soft specular highlight across the top.
+          An opaque surface with a cool near-white-to-blue gradient.
         </p>
         <Button variant="primary" size="sm">
           Action

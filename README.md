@@ -1,75 +1,70 @@
-# React + TypeScript + Vite
+# aero-ui
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React component library inspired by **Ocean** — the blue Metal Look and
+Feel theme from Java Swing, default since Java 5 (2004): cool near-white-
+to-blue gradients, restrained rounding, a soft glow instead of gloss,
+every surface fully opaque. See
+[`docs/design-language.md`](docs/design-language.md) for the full visual
+language.
 
-Currently, two official plugins are available:
+> **Status:** pre-release. The API is still settling and this isn't
+> published to npm yet — use it by cloning the repo for now. See
+> [Using it before it's on npm](#using-it-before-its-on-npm) below.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Why Tailwind
 
-## React Compiler
+Every component is built with Tailwind CSS v4 utilities + `cva`, so if
+your app already uses Tailwind, you can override any component's styling
+with a plain `className` — conflicting utility classes replace the
+component's own deterministically (via a configured `tailwind-merge`),
+not just pile on top of it. See
+[`docs/css-architecture.md`](docs/css-architecture.md) for how that's
+wired, and [`docs/creating-components.md`](docs/creating-components.md)
+for the pattern if you're adding a component.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+`tailwindcss` (`^4.0.0`) is a required peer dependency.
 
-## Expanding the ESLint configuration
+## Components
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Button, IconButton, Card, Input, Textarea, Checkbox, Radio, Switch,
+Select, Dialog, Tabs, Accordion, Tooltip, Toast, Progress, Slider, Badge,
+Text, Icon, Spinner, Divider, SegmentedControl, List, Skeleton, Avatar,
+Pagination.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Every component is documented and browsable in Storybook (see below), and
+[`docs/roadmap.md`](docs/roadmap.md) tracks what's built vs. planned.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Using it before it's on npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/rjamador/aero-ui.git
+cd aero-ui
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- `npm run dev` — the local demo app (`src/App.tsx`)
+- `npm run storybook` — browse every component in isolation, with controls
+- `npm test` — Vitest + Testing Library
+- `npm run build` — typecheck + production build of the demo app
+- `npm run lint` — ESLint
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To use a component in another local project today, import it directly
+from this repo's `src/` (e.g. via a workspace/`file:` dependency) — proper
+`npm install aero-ui` support (a library build, type declarations, and a
+published package) isn't set up yet.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Contributing
 
-```
+Read these three before touching a component:
+
+- [`docs/design-language.md`](docs/design-language.md) — the visual
+  language and why it looks the way it does.
+- [`docs/dos-and-donts.md`](docs/dos-and-donts.md) — a fast do/don't
+  checklist for reviewing or building UI here.
+- [`docs/creating-components.md`](docs/creating-components.md) — folder
+  shape, styling pattern, naming, and the checklist every new component
+  should satisfy.
+
+## License
+
+[MIT](LICENSE)
