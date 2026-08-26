@@ -24,6 +24,19 @@ for the pattern if you're adding a component.
 
 `tailwindcss` (`^4.0.0`) is a required peer dependency.
 
+```css
+@import "tailwindcss";
+@import "oceanic-ui/styles.css";
+@source "../node_modules/oceanic-ui/dist";
+```
+
+That `@source` line matters — Tailwind v4 only generates CSS for classes
+it detects in use, and it doesn't scan `node_modules` by default. Every
+component's class names live inside `oceanic-ui`'s compiled bundle, so
+without pointing `@source` at it, buttons/cards/etc. render completely
+unstyled (a real failure mode, not a hypothetical — it's how this exact
+line got added).
+
 ## Components
 
 Button, IconButton, Card, Input, Textarea, Checkbox, Radio, Switch,
@@ -48,10 +61,15 @@ npm install
 - `npm run build` — typecheck + production build of the demo app
 - `npm run lint` — ESLint
 
-To use a component in another local project today, import it directly
-from this repo's `src/` (e.g. via a workspace/`file:` dependency) — proper
-`npm install oceanic-ui` support (a library build, type declarations, and a
-published package) isn't set up yet.
+The library build (ESM, with type declarations and a distributable
+`styles.css`) is ready — `npm run build:lib` produces it — but the
+package isn't published to npm yet. Until it is, install it directly
+from a local tarball or a Git dependency:
+
+```bash
+npm run build:lib && npm pack
+npm install /path/to/oceanic-ui-<version>.tgz   # in a consumer project
+```
 
 ## Contributing
 
