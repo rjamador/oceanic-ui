@@ -14,7 +14,7 @@ A fast checklist for reviewing or building UI in this library. Read
 | A soft blue glow on `hover`/`:focus-visible` only | A permanent decorative highlight/reflection sitting on the control |
 | An elliptical specular highlight — but only on `Card` (real glass) | The same reflection trick on buttons/icon controls (that's the orb look we rejected) |
 | Distinguish raised controls (buttons) from recessed fields (inputs) via gradient direction | Style every control the same way regardless of whether it's an action or an entry field |
-| `var(--token)` for every color/spacing/radius value | A hardcoded hex, px, or rgba() literal in a `.module.css` |
+| `var(--token)` for every color/spacing/radius value | A hardcoded hex, px, or rgba() literal in a component's Tailwind classes or a `theme.css` `@utility` |
 
 ## Markup & accessibility
 

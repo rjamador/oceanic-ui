@@ -69,7 +69,7 @@ the line between "more Vista" and "back to the orb."
 
 All tokens live in `src/styles/`, one file per concern, and are consumed
 as `var(--token)` — never hardcode a hex/px value in a component's
-`*.module.css`.
+Tailwind classes or in a `theme.css` `@utility` block.
 
 ### `colors.css`
 

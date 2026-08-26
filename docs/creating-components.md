@@ -11,12 +11,20 @@ Every component gets its own folder under `src/components/`:
 
 ```
 src/components/<Name>/
-  <Name>.tsx          the component
-  <Name>.module.css    scoped styles (CSS Modules — no Tailwind, no CSS-in-JS)
+  <Name>.tsx          the component — styled with Tailwind utilities + cva
   <Name>.test.tsx      Vitest + Testing Library
   <Name>.stories.tsx   Storybook story
   index.ts             barrel — exports ONLY the public surface
 ```
+
+No `.module.css` — styling lives inline as Tailwind utility classes,
+composed with `class-variance-authority` (`cva`) for variants. Any
+composed multi-property effect (a gradient, a layered `box-shadow`, a
+`backdrop-filter` blur, a pseudo-state chain) that doesn't map to a single
+Tailwind utility goes in `src/styles/theme.css` as a custom `@utility`
+class instead — see `docs/css-architecture.md` for the full pattern and
+`src/components/Button/Button.tsx`/`Card/Card.tsx` for the reference
+shape.
 
 Then add one line to `src/index.ts`, the library's public entry point:
 
@@ -61,7 +69,7 @@ file per part:
 |---|---|
 | Component folder/files | `PascalCase` (`IconButton/IconButton.tsx`) |
 | Everything else (hooks, utils, lib) | `camelCase` — never kebab-case |
-| CSS Module class names | `camelCase` (`styles.fieldError`) |
+| `theme.css` `@utility` classes | `kebab-case`, prefixed `aero-<component>-<part>` (`aero-btn-primary`, `aero-checkbox-box`) |
 | Exported types | `<Name>Props`, `<Name>Variant`, `<Name>Size` |
 
 ## Component API checklist
@@ -71,7 +79,11 @@ Copy this when starting a new component:
 - [ ] `forwardRef` to the real DOM element a consumer would want to
       measure or focus (the `<button>`, the `<input>`, the root `<div>`).
 - [ ] Accepts `className` and merges it via the local `cn()` helper
-      (`src/lib/cn.ts`) — `cn(styles.root, styles[variant], className)`.
+      (`src/lib/cn.ts`) — `cn(xVariants({ variant, size }), className)`,
+      where `xVariants` is a `cva()` call. `cn()` runs a configured
+      `tailwind-merge`, so a consumer's conflicting utility class
+      deterministically replaces the component's own — that's the whole
+      point of using Tailwind here, see `docs/css-architecture.md`.
 - [ ] Extends the matching native HTML attributes interface
       (`ButtonHTMLAttributes<HTMLButtonElement>`,
       `InputHTMLAttributes<HTMLInputElement>`, …) and spreads `...rest`
@@ -91,10 +103,18 @@ Copy this when starting a new component:
       enforced **at the type level**
       (`Omit<..., 'aria-label'> & { 'aria-label': string }`), not just a
       runtime check. Follow that pattern for any future icon-only control.
-- [ ] Uses only `var(--token)` references in its `.module.css` — no
-      hardcoded hex, px radius, or spacing value. If the token you need
-      doesn't exist yet, add it to the matching file in `src/styles/`
-      first (don't invent a one-off local value).
+- [ ] Uses only `var(--token)` references (in Tailwind arbitrary values or
+      in a `theme.css` `@utility` block) — no hardcoded hex, px radius, or
+      spacing value, *except* where Tailwind's own default scale already
+      matches a token exactly (e.g. `p-4` for `--space-4`, both 16px) and
+      a plain utility is clearer than an arbitrary-value one. If the token
+      you need doesn't exist yet, add it to the matching file in
+      `src/styles/` first (don't invent a one-off local value). If a new
+      `theme.css` `@utility` sets `background`/`background-color`,
+      register it in `src/lib/cn.ts`'s `bg-color` group — but only if it's
+      a standalone/swappable background, never a base class that's always
+      combined with one of its own modifier classes (see
+      `docs/css-architecture.md` for why).
 - [ ] Controlled/uncontrolled: if the component has state a consumer
       might want to own (checked, value, open), support both — don't
       force one.
