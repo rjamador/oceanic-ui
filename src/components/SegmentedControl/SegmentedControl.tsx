@@ -4,11 +4,27 @@
    per component folder rather than scattering the shared context across
    files. */
 import { createContext, useContext, useId, type HTMLAttributes, type ReactNode } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { useControllableState } from '@/hooks/useControllableState'
 import { cn } from '@/lib/cn'
 
-import styles from './SegmentedControl.module.css'
+const optionVariants = cva('aero-segmented-option inline-flex items-center text-sm font-medium', {
+  variants: {
+    selected: {
+      true: 'aero-segmented-option-selected',
+      false: '',
+    },
+    disabled: {
+      true: 'cursor-not-allowed opacity-50',
+      false: 'cursor-pointer',
+    },
+  },
+  defaultVariants: {
+    selected: false,
+    disabled: false,
+  },
+})
 
 interface SegmentedContextValue {
   name: string
@@ -45,7 +61,11 @@ function SegmentedControlRoot({
 
   return (
     <SegmentedContext.Provider value={{ name, value: current, setValue: setCurrent }}>
-      <div role="radiogroup" className={cn(styles.root, className)} {...rest}>
+      <div
+        role="radiogroup"
+        className={cn('aero-segmented-root inline-flex overflow-hidden', className)}
+        {...rest}
+      >
         {children}
       </div>
     </SegmentedContext.Provider>
@@ -63,9 +83,7 @@ function SegmentedControlOption({ value, children, disabled }: SegmentedControlO
   const selected = ctx.value === value
 
   return (
-    <label
-      className={cn(styles.option, selected && styles.optionSelected, disabled && styles.optionDisabled)}
-    >
+    <label className={optionVariants({ selected, disabled })}>
       <input
         type="radio"
         name={ctx.name}
@@ -73,7 +91,7 @@ function SegmentedControlOption({ value, children, disabled }: SegmentedControlO
         checked={selected}
         disabled={disabled}
         onChange={() => ctx.setValue(value)}
-        className={styles.input}
+        className={cn('absolute inset-0 m-0 opacity-0', disabled ? 'cursor-not-allowed' : 'cursor-pointer')}
       />
       {children}
     </label>
