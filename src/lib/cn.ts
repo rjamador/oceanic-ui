@@ -24,6 +24,7 @@ const twMerge = extendTailwindMerge({
         'aero-segmented-option',
         'aero-segmented-option-selected',
         'aero-skeleton-base',
+        'aero-slider',
       ],
     },
   },
