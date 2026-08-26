@@ -1,10 +1,22 @@
 import { forwardRef, type HTMLAttributes } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Card.module.css'
+const cardVariants = cva('aero-glass', {
+  variants: {
+    padding: {
+      sm: 'p-4',
+      md: 'p-6',
+      lg: 'p-8',
+    },
+  },
+  defaultVariants: {
+    padding: 'md',
+  },
+})
 
-export type CardPadding = 'sm' | 'md' | 'lg'
+export type CardPadding = NonNullable<VariantProps<typeof cardVariants>['padding']>
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   padding?: CardPadding
@@ -13,9 +25,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ padding = 'md', className, children, ...rest }, ref) => {
     return (
-      <div ref={ref} className={cn(styles.card, styles[padding], className)} {...rest}>
-        <span className={styles.sheen} aria-hidden="true" />
-        <div className={styles.content}>{children}</div>
+      <div ref={ref} className={cn(cardVariants({ padding }), className)} {...rest}>
+        <span className="aero-sheen" aria-hidden="true" />
+        <div className="relative z-[1]">{children}</div>
       </div>
     )
   },

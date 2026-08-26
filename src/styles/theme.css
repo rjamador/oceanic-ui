@@ -117,3 +117,31 @@
     border-color: var(--glass-border-bottom);
   }
 }
+
+/* Static specular highlight across the top — softer than Button's, this is
+   a large surface, not a control */
+@utility aero-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--glass-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-bottom-color: var(--glass-border-bottom);
+  box-shadow: var(--glass-shadow);
+}
+
+@utility aero-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    var(--glass-sheen-strong) 0%,
+    var(--glass-sheen-mid) 30%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
