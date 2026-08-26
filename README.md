@@ -27,15 +27,11 @@ for the pattern if you're adding a component.
 ```css
 @import "tailwindcss";
 @import "oceanic-ui/styles.css";
-@source "../node_modules/oceanic-ui/dist";
 ```
 
-That `@source` line matters — Tailwind v4 only generates CSS for classes
-it detects in use, and it doesn't scan `node_modules` by default. Every
-component's class names live inside `oceanic-ui`'s compiled bundle, so
-without pointing `@source` at it, buttons/cards/etc. render completely
-unstyled (a real failure mode, not a hypothetical — it's how this exact
-line got added).
+`dist/styles.css` ships pre-compiled — every class the components use is
+already generated as real CSS, so unlike a source-only Tailwind plugin,
+nothing needs to scan `oceanic-ui`'s `node_modules` for class names.
 
 ## Components
 
