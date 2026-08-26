@@ -37,8 +37,12 @@ export default defineConfig({
     rollupOptions: {
       // Externalize every bare import (react, react-dom, clsx, ...) —
       // only relative/absolute imports (our own source files) get
-      // bundled into the library output.
-      external: (id) => !id.startsWith('.') && !path.isAbsolute(id),
+      // bundled into the library output. Rollup's `external` check runs
+      // on the import specifier as written, BEFORE the `@` alias below
+      // resolves it to a real path — so `@/lib/cn` looks like a bare
+      // specifier here and must be excluded explicitly, or it gets
+      // treated as an external package instead of being bundled.
+      external: (id) => !id.startsWith('.') && !id.startsWith('@/') && !path.isAbsolute(id),
     },
   },
 })
