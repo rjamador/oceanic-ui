@@ -1,6 +1,6 @@
 # Design language — Ocean
 
-`aero-ui` is **inspired by** Ocean — the blue theme of Java Swing's Metal
+`oceanic-ui` is **inspired by** Ocean — the blue theme of Java Swing's Metal
 Look and Feel, the default cross-platform Java desktop look since Java 5
 (2004). It borrows that toolkit's visual *grammar* (restrained rounding,
 cool near-white-to-blue gradients, recessed vs. raised surfaces, a glow

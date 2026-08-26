@@ -97,7 +97,7 @@ function App() {
           variant="displayLarge"
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}
         >
-          aero-ui <Badge variant="accent">Beta</Badge>
+          oceanic-ui <Badge variant="accent">Beta</Badge>
         </Text>
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
