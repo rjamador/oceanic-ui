@@ -3,7 +3,7 @@
 @import './styles/typography.css';
 @import './styles/layers.css';
 @import 'tailwindcss';
-/* @import './styles/theme.css'; -- added in Task 3 */
+@import './styles/theme.css';
 
 *,
 *::before,
