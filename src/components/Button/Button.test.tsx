@@ -44,4 +44,19 @@ describe('Button', () => {
 
     expect(node).toBeInstanceOf(HTMLButtonElement)
   })
+
+  it('lets a consumer className fully override the composed variant background', () => {
+    render(<Button className="bg-red-500">Save</Button>)
+
+    const button = screen.getByRole('button', { name: 'Save' })
+    expect(button.className).toContain('bg-red-500')
+    expect(button.className).not.toContain('aero-btn-primary')
+  })
+
+  it('keeps the base layout/chrome class alongside a consumer override', () => {
+    render(<Button className="bg-red-500">Save</Button>)
+
+    const button = screen.getByRole('button', { name: 'Save' })
+    expect(button.className).toContain('aero-btn-base')
+  })
 })
