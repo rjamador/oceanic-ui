@@ -31,4 +31,16 @@ describe('Select', () => {
     expect(select).toHaveAttribute('aria-invalid', 'true')
     expect(screen.getByRole('alert')).toHaveTextContent('Pick a country.')
   })
+
+  it('lets a consumer className fully override the composed field background', () => {
+    render(
+      <Select label="Country" className="bg-red-500">
+        <option value="ar">Argentina</option>
+      </Select>,
+    )
+
+    const select = screen.getByLabelText('Country')
+    expect(select.className).toContain('bg-red-500')
+    expect(select.className).not.toContain('aero-select-field')
+  })
 })
