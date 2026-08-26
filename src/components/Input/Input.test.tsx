@@ -40,4 +40,12 @@ describe('Input', () => {
       screen.getByText("We'll never share your email.").id,
     )
   })
+
+  it('lets a consumer className fully override the composed field background', () => {
+    render(<Input label="Email" className="bg-red-500" />)
+
+    const field = screen.getByLabelText('Email')
+    expect(field.className).toContain('bg-red-500')
+    expect(field.className).not.toContain('aero-input-field')
+  })
 })
