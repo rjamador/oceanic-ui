@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn'
 import { UserIcon } from '../Icon'
 
 const avatarVariants = cva(
-  'relative inline-flex flex-none items-center justify-center overflow-hidden rounded-full border border-[var(--glass-border-bottom)] bg-[var(--control-secondary-mid)] text-[var(--text-muted)]',
+  'relative inline-flex flex-none items-center justify-center overflow-hidden rounded-full border border-[var(--hairline)] bg-[var(--control-secondary-mid)] text-[var(--text-muted)]',
   {
     variants: {
       size: {

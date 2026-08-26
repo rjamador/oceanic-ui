@@ -20,9 +20,9 @@
   /* Glass surfaces */
   --glass-white: rgba(255, 255, 255, 0.55);
   --glass-white-strong: rgba(255, 255, 255, 0.78);
-  --glass-tint: rgba(200, 232, 255, 0.35);
+  --hover-wash: rgba(200, 232, 255, 0.35);
   --glass-border: rgba(255, 255, 255, 0.8);
-  --glass-border-bottom: rgba(13, 61, 120, 0.18);
+  --hairline: rgba(13, 61, 120, 0.18);
   --glass-shadow:
     0 8px 24px rgba(13, 61, 120, 0.16),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;

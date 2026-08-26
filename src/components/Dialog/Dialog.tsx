@@ -59,7 +59,7 @@ export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
         aria-labelledby={title ? titleId : undefined}
       >
         {title && (
-          <div className="flex items-center justify-between gap-4 pt-5 pr-4 pb-4 pl-5 border-b border-[var(--glass-border-bottom)]">
+          <div className="flex items-center justify-between gap-4 pt-5 pr-4 pb-4 pl-5 border-b border-[var(--hairline)]">
             <Text as="h2" variant="headingSmall" id={titleId} className="m-0">
               {title}
             </Text>

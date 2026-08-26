@@ -113,8 +113,8 @@
   border: 1px solid transparent;
 
   &:hover:not(:disabled) {
-    background: var(--glass-tint);
-    border-color: var(--glass-border-bottom);
+    background: var(--hover-wash);
+    border-color: var(--hairline);
   }
 }
 
@@ -129,7 +129,7 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-bottom-color: var(--glass-border-bottom);
+  border-bottom-color: var(--hairline);
   box-shadow: var(--glass-shadow);
 }
 
@@ -242,7 +242,7 @@
   display: inline-block;
   flex: none;
   border-radius: 50%;
-  border: 2.5px solid var(--glass-border-bottom);
+  border: 2.5px solid var(--hairline);
   border-top-color: var(--sky-600);
   animation: aero-spin 0.8s linear infinite;
 
@@ -262,7 +262,7 @@
   justify-content: center;
   border-radius: var(--radius-sm);
   background: var(--recessed-surface-strong);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   box-shadow:
     inset 0 1px 3px var(--recessed-shadow),
     inset 0 1px 0 var(--control-highlight-soft);
@@ -305,7 +305,7 @@
   justify-content: center;
   border-radius: var(--radius-full);
   background: var(--recessed-surface-strong);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   box-shadow:
     inset 0 1px 3px var(--recessed-shadow),
     inset 0 1px 0 var(--control-highlight-soft);
@@ -354,7 +354,7 @@
   width: 40px;
   height: 22px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--recessed-surface);
   box-shadow: inset 0 1px 3px var(--recessed-shadow);
   transition: box-shadow 0.15s ease;
@@ -393,7 +393,7 @@
 @utility aero-input-field {
   width: 100%;
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--recessed-surface);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -446,7 +446,7 @@
   min-height: 88px;
   resize: vertical;
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--recessed-surface);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -502,7 +502,7 @@
   appearance: none;
   -webkit-appearance: none;
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--recessed-surface);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -549,7 +549,7 @@
 
 @utility aero-accordion-item {
   overflow: hidden;
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
   background: var(--control-secondary-top);
 }
@@ -572,7 +572,7 @@
   }
 
   &:hover {
-    background: var(--glass-tint);
+    background: var(--hover-wash);
   }
 
   &:focus-visible {
@@ -600,7 +600,7 @@
 
   &:hover:not(:disabled) {
     color: var(--text);
-    background: var(--glass-tint);
+    background: var(--hover-wash);
   }
 
   &:focus-visible {
@@ -617,13 +617,13 @@
 @utility aero-tabs-tab-selected {
   color: var(--text);
   background: var(--control-secondary-top);
-  border-color: var(--glass-border-bottom);
+  border-color: var(--hairline);
   border-bottom-color: var(--control-secondary-top);
 }
 
 @utility aero-tabs-panel {
   padding: var(--space-5);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   border-top: none;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   background: var(--control-secondary-top);
@@ -639,7 +639,7 @@
 
 @utility aero-dialog-panel {
   padding: 0;
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   background: var(--glass-white-strong);
   backdrop-filter: blur(20px);
@@ -724,7 +724,7 @@
 /* Toast */
 
 @utility aero-toast-surface {
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
   background: var(--glass-white-strong);
   backdrop-filter: blur(16px);
@@ -759,7 +759,7 @@
   height: 10px;
   overflow: hidden;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--recessed-surface);
   box-shadow: inset 0 1px 3px var(--recessed-shadow);
 }
@@ -804,7 +804,7 @@
 
 @utility aero-list-root {
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--control-secondary-top);
 }
 
@@ -816,7 +816,7 @@
   transition: background 0.15s ease;
 
   &:hover:not([aria-selected='true']):not([aria-disabled='true']) {
-    background: var(--glass-tint);
+    background: var(--hover-wash);
   }
 
   &:focus-visible {
@@ -839,7 +839,7 @@
     color 0.15s ease;
 
   &:hover:not([aria-current='page']) {
-    background: var(--glass-tint);
+    background: var(--hover-wash);
     color: var(--text);
   }
 
@@ -859,7 +859,7 @@
 
 @utility aero-segmented-root {
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
   background: var(--control-secondary-top);
 }
 
@@ -873,11 +873,11 @@
     color 0.15s ease;
 
   &:not(:last-child) {
-    border-right: 1px solid var(--glass-border-bottom);
+    border-right: 1px solid var(--hairline);
   }
 
   &:hover:not(:has(input:checked)):not(:has(input:disabled)) {
-    background: var(--glass-tint);
+    background: var(--hover-wash);
     color: var(--text);
   }
 
@@ -908,7 +908,7 @@
   position: relative;
   overflow: hidden;
   background: var(--control-secondary-bottom);
-  border: 1px solid var(--glass-border-bottom);
+  border: 1px solid var(--hairline);
 
   &::after {
     content: '';
@@ -949,7 +949,7 @@
   &::-webkit-slider-runnable-track {
     height: 8px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--glass-border-bottom);
+    border: 1px solid var(--hairline);
     background: var(--recessed-surface);
     box-shadow: inset 0 1px 3px var(--recessed-shadow);
   }
@@ -957,7 +957,7 @@
   &::-moz-range-track {
     height: 8px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--glass-border-bottom);
+    border: 1px solid var(--hairline);
     background: var(--recessed-surface);
     box-shadow: inset 0 1px 3px var(--recessed-shadow);
   }
