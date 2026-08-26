@@ -1,10 +1,26 @@
 import { cloneElement, forwardRef, useId, type ReactElement, type ReactNode } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-import styles from './Tooltip.module.css'
-
 export type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
+
+const tooltipVariants = cva(
+  'absolute z-[var(--z-popover)] px-3 py-2 rounded-[var(--radius-sm)] bg-[var(--text)] text-[var(--text-on-accent)] font-[var(--font-body)] text-xs font-medium whitespace-nowrap shadow-[var(--glass-shadow)] opacity-0 invisible pointer-events-none transition-opacity duration-[120ms] motion-reduce:transition-none group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible',
+  {
+    variants: {
+      side: {
+        top: 'aero-tooltip-top',
+        bottom: 'aero-tooltip-bottom',
+        left: 'aero-tooltip-left',
+        right: 'aero-tooltip-right',
+      },
+    },
+    defaultVariants: {
+      side: 'top',
+    },
+  },
+)
 
 export interface TooltipProps {
   content: ReactNode
@@ -20,9 +36,9 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
     const id = useId()
 
     return (
-      <span ref={ref} className={styles.wrapper}>
+      <span ref={ref} className="group relative inline-flex">
         {cloneElement(children, { 'aria-describedby': id })}
-        <span role="tooltip" id={id} className={cn(styles.tooltip, styles[side])}>
+        <span role="tooltip" id={id} className={cn(tooltipVariants({ side }))}>
           {content}
         </span>
       </span>

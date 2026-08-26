@@ -6,13 +6,13 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { CloseIcon } from '../Icon'
 import { IconButton } from '../IconButton'
 import { Text } from '../Text'
-import styles from './Toast.module.css'
 
 export type ToastVariant = 'default' | 'danger'
 
@@ -34,6 +34,21 @@ interface ToastContextValue {
 }
 
 const ToastContext = createContext<ToastContextValue | null>(null)
+
+const toastVariants = cva(
+  'aero-toast-surface flex items-start gap-2 pt-3 pr-3 pb-3 pl-4',
+  {
+    variants: {
+      variant: {
+        default: '',
+        danger: 'aero-toast-danger',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+)
 
 /** Must be called inside a <ToastProvider>. Returns a function that queues a toast. */
 export function useToast() {
@@ -65,26 +80,25 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ toast }}>
       {children}
       {createPortal(
-        <div className={styles.viewport} role="region" aria-label="Notifications">
+        <div
+          className="fixed bottom-6 right-6 z-[var(--z-toast)] flex flex-col gap-2 w-[min(360px,calc(100vw_-_var(--space-8)))]"
+          role="region"
+          aria-label="Notifications"
+        >
           {toasts.map((item) => (
-            <div
-              key={item.id}
-              role="status"
-              aria-live="polite"
-              className={cn(styles.toast, item.variant === 'danger' && styles.danger)}
-            >
-              <div className={styles.content}>
+            <div key={item.id} role="status" aria-live="polite" className={cn(toastVariants({ variant: item.variant }))}>
+              <div className="flex-1 min-w-0">
                 {item.title && (
                   <Text
                     as="p"
                     variant="labelLarge"
                     color={item.variant === 'danger' ? 'danger' : 'default'}
-                    className={styles.title}
+                    className="mt-0 mr-0 mb-1 ml-0"
                   >
                     {item.title}
                   </Text>
                 )}
-                <Text as="p" variant="bodySmall" color="muted" className={styles.description}>
+                <Text as="p" variant="bodySmall" color="muted" className="m-0">
                   {item.description}
                 </Text>
               </div>

@@ -33,4 +33,12 @@ describe('Progress', () => {
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuemax', '10')
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '5')
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<Progress value={40} label="Copying files" className="bg-red-500" />)
+
+    const bar = screen.getByRole('progressbar', { name: 'Copying files' })
+    expect(bar.className).toContain('bg-red-500')
+    expect(bar.className).not.toContain('aero-progress-track')
+  })
 })

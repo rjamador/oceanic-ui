@@ -1,11 +1,13 @@
 import { forwardRef, useEffect, useId, useRef, type ReactNode } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
 import { CloseIcon } from '../Icon'
 import { IconButton } from '../IconButton'
 import { Text } from '../Text'
-import styles from './Dialog.module.css'
+
+const dialogVariants = cva('aero-dialog-panel')
 
 export interface DialogProps {
   open: boolean
@@ -53,12 +55,12 @@ export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
             forwardedRef.current = node
           }
         }}
-        className={cn(styles.dialog, className)}
+        className={cn(dialogVariants(), className)}
         aria-labelledby={title ? titleId : undefined}
       >
         {title && (
-          <div className={styles.header}>
-            <Text as="h2" variant="headingSmall" id={titleId} className={styles.title}>
+          <div className="flex items-center justify-between gap-4 pt-5 pr-4 pb-4 pl-5 border-b border-[var(--glass-border-bottom)]">
+            <Text as="h2" variant="headingSmall" id={titleId} className="m-0">
               {title}
             </Text>
             <IconButton
@@ -70,7 +72,7 @@ export const Dialog = forwardRef<HTMLDialogElement, DialogProps>(
             />
           </div>
         )}
-        <div className={styles.content}>{children}</div>
+        <div className="p-5">{children}</div>
       </dialog>
     )
   },
