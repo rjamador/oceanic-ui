@@ -68,4 +68,12 @@ describe('List', () => {
       'true',
     )
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(<BasicList className="bg-red-500" />)
+
+    const list = screen.getByRole('listbox')
+    expect(list.className).toContain('bg-red-500')
+    expect(list.className).not.toContain('aero-list-root')
+  })
 })

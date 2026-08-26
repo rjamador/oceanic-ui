@@ -4,7 +4,12 @@ import { cn } from '@/lib/cn'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '../Icon'
 import { IconButton } from '../IconButton'
-import styles from './Pagination.module.css'
+
+const pageButtonClasses =
+  'aero-pagination-page inline-flex h-8 min-w-8 cursor-pointer items-center justify-center border border-transparent bg-transparent px-2 text-sm font-medium'
+
+const ellipsisClasses =
+  'inline-flex h-8 min-w-8 items-center justify-center text-[color:var(--text-muted)] text-sm'
 
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   /** 1-indexed current page. */
@@ -55,7 +60,12 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const items = getPageItems(page, pageCount, siblingCount)
 
     return (
-      <nav ref={ref} aria-label="Pagination" className={cn(styles.root, className)} {...rest}>
+      <nav
+        ref={ref}
+        aria-label="Pagination"
+        className={cn('inline-flex items-center gap-1', className)}
+        {...rest}
+      >
         <IconButton
           variant="ghost"
           size="sm"
@@ -66,7 +76,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         />
         {items.map((item, index) =>
           item === 'ellipsis' ? (
-            <span key={`ellipsis-${index}`} className={styles.ellipsis} aria-hidden="true">
+            <span key={`ellipsis-${index}`} className={ellipsisClasses} aria-hidden="true">
               …
             </span>
           ) : (
@@ -74,7 +84,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               key={item}
               type="button"
               aria-current={item === page ? 'page' : undefined}
-              className={cn(styles.page, item === page && styles.pageSelected)}
+              className={pageButtonClasses}
               onClick={() => onPageChange(item)}
             >
               {item}

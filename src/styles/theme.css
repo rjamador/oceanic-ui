@@ -800,3 +800,215 @@
     left: 100%;
   }
 }
+/* List */
+
+@utility aero-list-root {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--control-secondary-top);
+}
+
+@utility aero-list-item {
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  color: var(--text);
+  outline: none;
+  transition: background 0.15s ease;
+
+  &:hover:not([aria-selected='true']):not([aria-disabled='true']) {
+    background: var(--glass-tint);
+  }
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+@utility aero-list-item-selected {
+  background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+}
+
+/* Pagination */
+
+@utility aero-pagination-page {
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not([aria-current='page']) {
+    background: var(--glass-tint);
+    color: var(--text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &[aria-current='page'] {
+    background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+    border-color: var(--control-primary-border);
+    color: var(--text);
+  }
+}
+
+/* SegmentedControl */
+
+@utility aero-segmented-root {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--control-secondary-top);
+}
+
+@utility aero-segmented-option {
+  position: relative;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  &:not(:last-child) {
+    border-right: 1px solid var(--glass-border-bottom);
+  }
+
+  &:hover:not(:has(input:checked)):not(:has(input:disabled)) {
+    background: var(--glass-tint);
+    color: var(--text);
+  }
+
+  &:focus-within {
+    outline: none;
+    box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+    z-index: 1;
+  }
+}
+
+@utility aero-segmented-option-selected {
+  background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+  color: var(--text);
+}
+
+/* Skeleton */
+
+@keyframes aero-skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Solid, opaque fill — this needs to read clearly against a white Card, not
+   just the page background, so the translucent --recessed-surface used
+   elsewhere (nearly invisible on white) doesn't work here. */
+@utility aero-skeleton-base {
+  position: relative;
+  overflow: hidden;
+  background: var(--control-secondary-bottom);
+  border: 1px solid var(--glass-border-bottom);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--control-highlight-strong), transparent);
+    animation: aero-skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      display: none;
+    }
+  }
+}
+
+@utility aero-skeleton-radius-sm {
+  border-radius: var(--radius-sm);
+}
+
+@utility aero-skeleton-radius-md {
+  border-radius: var(--radius-md);
+}
+
+/* Slider */
+
+/* Recessed track / raised thumb — same carved-in language as
+   Progress/Input, same 3-stop sphere gradient as Button's primary variant.
+   Range input pseudo-elements can't be expressed as plain Tailwind
+   utilities, so the whole cross-browser set lives here. */
+@utility aero-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+
+  &::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border-bottom);
+    background: var(--recessed-surface);
+    box-shadow: inset 0 1px 3px var(--recessed-shadow);
+  }
+
+  &::-moz-range-track {
+    height: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border-bottom);
+    background: var(--recessed-surface);
+    box-shadow: inset 0 1px 3px var(--recessed-shadow);
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -5px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--control-primary-border);
+    background: linear-gradient(
+      180deg,
+      var(--control-primary-top) 0%,
+      var(--control-primary-mid) 48%,
+      var(--control-primary-bottom) 100%
+    );
+    box-shadow: inset 0 1px 0 var(--control-highlight);
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--control-primary-border);
+    background: linear-gradient(
+      180deg,
+      var(--control-primary-top) 0%,
+      var(--control-primary-mid) 48%,
+      var(--control-primary-bottom) 100%
+    );
+    box-shadow: inset 0 1px 0 var(--control-highlight);
+    cursor: pointer;
+  }
+
+  &:disabled::-webkit-slider-thumb,
+  &:disabled::-moz-range-thumb {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible::-webkit-slider-thumb {
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &:focus-visible::-moz-range-thumb {
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+}

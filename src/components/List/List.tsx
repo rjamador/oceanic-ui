@@ -11,11 +11,27 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from 'react'
+import { cva } from 'class-variance-authority'
 
 import { useControllableState } from '@/hooks/useControllableState'
 import { cn } from '@/lib/cn'
 
-import styles from './List.module.css'
+const listItemVariants = cva('aero-list-item cursor-pointer px-3 py-2 text-sm outline-none', {
+  variants: {
+    selected: {
+      true: 'aero-list-item-selected',
+      false: '',
+    },
+    disabled: {
+      true: 'cursor-not-allowed opacity-50',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    selected: false,
+    disabled: false,
+  },
+})
 
 interface ListContextValue {
   value: string
@@ -44,7 +60,12 @@ const ListRoot = forwardRef<HTMLUListElement, ListProps>(
 
     return (
       <ListContext.Provider value={{ value: current, setValue: setCurrent }}>
-        <ul ref={ref} role="listbox" className={cn(styles.list, className)} {...rest}>
+        <ul
+          ref={ref}
+          role="listbox"
+          className={cn('aero-list-root m-0 flex list-none flex-col gap-[2px] p-2', className)}
+          {...rest}
+        >
           {children}
         </ul>
       </ListContext.Provider>
@@ -101,7 +122,7 @@ const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
         aria-selected={selected}
         aria-disabled={disabled || undefined}
         tabIndex={disabled ? undefined : selected ? 0 : -1}
-        className={cn(styles.item, selected && styles.itemSelected, disabled && styles.itemDisabled, className)}
+        className={cn(listItemVariants({ selected, disabled }), className)}
         onKeyDown={handleKeyDown}
         onClick={handleClick}
         {...rest}
