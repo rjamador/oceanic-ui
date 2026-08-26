@@ -131,7 +131,6 @@
   box-shadow: var(--panel-shadow);
 }
 
-
 /* IconButton — same raised-control chrome as Button, without the label
    gap/padding (icon-only, square footprint sized via cva). */
 
@@ -380,8 +379,6 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--hairline);
   background: var(--recessed-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   padding: 0 var(--space-4);
   font-family: var(--font-body);
   color: var(--text);
@@ -433,8 +430,6 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--hairline);
   background: var(--recessed-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   padding: var(--space-3) var(--space-4);
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -489,8 +484,6 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--hairline);
   background: var(--recessed-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   padding: 0 var(--space-8) 0 var(--space-4);
   font-family: var(--font-body);
   color: var(--text);
