@@ -145,3 +145,31 @@
   );
   pointer-events: none;
 }
+
+/* List */
+
+@utility aero-list-root {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border-bottom);
+  background: var(--control-secondary-top);
+}
+
+@utility aero-list-item {
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  color: var(--text);
+  outline: none;
+  transition: background 0.15s ease;
+
+  &:hover:not([aria-selected='true']):not([aria-disabled='true']) {
+    background: var(--glass-tint);
+  }
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+@utility aero-list-item-selected {
+  background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
+}
