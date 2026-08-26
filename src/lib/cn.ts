@@ -1,5 +1,23 @@
-type ClassValue = string | number | null | undefined | false
+import { clsx, type ClassValue } from 'clsx'
+import { extendTailwindMerge } from 'tailwind-merge'
+
+// Composed multi-property effects defined in src/styles/theme.css (Vista
+// Glass gradients, glass surfaces) act as a single class but set
+// background/background-color like a plain bg-* utility. Registering them
+// here lets a consumer's plain utility (e.g. bg-red-500) deterministically
+// win over them via tailwind-merge's conflict resolution, instead of
+// depending on unpredictable CSS load order between two separate builds.
+// Add new composed classes to this list as they're introduced.
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'bg-color': ['aero-btn-primary', 'aero-btn-secondary', 'aero-btn-ghost', 'aero-glass'],
+    },
+  },
+})
+
+export type { ClassValue }
 
 export function cn(...values: ClassValue[]): string {
-  return values.filter(Boolean).join(' ')
+  return twMerge(clsx(values))
 }

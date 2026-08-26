@@ -1,0 +1,147 @@
+/* Tailwind v4 theme layer for aero-ui.
+ *
+ * Composed multi-property visual effects (Vista Glass gradients, glass
+ * surfaces) are defined here as custom @utility classes instead of long
+ * arbitrary-value chains in component JSX. They reference the source
+ * design tokens (src/styles/colors.css, spacing.css, typography.css)
+ * directly via var(...) — those files stay the single source of truth.
+ *
+ * Every @utility here that sets background/background-color must also be
+ * registered in src/lib/cn.ts's extendTailwindMerge config, or a
+ * consumer's plain bg-* override class won't be recognized as conflicting
+ * with it.
+ *
+ * A full @theme color/radius/font palette (so consumers can write plain
+ * utilities like `bg-sky-500` against the Vista palette) is deferred to
+ * the batch migration of the remaining components — it needs a renaming
+ * strategy for the source tokens first, since aliasing `--radius-lg` to
+ * `var(--radius-lg)` under the same name inside @theme is a
+ * self-referential CSS custom property and resolves to invalid.
+ */
+
+@utility aero-btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* Variants — cool, near-white gradients with dark text throughout. The
+   "default" action reads as primary through a stronger blue tint + glow,
+   never through a solid color fill or white text. */
+
+@utility aero-btn-primary {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-primary-border);
+  box-shadow: inset 0 1px 0 var(--control-highlight);
+
+  &:hover:not(:disabled) {
+    border-color: var(--aero-accent-strong);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &:active:not(:disabled) {
+    background: linear-gradient(
+      180deg,
+      var(--control-primary-bottom) 0%,
+      var(--control-primary-mid) 100%
+    );
+  }
+}
+
+@utility aero-btn-secondary {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-mid) 48%,
+    var(--control-secondary-bottom) 100%
+  );
+  color: var(--text);
+  border: 1px solid var(--control-secondary-border);
+  box-shadow: inset 0 1px 0 var(--control-highlight-strong);
+
+  &:hover:not(:disabled) {
+    border-color: var(--sky-300);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 0 0 3px var(--control-hover-glow);
+  }
+
+  &:active:not(:disabled) {
+    background: linear-gradient(
+      180deg,
+      var(--control-secondary-bottom) 0%,
+      var(--control-secondary-mid) 100%
+    );
+  }
+}
+
+@utility aero-btn-ghost {
+  background: transparent;
+  color: var(--sky-700);
+  border: 1px solid transparent;
+
+  &:hover:not(:disabled) {
+    background: var(--glass-tint);
+    border-color: var(--glass-border-bottom);
+  }
+}
+
+/* Static specular highlight across the top — softer than Button's, this is
+   a large surface, not a control */
+@utility aero-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--glass-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-bottom-color: var(--glass-border-bottom);
+  box-shadow: var(--glass-shadow);
+}
+
+@utility aero-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    var(--glass-sheen-strong) 0%,
+    var(--glass-sheen-mid) 30%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
