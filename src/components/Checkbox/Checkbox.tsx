@@ -4,7 +4,6 @@ import { cn } from '@/lib/cn'
 
 import { CheckIcon } from '../Icon'
 import { Text } from '../Text'
-import styles from './Checkbox.module.css'
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   label?: string
@@ -18,23 +17,27 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label
         htmlFor={inputId}
-        className={cn(styles.wrapper, disabled && styles.disabled, className)}
+        className={cn(
+          'inline-flex items-center gap-2 cursor-pointer',
+          disabled && 'cursor-not-allowed opacity-50',
+          className,
+        )}
       >
-        <span className={styles.control}>
+        <span className="relative inline-flex w-[18px] h-[18px] flex-none">
           <input
             ref={ref}
             id={inputId}
             type="checkbox"
-            className={styles.input}
+            className="absolute inset-0 z-[1] m-0 cursor-pointer opacity-0 disabled:cursor-not-allowed"
             disabled={disabled}
             {...rest}
           />
-          <span className={styles.box} aria-hidden="true">
+          <span className="aero-checkbox-box" aria-hidden="true">
             <CheckIcon />
           </span>
         </span>
         {label && (
-          <Text as="span" variant="bodySmall" className={styles.text}>
+          <Text as="span" variant="bodySmall" className="select-none">
             {label}
           </Text>
         )}

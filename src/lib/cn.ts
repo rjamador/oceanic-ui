@@ -11,7 +11,20 @@ import { extendTailwindMerge } from 'tailwind-merge'
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'bg-color': ['aero-btn-primary', 'aero-btn-secondary', 'aero-btn-ghost', 'aero-glass'],
+      'bg-color': [
+        'aero-btn-primary',
+        'aero-btn-secondary',
+        'aero-btn-ghost',
+        'aero-glass',
+        'aero-checkbox-box',
+        'aero-radio-box',
+        'aero-radio-dot',
+        'aero-switch-track',
+        'aero-switch-thumb',
+        'aero-input-field',
+        'aero-textarea-field',
+        'aero-select-field',
+      ],
     },
   },
 })
