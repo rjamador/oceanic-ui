@@ -53,4 +53,16 @@ describe('Dialog', () => {
 
     expect(onClose).toHaveBeenCalledOnce()
   })
+
+  it('lets a consumer className fully override the composed background', () => {
+    render(
+      <Dialog open onClose={vi.fn()} title="Settings" className="bg-red-500">
+        content
+      </Dialog>,
+    )
+
+    const dialog = screen.getByRole('dialog', { name: 'Settings' })
+    expect(dialog.className).toContain('bg-red-500')
+    expect(dialog.className).not.toContain('aero-dialog-panel')
+  })
 })
