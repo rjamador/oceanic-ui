@@ -23,6 +23,7 @@ const twMerge = extendTailwindMerge({
         'aero-segmented-root',
         'aero-segmented-option',
         'aero-segmented-option-selected',
+        'aero-skeleton-base',
       ],
     },
   },

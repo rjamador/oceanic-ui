@@ -238,3 +238,45 @@
   background: linear-gradient(180deg, var(--control-primary-top), var(--control-primary-mid));
   color: var(--text);
 }
+
+/* Skeleton */
+
+@keyframes aero-skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Solid, opaque fill — this needs to read clearly against a white Card, not
+   just the page background, so the translucent --recessed-surface used
+   elsewhere (nearly invisible on white) doesn't work here. */
+@utility aero-skeleton-base {
+  position: relative;
+  overflow: hidden;
+  background: var(--control-secondary-bottom);
+  border: 1px solid var(--glass-border-bottom);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--control-highlight-strong), transparent);
+    animation: aero-skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      display: none;
+    }
+  }
+}
+
+@utility aero-skeleton-radius-sm {
+  border-radius: var(--radius-sm);
+}
+
+@utility aero-skeleton-radius-md {
+  border-radius: var(--radius-md);
+}
