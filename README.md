@@ -1,4 +1,4 @@
-# aero-ui
+# oceanic-ui
 
 A React component library inspired by **Ocean** — the blue Metal Look and
 Feel theme from Java Swing, default since Java 5 (2004): cool near-white-
@@ -37,8 +37,8 @@ Every component is documented and browsable in Storybook (see below), and
 ## Using it before it's on npm
 
 ```bash
-git clone https://github.com/rjamador/aero-ui.git
-cd aero-ui
+git clone https://github.com/rjamador/oceanic-ui.git
+cd oceanic-ui
 npm install
 ```
 
@@ -50,7 +50,7 @@ npm install
 
 To use a component in another local project today, import it directly
 from this repo's `src/` (e.g. via a workspace/`file:` dependency) — proper
-`npm install aero-ui` support (a library build, type declarations, and a
+`npm install oceanic-ui` support (a library build, type declarations, and a
 published package) isn't set up yet.
 
 ## Contributing
