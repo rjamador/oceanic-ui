@@ -18,12 +18,12 @@
   --aero-accent-glow: rgba(51, 214, 224, 0.55);
 
   /* Glass surfaces */
-  --glass-white: rgba(255, 255, 255, 0.55);
-  --glass-white-strong: rgba(255, 255, 255, 0.78);
+  --panel-surface: #f7fcff;
+  --panel-surface-strong: #fbfdff;
   --hover-wash: rgba(200, 232, 255, 0.35);
-  --glass-border: rgba(255, 255, 255, 0.8);
+  --panel-border: rgba(255, 255, 255, 0.8);
   --hairline: rgba(13, 61, 120, 0.18);
-  --glass-shadow:
+  --panel-shadow:
     0 8px 24px rgba(13, 61, 120, 0.16),
     0 1px 0 rgba(255, 255, 255, 0.6) inset;
 

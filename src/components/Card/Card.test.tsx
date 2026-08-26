@@ -25,7 +25,7 @@ describe('Card', () => {
 
     const card = screen.getByText('content').parentElement
     expect(card?.className).toContain('bg-red-500')
-    expect(card?.className).not.toContain('aero-glass')
+    expect(card?.className).not.toContain('aero-panel')
   })
 
   it('renders the sheen and content layers', () => {

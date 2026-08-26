@@ -120,17 +120,15 @@
 
 /* Static specular highlight across the top — softer than Button's, this is
    a large surface, not a control */
-@utility aero-glass {
+@utility aero-panel {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background: var(--glass-white);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  background: var(--panel-surface);
+  border: 1px solid var(--panel-border);
   border-bottom-color: var(--hairline);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--panel-shadow);
 }
 
 @utility aero-sheen {
@@ -641,10 +639,8 @@
   padding: 0;
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
-  background: var(--glass-white-strong);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: var(--glass-shadow);
+  background: var(--panel-surface-strong);
+  box-shadow: var(--panel-shadow);
   width: 100%;
   max-width: min(480px, calc(100vw - var(--space-8)));
   color: var(--text);
@@ -726,10 +722,8 @@
 @utility aero-toast-surface {
   border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
-  background: var(--glass-white-strong);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: var(--glass-shadow);
+  background: var(--panel-surface-strong);
+  box-shadow: var(--panel-shadow);
   animation: aero-toast-slide-in 0.2s ease;
 
   @media (prefers-reduced-motion: reduce) {

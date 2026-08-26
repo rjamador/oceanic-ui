@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-const cardVariants = cva('aero-glass', {
+const cardVariants = cva('aero-panel', {
   variants: {
     padding: {
       sm: 'p-4',
