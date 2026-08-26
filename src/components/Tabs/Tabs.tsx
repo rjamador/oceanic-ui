@@ -37,7 +37,7 @@ function useTabsContext(component: string) {
 const tabsRootVariants = cva('flex flex-col')
 const tabsListVariants = cva('flex gap-1 px-2 border-b border-[var(--glass-border-bottom)]')
 const tabsTabVariants = cva(
-  'aero-tabs-tab font-[var(--font-body)] text-sm font-medium',
+  'aero-tabs-tab [font-family:var(--font-body)] text-sm font-medium',
   {
     variants: {
       selected: {

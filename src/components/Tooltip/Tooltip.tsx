@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn'
 export type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
 
 const tooltipVariants = cva(
-  'absolute z-[var(--z-popover)] px-3 py-2 rounded-[var(--radius-sm)] bg-[var(--text)] text-[var(--text-on-accent)] font-[var(--font-body)] text-xs font-medium whitespace-nowrap shadow-[var(--glass-shadow)] opacity-0 invisible pointer-events-none transition-opacity duration-[120ms] motion-reduce:transition-none group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible',
+  'absolute z-[var(--z-popover)] px-3 py-2 rounded-[var(--radius-sm)] bg-[var(--text)] text-[var(--text-on-accent)] [font-family:var(--font-body)] text-xs font-medium whitespace-nowrap shadow-[var(--glass-shadow)] opacity-0 invisible pointer-events-none transition-opacity duration-[120ms] motion-reduce:transition-none group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible',
   {
     variants: {
       side: {
