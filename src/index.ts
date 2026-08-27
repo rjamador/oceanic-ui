@@ -186,11 +186,10 @@ export type {
   ComposerAttachmentKind,
   ComposerAttachmentStatus,
   ComposerCommand,
-  ComposerQueuedMessage,
   ComposerAddMenuItem,
 } from './components/Composer'
 
-export { CodeBlock, markdownCodeProps, parseLineSpec, languageLabel, normalizeLanguage } from './components/CodeBlock'
+export { CodeBlock } from './components/CodeBlock'
 export type {
   CodeBlockProps,
   CodeBlockHeaderProps,

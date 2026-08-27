@@ -56,18 +56,20 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
             </Text>
           ) : null}
           {children ? (
-            <Text as="div" variant="bodySmall" color={variant === 'danger' ? 'danger' : 'default'}>
+            <Text as="div" variant="bodySmall">
               {children}
             </Text>
           ) : null}
         </div>
         {onDismiss ? (
           <IconButton
+            type="button"
             variant="ghost"
             size="sm"
             icon={<CloseIcon />}
             aria-label={dismissLabel}
             onClick={onDismiss}
+            className="-mr-1 self-start"
           />
         ) : null}
       </div>

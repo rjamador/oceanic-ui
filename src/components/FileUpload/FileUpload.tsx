@@ -59,8 +59,10 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       emit(event.dataTransfer.files)
     }
 
+    const helperId = helperText ? `${inputId}-helper` : undefined
+
     return (
-      <div className="flex w-full flex-col">
+      <div className="flex w-full flex-col gap-2">
         <label
           htmlFor={inputId}
           data-active={active}
@@ -74,11 +76,6 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           <Text as="span" variant="labelLarge">
             {label}
           </Text>
-          {helperText ? (
-            <Text as="span" variant="labelSmall" color="muted">
-              {helperText}
-            </Text>
-          ) : null}
           <input
             ref={assignRef}
             id={inputId}
@@ -87,6 +84,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             disabled={disabled}
             multiple={multiple}
             accept={accept}
+            aria-describedby={helperId}
             onChange={(event) => {
               emit(event.target.files)
               event.target.value = ''
@@ -94,6 +92,11 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             {...rest}
           />
         </label>
+        {helperText ? (
+          <Text as="p" variant="labelSmall" color="muted" id={helperId}>
+            {helperText}
+          </Text>
+        ) : null}
       </div>
     )
   },

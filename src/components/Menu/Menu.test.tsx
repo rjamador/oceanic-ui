@@ -52,6 +52,45 @@ describe('Menu', () => {
     expect(screen.getByRole('button', { name: 'Open' })).toHaveFocus()
   })
 
+  it('closes on Tab and returns focus to the trigger', async () => {
+    const user = userEvent.setup()
+    render(
+      <Menu>
+        <Menu.Trigger>
+          <Button>Open</Button>
+        </Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item>Upload files</Menu.Item>
+        </Menu.Content>
+      </Menu>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+    await user.keyboard('{Tab}')
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open' })).toHaveFocus()
+  })
+
+  it('jumps to a matching item on type-ahead', async () => {
+    const user = userEvent.setup()
+    render(
+      <Menu>
+        <Menu.Trigger>
+          <Button>Open</Button>
+        </Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item>Alpha</Menu.Item>
+          <Menu.Item>Bravo</Menu.Item>
+          <Menu.Item>Charlie</Menu.Item>
+        </Menu.Content>
+      </Menu>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+    await user.keyboard('c')
+    expect(screen.getByRole('menuitem', { name: 'Charlie' })).toHaveFocus()
+  })
+
   it('does not select a disabled item', async () => {
     const user = userEvent.setup()
     const onSelect = vi.fn()

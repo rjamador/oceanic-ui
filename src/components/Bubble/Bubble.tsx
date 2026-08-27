@@ -16,7 +16,7 @@ const bubbleVariants = cva(
         assistant: 'aero-bubble-assistant',
         outline: 'aero-bubble-outline',
         ghost: 'aero-bubble-ghost',
-        destructive: 'aero-bubble-destructive',
+        danger: 'aero-bubble-danger',
       },
     },
     defaultVariants: {

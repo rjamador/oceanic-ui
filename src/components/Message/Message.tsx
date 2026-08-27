@@ -6,6 +6,8 @@ import { forwardRef, type HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/cn'
 
+import { Text } from '../Text'
+
 export type MessageAlign = 'start' | 'end'
 
 export type MessageGroupProps = HTMLAttributes<HTMLDivElement>
@@ -84,18 +86,17 @@ const MessageContent = forwardRef<HTMLDivElement, MessageContentProps>(
 )
 MessageContent.displayName = 'Message.Content'
 
-export type MessageHeaderProps = HTMLAttributes<HTMLDivElement>
+export type MessageHeaderProps = Omit<HTMLAttributes<HTMLElement>, 'color'>
 
-const MessageHeader = forwardRef<HTMLDivElement, MessageHeaderProps>(
+const MessageHeader = forwardRef<HTMLElement, MessageHeaderProps>(
   ({ className, ...rest }, ref) => {
     return (
-      <div
+      <Text
         ref={ref}
+        as="div"
+        variant="labelSmall"
         data-slot="message-header"
-        className={cn(
-          'flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-[color:var(--text)]',
-          className,
-        )}
+        className={cn('flex max-w-full min-w-0 items-center px-3', className)}
         {...rest}
       />
     )
@@ -103,16 +104,19 @@ const MessageHeader = forwardRef<HTMLDivElement, MessageHeaderProps>(
 )
 MessageHeader.displayName = 'Message.Header'
 
-export type MessageFooterProps = HTMLAttributes<HTMLDivElement>
+export type MessageFooterProps = Omit<HTMLAttributes<HTMLElement>, 'color'>
 
-const MessageFooter = forwardRef<HTMLDivElement, MessageFooterProps>(
+const MessageFooter = forwardRef<HTMLElement, MessageFooterProps>(
   ({ className, ...rest }, ref) => {
     return (
-      <div
+      <Text
         ref={ref}
+        as="div"
+        variant="labelSmall"
+        color="muted"
         data-slot="message-footer"
         className={cn(
-          'flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-[color:var(--text-muted)] group-data-[align=end]/message:justify-end',
+          'flex max-w-full min-w-0 items-center px-3 group-data-[align=end]/message:justify-end',
           className,
         )}
         {...rest}

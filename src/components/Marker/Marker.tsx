@@ -72,7 +72,7 @@ const MarkerContent = forwardRef<HTMLSpanElement, MarkerContentProps>(
         ref={ref}
         data-slot="marker-content"
         className={cn(
-          'min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center',
+          'min-w-0 max-w-full wrap-break-word group-data-[variant=separator]/marker:shrink group-data-[variant=separator]/marker:text-center',
           className,
         )}
         {...rest}

@@ -10,6 +10,7 @@ import {
   useContext,
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
   useCallback,
@@ -23,6 +24,8 @@ import {
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { useControllableState } from '@/hooks/useControllableState'
+import { useDismissable } from '@/hooks/useDismissable'
+import { useEdgeAlign } from '@/hooks/useEdgeAlign'
 import { cn } from '@/lib/cn'
 
 export type MenuSide = 'top' | 'bottom'
@@ -75,46 +78,32 @@ const MenuRoot = forwardRef<HTMLDivElement, MenuProps>(
       [setCurrent],
     )
 
-    useEffect(() => {
-      if (!current) return
-
-      const onPointerDown = (event: PointerEvent) => {
-        const root = rootRef.current
-        if (!root) return
-        if (event.target instanceof Node && !root.contains(event.target)) {
-          setOpen(false)
-        }
-      }
-      const onKeyDown = (event: globalThis.KeyboardEvent) => {
-        if (event.key === 'Escape') setOpen(false)
-      }
-
-      document.addEventListener('pointerdown', onPointerDown)
-      document.addEventListener('keydown', onKeyDown)
-      return () => {
-        document.removeEventListener('pointerdown', onPointerDown)
-        document.removeEventListener('keydown', onKeyDown)
-      }
-    }, [current, setOpen])
+    useDismissable({
+      open: current,
+      onDismiss: () => setOpen(false),
+      rootRef,
+    })
 
     useEffect(() => {
       if (wasOpen.current && !current) {
-        document.getElementById(triggerId)?.focus()
+        // Restore focus to the trigger only when the close left focus
+        // inside the menu (Escape, Tab, selecting an item) — not when the
+        // user clicked another control on the page.
+        const active = document.activeElement
+        if (!active || active === document.body || rootRef.current?.contains(active)) {
+          document.getElementById(triggerId)?.focus()
+        }
       }
       wasOpen.current = current
     }, [current, triggerId])
 
+    const contextValue = useMemo<MenuContextValue>(
+      () => ({ open: current, setOpen, triggerId, contentId, highlighted, setHighlighted }),
+      [current, setOpen, triggerId, contentId, highlighted],
+    )
+
     return (
-      <MenuContext.Provider
-        value={{
-          open: current,
-          setOpen,
-          triggerId,
-          contentId,
-          highlighted,
-          setHighlighted,
-        }}
-      >
+      <MenuContext.Provider value={contextValue}>
         <div
           ref={(node) => {
             rootRef.current = node
@@ -183,6 +172,8 @@ const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
   ({ className, side = 'bottom', align = 'start', onKeyDown, children, ...rest }, ref) => {
     const ctx = useMenuContext('Content')
     const localRef = useRef<HTMLDivElement | null>(null)
+    const resolvedAlign = useEdgeAlign(ctx.open, localRef, align ?? 'start')
+    const typeahead = useRef({ buffer: '', timer: 0 })
 
     useEffect(() => {
       if (!ctx.open) return
@@ -194,36 +185,58 @@ const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
 
     if (!ctx.open) return null
 
+    const itemsOf = (root: HTMLElement) =>
+      Array.from(root.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)'))
+
+    const focusItem = (items: HTMLButtonElement[], index: number) => {
+      ctx.setHighlighted(index)
+      items[index]?.focus()
+    }
+
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event)
-      const items = Array.from(
-        event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)'),
-      )
+      const items = itemsOf(event.currentTarget)
       if (items.length === 0) return
 
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault()
-        const step = event.key === 'ArrowDown' ? 1 : -1
-        const next = (ctx.highlighted + step + items.length) % items.length
-        ctx.setHighlighted(next)
-        items[next]?.focus()
-        return
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowUp': {
+          event.preventDefault()
+          const step = event.key === 'ArrowDown' ? 1 : -1
+          focusItem(items, (ctx.highlighted + step + items.length) % items.length)
+          return
+        }
+        case 'Home':
+          event.preventDefault()
+          focusItem(items, 0)
+          return
+        case 'End':
+          event.preventDefault()
+          focusItem(items, items.length - 1)
+          return
+        case 'Tab':
+          // APG: Tab closes the menu. Focus returns to the trigger.
+          event.preventDefault()
+          ctx.setOpen(false)
+          return
+        case 'Escape':
+          event.preventDefault()
+          ctx.setOpen(false)
+          return
       }
-      if (event.key === 'Home') {
-        event.preventDefault()
-        ctx.setHighlighted(0)
-        items[0]?.focus()
-        return
-      }
-      if (event.key === 'End') {
-        event.preventDefault()
-        ctx.setHighlighted(items.length - 1)
-        items[items.length - 1]?.focus()
-        return
-      }
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        ctx.setOpen(false)
+
+      // Type-ahead: jump to the next item whose label starts with what was typed.
+      if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+        const state = typeahead.current
+        window.clearTimeout(state.timer)
+        state.buffer += event.key.toLowerCase()
+        state.timer = window.setTimeout(() => {
+          state.buffer = ''
+        }, 500)
+        const match = items.findIndex((item) =>
+          (item.textContent ?? '').trim().toLowerCase().startsWith(state.buffer),
+        )
+        if (match >= 0) focusItem(items, match)
       }
     }
 
@@ -237,7 +250,7 @@ const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
         id={ctx.contentId}
         role="menu"
         aria-labelledby={ctx.triggerId}
-        className={cn(menuContentVariants({ side, align }), className)}
+        className={cn(menuContentVariants({ side, align: resolvedAlign }), className)}
         onKeyDown={handleKeyDown}
         {...rest}
       >
@@ -255,15 +268,10 @@ export interface MenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
   ({ className, disabled, onClick, onSelect, onMouseEnter, children, ...rest }, ref) => {
     const ctx = useMenuContext('Item')
-    const itemRef = useRef<HTMLButtonElement | null>(null)
 
     return (
       <button
-        ref={(node) => {
-          itemRef.current = node
-          if (typeof ref === 'function') ref(node)
-          else if (ref) ref.current = node
-        }}
+        ref={ref}
         type="button"
         role="menuitem"
         disabled={disabled}

@@ -38,6 +38,26 @@ describe('Popover', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
-    expect(screen.getByRole('region', { name: 'Open' })).toHaveFocus()
+    expect(screen.getByRole('group', { name: 'Open' })).toHaveFocus()
+  })
+
+  it('does not yank focus back to the trigger when dismissed by an outside click', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <Popover>
+          <Popover.Trigger>
+            <Button>Open</Button>
+          </Popover.Trigger>
+          <Popover.Content>Panel</Popover.Content>
+        </Popover>
+        <Button>Elsewhere</Button>
+      </>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+    await user.click(screen.getByRole('button', { name: 'Elsewhere' }))
+    expect(screen.queryByText('Panel')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open' })).not.toHaveFocus()
   })
 })

@@ -35,7 +35,7 @@ export interface CodeBlockToken {
 type CodeBlockContextValue = {
   code: string
   language?: string
-  languageLabel: string
+  langLabel: string
   showLineNumbers: boolean
   wrap: boolean
   startLine: number
@@ -260,7 +260,7 @@ const KEYWORDS: Record<string, Set<string>> = {
   ]),
 }
 
-export function normalizeCode(code: string): string {
+function normalizeCode(code: string): string {
   return code.replace(/\r\n?/g, '\n').replace(/\n$/, '')
 }
 
@@ -350,7 +350,7 @@ function keywordsFor(language: string): Set<string> | undefined {
 
 function tokenizeLine(text: string, language: string): CodeBlockToken[] {
   if (!text) return []
-  if (language === 'plaintext' || language === 'diff' || language === 'text') {
+  if (language === 'plaintext' || language === 'text') {
     return [{ content: text }]
   }
 
@@ -430,14 +430,6 @@ function tokenizeLine(text: string, language: string): CodeBlockToken[] {
   return tokens
 }
 
-function diffKind(text: string, language: string): 'add' | 'remove' | 'hunk' | undefined {
-  if (language !== 'diff') return undefined
-  if (text.startsWith('+') && !text.startsWith('+++')) return 'add'
-  if (text.startsWith('-') && !text.startsWith('---')) return 'remove'
-  if (text.startsWith('@@')) return 'hunk'
-  return undefined
-}
-
 function hasHeaderChild(children: ReactNode): boolean {
   return Children.toArray(children).some(
     (child) => isValidElement(child) && child.type === CodeBlockHeader,
@@ -453,8 +445,6 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ti
   startLine?: number
   highlightedLines?: CodeBlockLineSpec
   wrap?: boolean
-  defaultWrap?: boolean
-  onWrapChange?: (wrap: boolean) => void
   maxLines?: number
   expanded?: boolean
   defaultExpanded?: boolean
@@ -478,9 +468,7 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
       showLineNumbers = false,
       startLine = 1,
       highlightedLines,
-      wrap: wrapProp,
-      defaultWrap = false,
-      onWrapChange,
+      wrap = false,
       maxLines,
       expanded: expandedProp,
       defaultExpanded = false,
@@ -500,19 +488,18 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
     const contentId = useId()
     const resolvedLanguage = normalizeLanguage(language)
     const resolvedLabel = languageLabel(language)
-    const [wrap] = useControllableState({
-      value: wrapProp,
-      defaultValue: defaultWrap,
-      onChange: onWrapChange,
-    })
     const [expanded, setExpanded] = useControllableState({
       value: expandedProp,
       defaultValue: defaultExpanded,
       onChange: onExpandedChange,
     })
 
-    const source = normalizeCode(code)
+    const source = useMemo(() => normalizeCode(code), [code])
     const allLines = useMemo(() => source.split('\n'), [source])
+    const tokenizedLines = useMemo(
+      () => allLines.map((line) => tokenizeLine(line, resolvedLanguage)),
+      [allLines, resolvedLanguage],
+    )
     const highlighted = useMemo(() => parseLineSpec(highlightedLines), [highlightedLines])
     const collapsible = Boolean(maxLines && allLines.length > maxLines)
     const visibleLines = collapsible && !expanded ? allLines.slice(0, maxLines) : allLines
@@ -523,7 +510,7 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
       () => ({
         code: source,
         language: language ? resolvedLanguage : undefined,
-        languageLabel: resolvedLabel,
+        langLabel: resolvedLabel,
         showLineNumbers,
         wrap,
         startLine,
@@ -567,9 +554,7 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
               <CodeBlockCopy onCopy={onCopy} />
             </CodeBlockHeader>
           ) : null}
-          {!customHeader && !showDefaultHeader ? (
-            <CodeBlockCopy position="pinned" alwaysVisible onCopy={onCopy} />
-          ) : null}
+          {!customHeader && !showDefaultHeader ? <CodeBlockCopy onCopy={onCopy} /> : null}
 
           <pre
             id={contentId}
@@ -582,12 +567,11 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
             )}
           >
             <code className="grid min-w-full">
-              {visibleLines.map((text, index) => {
+              {visibleLines.map((_line, index) => {
                 const sourceLine = index + 1
                 const displayNumber = startLine + index
-                const tokens = tokenizeLine(text, resolvedLanguage)
-                const kind = diffKind(text, resolvedLanguage)
-                const isHighlighted = highlighted.has(sourceLine) || kind === 'hunk'
+                const tokens = tokenizedLines[index] ?? []
+                const isHighlighted = highlighted.has(sourceLine)
                 return (
                   <span
                     key={`${displayNumber}-${index}`}
@@ -596,8 +580,6 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
                     className={cn(
                       'flex min-h-[1.6em]',
                       isHighlighted && 'aero-code-block-line-highlight',
-                      kind === 'add' && 'aero-code-block-diff-add',
-                      kind === 'remove' && 'aero-code-block-diff-remove',
                     )}
                   >
                     {showLineNumbers ? (
@@ -694,7 +676,7 @@ export type CodeBlockLanguageProps = HTMLAttributes<HTMLSpanElement>
 
 const CodeBlockLanguage = forwardRef<HTMLSpanElement, CodeBlockLanguageProps>(
   ({ className, children, ...rest }, ref) => {
-    const { language, languageLabel: resolved } = useCodeBlock('Language')
+    const { language, langLabel: resolved } = useCodeBlock('Language')
     const label = children ?? resolved ?? language
     if (!label) return null
 
@@ -716,8 +698,6 @@ export interface CodeBlockCopyProps
   extends Omit<HTMLAttributes<HTMLButtonElement>, 'onCopy'> {
   value?: string
   timeout?: number
-  position?: 'auto' | 'inline' | 'pinned'
-  alwaysVisible?: boolean
   onCopy?: (value: string) => void
   copyLabel?: string
   copiedLabel?: string
@@ -728,8 +708,6 @@ const CodeBlockCopy = forwardRef<HTMLButtonElement, CodeBlockCopyProps>(
     {
       value,
       timeout = 2000,
-      position = 'auto',
-      alwaysVisible = false,
       onCopy,
       copyLabel: copyLabelProp,
       copiedLabel: copiedLabelProp,
@@ -739,11 +717,12 @@ const CodeBlockCopy = forwardRef<HTMLButtonElement, CodeBlockCopyProps>(
     ref,
   ) => {
     const inHeader = useContext(CodeBlockHeaderContext)
-    const document = useContext(CodeBlockContext)
+    const ctx = useContext(CodeBlockContext)
     const [copied, setCopied] = useState(false)
-    const resolvedPosition = position === 'auto' ? (inHeader ? 'inline' : 'pinned') : position
-    const copyLabel = copyLabelProp ?? document?.copyLabel ?? 'Copy code'
-    const copiedLabel = copiedLabelProp ?? document?.copiedLabel ?? 'Copied'
+    // In a header it sits inline; on a bare block it pins to the top-right.
+    const pinned = !inHeader
+    const copyLabel = copyLabelProp ?? ctx?.copyLabel ?? 'Copy code'
+    const copiedLabel = copiedLabelProp ?? ctx?.copiedLabel ?? 'Copied'
 
     useEffect(() => {
       if (!copied || timeout === 0) return
@@ -752,7 +731,7 @@ const CodeBlockCopy = forwardRef<HTMLButtonElement, CodeBlockCopyProps>(
     }, [copied, timeout])
 
     const handleClick = useCallback(() => {
-      const payload = value ?? document?.code ?? ''
+      const payload = value ?? ctx?.code ?? ''
       if (!payload) return
       if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) return
 
@@ -763,38 +742,38 @@ const CodeBlockCopy = forwardRef<HTMLButtonElement, CodeBlockCopyProps>(
         },
         () => undefined,
       )
-    }, [value, document, onCopy])
+    }, [value, ctx, onCopy])
 
     return (
-      <IconButton
-        ref={ref}
-        type="button"
-        variant="ghost"
-        size="sm"
-        data-slot="code-block-copy"
-        data-copied={copied || undefined}
-        data-position={resolvedPosition}
-        aria-label={copied ? copiedLabel : copyLabel}
-        icon={
-          <IconSwap
-            className="size-3.5"
-            active={copied}
-            initial={<CopyIcon size={14} />}
-            swapped={<CheckIcon size={14} />}
-          />
-        }
-        onClick={handleClick}
-        className={cn(
-          'ml-auto shrink-0',
-          resolvedPosition === 'pinned' &&
-            'absolute top-2 right-2 z-[var(--z-raised)]',
-          resolvedPosition === 'pinned' &&
-            !alwaysVisible &&
-            'opacity-0 group-hover/code-block:opacity-100 focus-visible:opacity-100',
-          className,
-        )}
-        {...rest}
-      />
+      <>
+        <IconButton
+          ref={ref}
+          type="button"
+          variant="ghost"
+          size="sm"
+          data-slot="code-block-copy"
+          data-copied={copied || undefined}
+          aria-label={copied ? copiedLabel : copyLabel}
+          icon={
+            <IconSwap
+              className="size-3.5"
+              active={copied}
+              initial={<CopyIcon size={14} />}
+              swapped={<CheckIcon size={14} />}
+            />
+          }
+          onClick={handleClick}
+          className={cn(
+            'ml-auto shrink-0',
+            pinned && 'absolute top-2 right-2 z-[var(--z-raised)]',
+            className,
+          )}
+          {...rest}
+        />
+        <span role="status" aria-live="polite" className="sr-only">
+          {copied ? copiedLabel : ''}
+        </span>
+      </>
     )
   },
 )

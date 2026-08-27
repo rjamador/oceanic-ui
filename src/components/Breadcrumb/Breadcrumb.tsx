@@ -22,7 +22,9 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
         className={cn('flex min-w-0 items-center', className)}
         {...rest}
       >
-        <ol className="m-0 flex min-w-0 list-none items-center gap-1 p-0">{children}</ol>
+        <ol className="m-0 flex min-w-0 list-none items-center gap-1 overflow-x-auto p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {children}
+        </ol>
       </nav>
     )
   },
@@ -39,13 +41,13 @@ const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
     return (
       <li
         ref={ref}
-        className={cn('flex min-w-0 items-center gap-1', className)}
+        className={cn('flex shrink-0 items-center gap-1', className)}
         {...rest}
       >
         {href && !current ? (
           <a
             href={href}
-            className="min-w-0 truncate text-sm text-[color:var(--sky-700)] underline-offset-2 hover:underline"
+            className="-my-1 inline-flex items-center py-1 text-sm whitespace-nowrap text-[color:var(--sky-700)] underline-offset-2 hover:underline"
           >
             {children}
           </a>
@@ -55,7 +57,7 @@ const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
             variant="labelMedium"
             color={current ? 'default' : 'muted'}
             aria-current={current ? 'page' : undefined}
-            className="min-w-0 truncate"
+            className="whitespace-nowrap"
           >
             {children}
           </Text>

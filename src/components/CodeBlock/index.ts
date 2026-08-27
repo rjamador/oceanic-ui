@@ -1,4 +1,4 @@
-export { CodeBlock, markdownCodeProps, parseLineSpec, languageLabel, normalizeLanguage } from './CodeBlock'
+export { CodeBlock } from './CodeBlock'
 export type {
   CodeBlockProps,
   CodeBlockHeaderProps,

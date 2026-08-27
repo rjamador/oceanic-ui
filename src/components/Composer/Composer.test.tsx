@@ -53,6 +53,30 @@ describe('Composer', () => {
     expect(onChange).toHaveBeenCalledWith('/plan ')
   })
 
+  it('is a plain textbox until the slash palette opens, then a combobox', () => {
+    const { rerender } = render(
+      <Composer
+        value=""
+        onChange={vi.fn()}
+        onSubmit={vi.fn()}
+        commands={[{ name: 'plan' }]}
+      />,
+    )
+    expect(screen.getByRole('textbox', { name: 'Message' })).not.toHaveAttribute('aria-expanded')
+
+    rerender(
+      <Composer
+        value="/pl"
+        onChange={vi.fn()}
+        onSubmit={vi.fn()}
+        commands={[{ name: 'plan' }]}
+      />,
+    )
+    const combobox = screen.getByRole('combobox', { name: 'Message' })
+    expect(combobox).toHaveAttribute('aria-expanded', 'true')
+    expect(combobox).toHaveAttribute('aria-controls', screen.getByRole('listbox').id)
+  })
+
   it('stops an in-flight send instead of submitting again', async () => {
     const user = userEvent.setup()
     const onStop = vi.fn()

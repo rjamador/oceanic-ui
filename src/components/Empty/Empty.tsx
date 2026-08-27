@@ -7,6 +7,8 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
+import { Text } from '../Text'
+
 export type EmptyProps = HTMLAttributes<HTMLDivElement>
 
 const EmptyRoot = forwardRef<HTMLDivElement, EmptyProps>(({ className, ...rest }, ref) => {
@@ -61,32 +63,40 @@ const EmptyMedia = forwardRef<HTMLDivElement, EmptyMediaProps>(
 )
 EmptyMedia.displayName = 'Empty.Media'
 
-export type EmptyTitleProps = HTMLAttributes<HTMLDivElement>
+export interface EmptyTitleProps extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
+  /** Heading level for the document outline — pick the one that fits where
+   *  the empty state sits. Defaults to `h3`. */
+  as?: 'h2' | 'h3' | 'h4'
+}
 
-const EmptyTitle = forwardRef<HTMLDivElement, EmptyTitleProps>(({ className, ...rest }, ref) => {
-  return (
-    <div
-      ref={ref}
-      data-slot="empty-title"
-      className={cn(
-        'font-[family-name:var(--font-display)] text-sm font-semibold tracking-tight text-[color:var(--text)]',
-        className,
-      )}
-      {...rest}
-    />
-  )
-})
+const EmptyTitle = forwardRef<HTMLElement, EmptyTitleProps>(
+  ({ className, as = 'h3', ...rest }, ref) => {
+    return (
+      <Text
+        ref={ref}
+        as={as}
+        variant="headingSmall"
+        data-slot="empty-title"
+        className={className}
+        {...rest}
+      />
+    )
+  },
+)
 EmptyTitle.displayName = 'Empty.Title'
 
-export type EmptyDescriptionProps = HTMLAttributes<HTMLParagraphElement>
+export type EmptyDescriptionProps = Omit<HTMLAttributes<HTMLElement>, 'color'>
 
-const EmptyDescription = forwardRef<HTMLParagraphElement, EmptyDescriptionProps>(
+const EmptyDescription = forwardRef<HTMLElement, EmptyDescriptionProps>(
   ({ className, ...rest }, ref) => {
     return (
-      <p
+      <Text
         ref={ref}
+        as="p"
+        variant="bodySmall"
+        color="muted"
         data-slot="empty-description"
-        className={cn('m-0 text-sm leading-relaxed text-[color:var(--text-muted)]', className)}
+        className={cn('leading-relaxed', className)}
         {...rest}
       />
     )

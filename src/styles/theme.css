@@ -1206,11 +1206,33 @@
   }
 }
 
-@utility aero-bubble-destructive {
+@utility aero-bubble-danger {
   & [data-slot='bubble-content'] {
     background: var(--danger-tint);
-    color: var(--danger);
     border-color: var(--danger);
+  }
+}
+
+/* IconSwap — two stacked icon layers, only one visible at a time. */
+
+@utility aero-icon-swap-layer {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+
+  &[data-visible='false'] {
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
@@ -1220,6 +1242,7 @@
   position: absolute;
   z-index: var(--z-popover);
   min-width: 180px;
+  max-width: calc(100vw - 2 * var(--space-2));
   padding: var(--space-1);
   border-radius: var(--radius-md);
   background: var(--panel-surface);
@@ -1243,8 +1266,7 @@
   font-family: var(--font-body);
   font-size: var(--type-body-sm);
 
-  &:hover,
-  &[data-highlighted='true'] {
+  &:hover:not(:disabled) {
     background: var(--hover-wash);
   }
 
@@ -1297,7 +1319,6 @@
 @utility aero-alert-danger {
   background: var(--danger-tint);
   border-color: var(--danger);
-  color: var(--danger);
 }
 
 /* Empty state */
@@ -1378,8 +1399,11 @@
     opacity: 0.5;
   }
 
-  &:focus-visible {
-    outline: none;
+  /* The focusable element is the visually-hidden <input>, not this <label> —
+     mirror its keyboard focus ring onto the dropzone. */
+  &:has(input:focus-visible) {
+    border-style: solid;
+    border-color: var(--aero-accent-strong);
     box-shadow:
       inset 0 1px 3px var(--recessed-shadow),
       0 0 0 3px var(--aero-accent-glow);
@@ -1453,15 +1477,6 @@
 @utility aero-code-block-line-highlight {
   background: color-mix(in srgb, var(--sky-300) 32%, transparent);
   box-shadow: inset 3px 0 0 var(--sky-500);
-}
-
-@utility aero-code-block-diff-add {
-  background: color-mix(in srgb, var(--sky-400) 20%, transparent);
-}
-
-@utility aero-code-block-diff-remove {
-  background: var(--danger-tint);
-  color: var(--danger);
 }
 
 @utility aero-code-block-token {

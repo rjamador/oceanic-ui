@@ -10,6 +10,7 @@ import {
   useContext,
   useEffect,
   useId,
+  useMemo,
   useRef,
   type HTMLAttributes,
   type KeyboardEvent,
@@ -20,6 +21,8 @@ import {
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { useControllableState } from '@/hooks/useControllableState'
+import { useDismissable } from '@/hooks/useDismissable'
+import { useEdgeAlign } from '@/hooks/useEdgeAlign'
 import { cn } from '@/lib/cn'
 
 export type PopoverSide = 'top' | 'bottom'
@@ -63,37 +66,30 @@ const PopoverRoot = forwardRef<HTMLDivElement, PopoverProps>(
 
     useEffect(() => {
       if (wasOpen.current && !current) {
-        document.getElementById(triggerId)?.focus()
+        // Only pull focus back to the trigger when the close left focus
+        // inside the layer (Escape, selecting something) — not when the
+        // user clicked away to another control.
+        const active = document.activeElement
+        if (!active || active === document.body || rootRef.current?.contains(active)) {
+          document.getElementById(triggerId)?.focus()
+        }
       }
       wasOpen.current = current
     }, [current, triggerId])
 
-    useEffect(() => {
-      if (!current) return
+    useDismissable({
+      open: current,
+      onDismiss: () => setCurrent(false),
+      rootRef,
+    })
 
-      const onPointerDown = (event: PointerEvent) => {
-        const root = rootRef.current
-        if (!root) return
-        if (event.target instanceof Node && !root.contains(event.target)) {
-          setCurrent(false)
-        }
-      }
-      const onKeyDown = (event: globalThis.KeyboardEvent) => {
-        if (event.key === 'Escape') setCurrent(false)
-      }
-
-      document.addEventListener('pointerdown', onPointerDown)
-      document.addEventListener('keydown', onKeyDown)
-      return () => {
-        document.removeEventListener('pointerdown', onPointerDown)
-        document.removeEventListener('keydown', onKeyDown)
-      }
-    }, [current, setCurrent])
+    const contextValue = useMemo<PopoverContextValue>(
+      () => ({ open: current, setOpen: setCurrent, triggerId, contentId }),
+      [current, setCurrent, triggerId, contentId],
+    )
 
     return (
-      <PopoverContext.Provider
-        value={{ open: current, setOpen: setCurrent, triggerId, contentId }}
-      >
+      <PopoverContext.Provider value={contextValue}>
         <div
           ref={(node) => {
             rootRef.current = node
@@ -128,7 +124,9 @@ function PopoverTrigger({ children }: PopoverTriggerProps) {
   return cloneElement(children, {
     id: children.props.id ?? ctx.triggerId,
     'aria-expanded': ctx.open,
-    'aria-haspopup': children.props['aria-haspopup'] ?? true,
+    // No default aria-haspopup — the content is a plain group, not a menu
+    // or dialog. A consumer whose content warrants it can still pass one.
+    'aria-haspopup': children.props['aria-haspopup'],
     'aria-controls': ctx.open ? ctx.contentId : undefined,
     onClick: (event: MouseEvent<HTMLElement>) => {
       children.props.onClick?.(event)
@@ -162,6 +160,7 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   ({ className, side = 'bottom', align = 'start', onKeyDown, ...rest }, ref) => {
     const ctx = usePopoverContext('Content')
     const localRef = useRef<HTMLDivElement | null>(null)
+    const resolvedAlign = useEdgeAlign(ctx.open, localRef, align ?? 'start')
 
     useEffect(() => {
       if (!ctx.open) return
@@ -186,10 +185,10 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
           else if (ref) ref.current = node
         }}
         id={ctx.contentId}
-        role="region"
+        role="group"
         tabIndex={-1}
         aria-labelledby={ctx.triggerId}
-        className={cn(popoverContentVariants({ side, align }), className)}
+        className={cn(popoverContentVariants({ side, align: resolvedAlign }), className)}
         onKeyDown={handleKeyDown}
         {...rest}
       />

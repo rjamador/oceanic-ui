@@ -8,13 +8,13 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/cn'
 
 import { IconButton, type IconButtonProps } from '../IconButton'
+import { Text } from '../Text'
 
 const attachmentVariants = cva('aero-attachment group/attachment', {
   variants: {
     size: {
-      default: 'gap-2 text-sm px-2.5 py-2',
-      sm: 'gap-2 text-xs px-2.5 py-2',
-      xs: 'gap-1.5 text-xs px-2 py-1.5',
+      sm: 'gap-1.5 text-xs px-2 py-1.5',
+      md: 'gap-2 text-sm px-2.5 py-2',
     },
     orientation: {
       horizontal: 'min-w-40 items-center',
@@ -22,7 +22,7 @@ const attachmentVariants = cva('aero-attachment group/attachment', {
     },
   },
   defaultVariants: {
-    size: 'default',
+    size: 'md',
     orientation: 'horizontal',
   },
 })
@@ -41,7 +41,7 @@ export interface AttachmentProps
 
 const AttachmentRoot = forwardRef<HTMLDivElement, AttachmentProps>(
   (
-    { className, state = 'done', size = 'default', orientation = 'horizontal', ...rest },
+    { className, state = 'done', size = 'md', orientation = 'horizontal', ...rest },
     ref,
   ) => {
     return (
@@ -84,7 +84,7 @@ const AttachmentMedia = forwardRef<HTMLDivElement, AttachmentMediaProps>(
         data-variant={variant}
         className={cn(
           attachmentMediaVariants({ variant }),
-          'group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7',
+          'group-data-[size=sm]/attachment:w-8',
           className,
         )}
         {...rest}
@@ -110,15 +110,17 @@ const AttachmentContent = forwardRef<HTMLDivElement, AttachmentContentProps>(
 )
 AttachmentContent.displayName = 'Attachment.Content'
 
-export type AttachmentTitleProps = HTMLAttributes<HTMLSpanElement>
+export type AttachmentTitleProps = Omit<HTMLAttributes<HTMLElement>, 'color'>
 
-const AttachmentTitle = forwardRef<HTMLSpanElement, AttachmentTitleProps>(
+const AttachmentTitle = forwardRef<HTMLElement, AttachmentTitleProps>(
   ({ className, ...rest }, ref) => {
     return (
-      <span
+      <Text
         ref={ref}
+        as="span"
+        variant="labelMedium"
         data-slot="attachment-title"
-        className={cn('block max-w-full min-w-0 truncate font-medium text-[color:var(--text)]', className)}
+        className={cn('block max-w-full min-w-0 truncate', className)}
         {...rest}
       />
     )
@@ -126,18 +128,18 @@ const AttachmentTitle = forwardRef<HTMLSpanElement, AttachmentTitleProps>(
 )
 AttachmentTitle.displayName = 'Attachment.Title'
 
-export type AttachmentDescriptionProps = HTMLAttributes<HTMLSpanElement>
+export type AttachmentDescriptionProps = Omit<HTMLAttributes<HTMLElement>, 'color'>
 
-const AttachmentDescription = forwardRef<HTMLSpanElement, AttachmentDescriptionProps>(
+const AttachmentDescription = forwardRef<HTMLElement, AttachmentDescriptionProps>(
   ({ className, ...rest }, ref) => {
     return (
-      <span
+      <Text
         ref={ref}
+        as="span"
+        variant="labelSmall"
+        color="muted"
         data-slot="attachment-description"
-        className={cn(
-          'mt-0.5 block min-w-0 truncate text-xs text-[color:var(--text-muted)] group-data-[state=error]/attachment:text-[color:var(--danger)]',
-          className,
-        )}
+        className={cn('mt-0.5 block min-w-0 truncate', className)}
         {...rest}
       />
     )

@@ -1,8 +1,12 @@
 import {
-  useEffect,
+  forwardRef,
+  useCallback,
   useId,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState,
+  type HTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
 } from 'react'
@@ -10,23 +14,18 @@ import {
 import { cn } from '@/lib/cn'
 
 import { Attachment } from '../Attachment'
-import { Button } from '../Button'
 import {
   ArrowUpIcon,
-  CheckIcon,
   CloseIcon,
   FileIcon,
   FileTextIcon,
   ImageIcon,
-  PencilIcon,
   PlusIcon,
   SquareIcon,
-  TrashIcon,
 } from '../Icon'
 import { IconButton } from '../IconButton'
 import { IconSwap } from '../IconSwap'
 import { Menu } from '../Menu'
-import { Text } from '../Text'
 
 export type ComposerAttachmentKind = 'file' | 'image' | 'pdf'
 export type ComposerAttachmentStatus = 'idle' | 'uploading' | 'processing' | 'error' | 'done'
@@ -45,19 +44,14 @@ export interface ComposerCommand {
   description?: string
 }
 
-export interface ComposerQueuedMessage {
-  id: string
-  text: string
-  attachments?: number
-}
-
 export interface ComposerAddMenuItem {
   label: string
   icon?: ReactNode
   onSelect: () => void
 }
 
-export interface ComposerProps {
+export interface ComposerProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSubmit'> {
   value: string
   onChange: (value: string) => void
   onSubmit: () => void
@@ -65,83 +59,101 @@ export interface ComposerProps {
   sending?: boolean
   placeholder?: string
   disabled?: boolean
-  compacting?: boolean
   attachments?: ComposerAttachmentItem[]
   onRemoveAttachment?: (id: string) => void
   onAttachFiles?: () => void
   onPasteImages?: (files: File[]) => void
   commands?: ComposerCommand[]
-  queuedMessages?: ReadonlyArray<ComposerQueuedMessage>
-  onUpdateQueuedMessage?: (id: string, text: string) => void
-  onRemoveQueuedMessage?: (id: string) => void
-  onResumeQueuedMessages?: () => void
-  resumingQueuedMessages?: boolean
   addMenu?: ComposerAddMenuItem[]
-  leading?: ReactNode
-  footer?: ReactNode
+  /** Slot rendered above the input frame — e.g. a consumer-owned queued-message list. */
   above?: ReactNode
-  className?: string
-  /** Accessible name for the textarea. */
+  /** Slot at the start of the toolbar row, after the add-context menu. */
+  leading?: ReactNode
+  /** Slot rendered below the frame — e.g. a model badge / keyboard hint. */
+  footer?: ReactNode
+  /** Accessible name for the textarea and the surrounding group. */
   inputLabel?: string
   addContextLabel?: string
   sendLabel?: string
   stopLabel?: string
-  queueLabel?: string
+  /** Announced politely to assistive tech while `sending` is true. */
+  busyLabel?: string
   uploadFilesLabel?: string
   commandsLabel?: string
 }
 
-export function Composer({
-  value,
-  onChange,
-  onSubmit,
-  onStop,
-  sending = false,
-  placeholder = 'Ask anything — / for commands, paste or attach files',
-  disabled = false,
-  compacting = false,
-  attachments = [],
-  onRemoveAttachment,
-  onAttachFiles,
-  onPasteImages,
-  commands = [],
-  queuedMessages = [],
-  onUpdateQueuedMessage,
-  onRemoveQueuedMessage,
-  onResumeQueuedMessages,
-  resumingQueuedMessages = false,
-  addMenu,
-  leading,
-  footer,
-  above,
-  className,
-  inputLabel = 'Message',
-  addContextLabel = 'Add context',
-  sendLabel = 'Send',
-  stopLabel = 'Stop',
-  queueLabel = 'Queued messages',
-  uploadFilesLabel = 'Upload files',
-  commandsLabel = 'Commands',
-}: ComposerProps) {
-  const ref = useRef<HTMLTextAreaElement>(null)
+/**
+ * Presentational chat input: a growing textarea, an attachment strip, an
+ * optional slash-command palette, and a send/stop control. Fully controlled
+ * (`value` / `onChange` / `onSubmit`). Anything stateful a specific host
+ * needs around it — a queued-message list, a "compacting" lock — is the
+ * consumer's job; render it through `above` / `footer`.
+ *
+ * The forwarded ref points at the textarea (the element a host wants to
+ * focus after a send); `...rest` spreads onto the outer wrapper `<div>`.
+ */
+export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function Composer(
+  {
+    value,
+    onChange,
+    onSubmit,
+    onStop,
+    sending = false,
+    placeholder = 'Write a message…',
+    disabled = false,
+    attachments = [],
+    onRemoveAttachment,
+    onAttachFiles,
+    onPasteImages,
+    commands = [],
+    addMenu,
+    above,
+    leading,
+    footer,
+    className,
+    inputLabel = 'Message',
+    addContextLabel = 'Add context',
+    sendLabel = 'Send',
+    stopLabel = 'Stop',
+    busyLabel = 'Sending…',
+    uploadFilesLabel = 'Upload files',
+    commandsLabel = 'Commands',
+    ...rest
+  },
+  forwardedRef,
+) {
+  const innerRef = useRef<HTMLTextAreaElement | null>(null)
+  const setRef = useCallback(
+    (node: HTMLTextAreaElement | null) => {
+      innerRef.current = node
+      if (typeof forwardedRef === 'function') forwardedRef(node)
+      else if (forwardedRef) forwardedRef.current = node
+    },
+    [forwardedRef],
+  )
+
   const inputId = useId()
+  const listboxId = useId()
+  const optionId = (index: number) => `${listboxId}-opt-${index}`
+
   const [palette, setPalette] = useState({ token: '', index: 0, dismissed: false })
-  const [editingQueuedId, setEditingQueuedId] = useState<string | null>(null)
-  const [editingQueuedText, setEditingQueuedText] = useState('')
 
   const typedCommand = /^\/([a-z0-9-_]*)$/i.exec(value.trimStart())?.[1]
   const commandsDismissed =
     typedCommand !== undefined && palette.token === typedCommand && palette.dismissed
-  const commandIndex = palette.token === (typedCommand ?? '') ? palette.index : 0
-  const commandMatches =
-    typedCommand === undefined || commandsDismissed
-      ? []
-      : commands.filter((command) =>
-          command.name.toLowerCase().startsWith(typedCommand.toLowerCase()),
-        )
+  const rawIndex = palette.token === (typedCommand ?? '') ? palette.index : 0
 
-  useEffect(() => {
-    const el = ref.current
+  const commandMatches = useMemo(() => {
+    if (typedCommand === undefined || commandsDismissed) return []
+    const query = typedCommand.toLowerCase()
+    return commands.filter((command) => command.name.toLowerCase().startsWith(query))
+  }, [typedCommand, commandsDismissed, commands])
+
+  const showPalette = commandMatches.length > 0
+  const commandIndex = Math.max(0, Math.min(rawIndex, commandMatches.length - 1))
+
+  useLayoutEffect(() => {
+    const el = innerRef.current
     if (!el) return
     el.style.height = 'auto'
     el.style.height = `${Math.min(el.scrollHeight, 180)}px`
@@ -149,38 +161,14 @@ export function Composer({
 
   const hasOkAttachment = attachments.some(
     (item) =>
-      (item.status ?? 'done') !== 'error' &&
-      (Boolean(item.previewUrl) || Boolean(item.name)),
+      (item.status ?? 'done') !== 'error' && (Boolean(item.previewUrl) || Boolean(item.name)),
   )
-  const canSend = !compacting && !disabled && (value.trim().length > 0 || hasOkAttachment)
+  const canSend = !disabled && (value.trim().length > 0 || hasOkAttachment)
 
   function applyCommand(name: string) {
     onChange(`/${name} `)
     setPalette({ token: typedCommand ?? '', index: 0, dismissed: true })
-    ref.current?.focus()
-  }
-
-  function beginQueuedEdit(turn: ComposerQueuedMessage) {
-    setEditingQueuedId(turn.id)
-    setEditingQueuedText(turn.text)
-  }
-
-  function cancelQueuedEdit() {
-    setEditingQueuedId(null)
-    setEditingQueuedText('')
-  }
-
-  function saveQueuedEdit() {
-    if (!editingQueuedId) return
-    const current = queuedMessages.find((turn) => turn.id === editingQueuedId)
-    if (!current) {
-      cancelQueuedEdit()
-      return
-    }
-    const text = editingQueuedText.trim()
-    if (!text && !current.attachments) return
-    onUpdateQueuedMessage?.(editingQueuedId, text)
-    cancelQueuedEdit()
+    innerRef.current?.focus()
   }
 
   const resolvedAddMenu: ComposerAddMenuItem[] =
@@ -190,7 +178,7 @@ export function Composer({
       : [])
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (commandMatches.length > 0) {
+    if (showPalette) {
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
         event.preventDefault()
         const step = event.key === 'ArrowDown' ? 1 : -1
@@ -219,130 +207,19 @@ export function Composer({
   }
 
   return (
-    <div className={cn('flex w-full flex-col', className)}>
+    <div className={cn('flex w-full flex-col', className)} {...rest}>
       {above}
-      {queuedMessages.length > 0 ? (
-          <div
-          className="mb-2 rounded-[var(--radius-lg)] border border-[var(--control-secondary-border)] bg-[var(--recessed-surface)] p-2"
-          aria-live="polite"
-        >
-          <div className="flex items-center justify-between gap-2 px-1 pb-1.5">
-            <Text as="span" variant="labelSmall" color="muted" className="uppercase tracking-wide">
-              {queueLabel}
-            </Text>
-            <div className="flex items-center gap-2">
-              <Text as="span" variant="labelSmall" color="muted" className="tabular-nums">
-                {queuedMessages.length}
-              </Text>
-              {onResumeQueuedMessages ? (
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="sm"
-                  disabled={sending || compacting || resumingQueuedMessages}
-                  onClick={onResumeQueuedMessages}
-                >
-                  {resumingQueuedMessages ? 'Resuming…' : 'Resume queued'}
-                </Button>
-              ) : null}
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            {queuedMessages.map((turn, index) => {
-              const editing = editingQueuedId === turn.id
-              return (
-                <div
-                  key={turn.id}
-                  className="rounded-[var(--radius-md)] border border-[var(--control-secondary-border)] bg-[var(--control-secondary-top)] p-1.5"
-                >
-                  {editing ? (
-                    <div className="flex items-end gap-1.5">
-                      <textarea
-                        rows={2}
-                        value={editingQueuedText}
-                        aria-label={`Edit queued message ${index + 1}`}
-                        className="aero-composer-input min-h-10 flex-1 px-2 py-1.5"
-                        onChange={(event) => setEditingQueuedText(event.target.value)}
-                        onKeyDown={(event) => {
-                          if (event.key === 'Escape') {
-                            event.preventDefault()
-                            cancelQueuedEdit()
-                          } else if (
-                            event.key === 'Enter' &&
-                            !event.shiftKey &&
-                            !event.nativeEvent.isComposing
-                          ) {
-                            event.preventDefault()
-                            saveQueuedEdit()
-                          }
-                        }}
-                      />
-                      <IconButton
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        aria-label={`Save queued message ${index + 1}`}
-                        icon={<CheckIcon />}
-                        onClick={saveQueuedEdit}
-                      />
-                      <IconButton
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        aria-label={`Cancel editing queued message ${index + 1}`}
-                        icon={<CloseIcon />}
-                        onClick={cancelQueuedEdit}
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5">
-                      <div
-                        className="min-w-0 flex-1 truncate text-xs text-[color:var(--text)]"
-                        title={turn.text || 'Attachment-only message'}
-                      >
-                        <span className="mr-1 text-[color:var(--text-muted)]">{index + 1}.</span>
-                        {turn.text || 'Attachment-only message'}
-                        {turn.attachments ? (
-                          <span className="ml-1 text-[10px] text-[color:var(--text-muted)]">
-                            · {turn.attachments} attachment{turn.attachments === 1 ? '' : 's'}
-                          </span>
-                        ) : null}
-                      </div>
-                      {onUpdateQueuedMessage ? (
-                        <IconButton
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          aria-label={`Edit queued message ${index + 1}`}
-                          icon={<PencilIcon />}
-                          onClick={() => beginQueuedEdit(turn)}
-                        />
-                      ) : null}
-                      {onRemoveQueuedMessage ? (
-                        <IconButton
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          aria-label={`Remove queued message ${index + 1}`}
-                          icon={<TrashIcon />}
-                          onClick={() => onRemoveQueuedMessage(turn.id)}
-                        />
-                      ) : null}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      ) : null}
 
       <div
         className="aero-composer-frame"
         role="group"
         aria-label={inputLabel}
-        aria-busy={sending || compacting || undefined}
+        aria-busy={sending || undefined}
       >
+        <span role="status" aria-live="polite" className="sr-only">
+          {sending ? busyLabel : ''}
+        </span>
+
         {attachments.length > 0 ? (
           <Attachment.Group className="px-3 pt-3">
             {attachments.map((item) => (
@@ -379,26 +256,28 @@ export function Composer({
           </Attachment.Group>
         ) : null}
 
-        {commandMatches.length > 0 ? (
+        {showPalette ? (
           <div
+            id={listboxId}
             className="aero-popover-panel relative mx-2 mt-2 w-auto min-w-0"
             role="listbox"
             aria-label={commandsLabel}
           >
             {commandMatches.map((command, index) => (
-              <button
+              <div
                 key={command.name}
-                type="button"
+                id={optionId(index)}
                 role="option"
                 aria-selected={index === commandIndex}
                 data-active={index === commandIndex}
                 className="aero-composer-command"
+                onMouseDown={(event) => event.preventDefault()}
                 onMouseEnter={() =>
                   setPalette({ token: typedCommand ?? '', index, dismissed: false })
                 }
                 onClick={() => applyCommand(command.name)}
               >
-                <span className="shrink-0 font-[family-name:var(--font-mono)] text-xs text-[color:var(--text)]">
+                <span className="shrink-0 [font-family:var(--font-mono)] text-xs text-[color:var(--text)]">
                   /{command.name}
                 </span>
                 {command.description ? (
@@ -406,20 +285,25 @@ export function Composer({
                     {command.description}
                   </span>
                 ) : null}
-              </button>
+              </div>
             ))}
           </div>
         ) : null}
 
         <textarea
-          ref={ref}
+          ref={setRef}
           id={inputId}
           rows={1}
           value={value}
           placeholder={placeholder}
-          disabled={disabled || compacting}
+          disabled={disabled}
           autoComplete="off"
           aria-label={inputLabel}
+          role={showPalette ? 'combobox' : undefined}
+          aria-expanded={showPalette || undefined}
+          aria-controls={showPalette ? listboxId : undefined}
+          aria-activedescendant={showPalette ? optionId(commandIndex) : undefined}
+          aria-autocomplete={showPalette ? 'list' : undefined}
           className="aero-composer-input px-4 pt-3.5 pb-2"
           onChange={(event) => onChange(event.target.value)}
           onPaste={(event) => {
@@ -486,12 +370,12 @@ export function Composer({
       </div>
 
       {footer ? (
-        <div className="mt-2 flex items-center justify-between gap-2 px-1 font-[family-name:var(--font-body)] text-[length:var(--type-label-md)] text-[color:var(--text)]">
+        <div className="mt-2 flex items-center justify-between gap-2 px-1 [font-family:var(--font-body)] text-[length:var(--type-label-md)] text-[color:var(--text)]">
           {footer}
         </div>
       ) : null}
     </div>
   )
-}
+})
 
 Composer.displayName = 'Composer'

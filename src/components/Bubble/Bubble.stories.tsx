@@ -22,7 +22,7 @@ export const Variants: Story = {
       <Bubble variant="outline">
         <Bubble.Content>Outline bubble</Bubble.Content>
       </Bubble>
-      <Bubble variant="destructive">
+      <Bubble variant="danger">
         <Bubble.Content>Something went wrong.</Bubble.Content>
       </Bubble>
     </Bubble.Group>

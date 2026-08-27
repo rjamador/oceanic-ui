@@ -5,6 +5,5 @@ export type {
   ComposerAttachmentKind,
   ComposerAttachmentStatus,
   ComposerCommand,
-  ComposerQueuedMessage,
   ComposerAddMenuItem,
 } from './Composer'
