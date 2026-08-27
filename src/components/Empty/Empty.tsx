@@ -11,6 +11,12 @@ import { Text } from '../Text'
 
 export type EmptyProps = HTMLAttributes<HTMLDivElement>
 
+/**
+ * The placeholder shown where content would be — an empty inbox, no search
+ * results, a fresh list. A centred, dashed, recessed panel. Compose from
+ * `Empty.Header` (holding `Empty.Media` + `Empty.Title` + `Empty.Description`)
+ * and an optional `Empty.Content` for actions below.
+ */
 const EmptyRoot = forwardRef<HTMLDivElement, EmptyProps>(({ className, ...rest }, ref) => {
   return <div ref={ref} data-slot="empty" className={cn('aero-empty', className)} {...rest} />
 })

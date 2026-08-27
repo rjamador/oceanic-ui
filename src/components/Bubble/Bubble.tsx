@@ -47,10 +47,24 @@ const BubbleGroup = forwardRef<HTMLDivElement, BubbleGroupProps>(
 BubbleGroup.displayName = 'Bubble.Group'
 
 export interface BubbleProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Surface style: `user` (raised, primary tint), `assistant` (recessed,
+   * neutral), `outline`, `ghost` (unstyled), `danger`.
+   * @default assistant
+   */
   variant?: BubbleVariant
+  /**
+   * `end` right-aligns the bubble within its column.
+   * @default start
+   */
   align?: BubbleAlign
 }
 
+/**
+ * A single speech bubble. Put the text in `Bubble.Content` and, optionally,
+ * a reaction pill in `Bubble.Reactions`; stack a run with `Bubble.Group`.
+ * The variant styles `Bubble.Content`, so a `className` on it still wins.
+ */
 const BubbleRoot = forwardRef<HTMLDivElement, BubbleProps>(
   ({ variant = 'assistant', align = 'start', className, ...rest }, ref) => {
     return (

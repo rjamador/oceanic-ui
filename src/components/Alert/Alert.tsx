@@ -26,8 +26,20 @@ export type AlertVariant = NonNullable<VariantProps<typeof alertVariants>['varia
 export interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
     VariantProps<typeof alertVariants> {
+  /**
+   * Tone of the message. `danger` renders as an assertive live region
+   * (`role="alert"`); the rest are polite (`role="status"`).
+   * @default info
+   */
+  variant?: AlertVariant
+  /** Bold lead line above the body. */
   title?: ReactNode
+  /** When provided, a dismiss button is shown that calls this on click. */
   onDismiss?: () => void
+  /**
+   * Accessible name for the dismiss button.
+   * @default Dismiss
+   */
   dismissLabel?: string
 }
 
@@ -37,6 +49,13 @@ function defaultIcon(variant: AlertVariant) {
   return <InfoIcon size={18} />
 }
 
+/**
+ * A persistent inline message — a banner that stays on the page, as opposed
+ * to a `Toast` that appears and leaves. Carries a status icon for its
+ * `variant`, an optional `title`, body `children`, and an optional dismiss
+ * button. It announces itself to assistive tech (politely, or assertively
+ * for `danger`).
+ */
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
   ({ variant = 'info', title, onDismiss, dismissLabel = 'Dismiss', className, children, ...rest }, ref) => {
     return (

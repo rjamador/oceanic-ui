@@ -443,13 +443,33 @@ function hasHeaderChild(children: ReactNode): boolean {
 }
 
 export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'onCopy'> {
+  /** The source. Line endings are normalised and a single trailing newline is trimmed. */
   code: string
+  /** Language id or alias (`ts`, `tsx`, `py`, `sh`…) for highlighting and the header chip. */
   language?: string
+  /** Filename / caption shown in the header. Presence of `title` or `language` is what draws the header. */
   title?: string
+  /**
+   * Show the language chip in the header.
+   * @default true
+   */
   showLang?: boolean
+  /**
+   * Show a line-number gutter.
+   * @default false
+   */
   showLineNumbers?: boolean
+  /**
+   * Number of the first line (for a snippet excerpted from a larger file).
+   * @default 1
+   */
   startLine?: number
+  /** Lines to emphasise — an array (`[2, 3]`) or a spec string (`"2-4,7"`). */
   highlightedLines?: CodeBlockLineSpec
+  /**
+   * Wrap long lines instead of scrolling horizontally.
+   * @default false
+   */
   wrap?: boolean
   /**
    * Pre-tokenized source, one entry per line of `code`, to render instead
@@ -458,19 +478,38 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ti
    * and collapse); a length mismatch just renders those lines untokenized.
    */
   tokens?: CodeBlockToken[][]
+  /** Collapse to this many lines with a "Show more" toggle. Omit for no collapsing. */
   maxLines?: number
+  /** Controlled expanded state for the collapse toggle. */
   expanded?: boolean
+  /**
+   * Uncontrolled initial expanded state.
+   * @default false
+   */
   defaultExpanded?: boolean
   onExpandedChange?: (expanded: boolean) => void
+  /** @default Copy code */
   copyLabel?: string
+  /** @default Copied */
   copiedLabel?: string
+  /** @default Show more */
   showMoreLabel?: string
+  /** @default Show less */
   showLessLabel?: string
-  /** Accessible name for the region. Defaults to "{language} code". */
+  /** Accessible name for the region. Defaults to `"{language} code"`. */
   label?: string
+  /** Called with the copied text after a successful clipboard write. */
   onCopy?: (value: string) => void
 }
 
+/**
+ * A read-only source display: a raised panel with a recessed code well, an
+ * optional header (filename + language chip + copy button), line numbers,
+ * line highlighting, and collapse. Highlighting is a small built-in
+ * tokenizer for common languages; pass `tokens` to plug in Shiki / Prism
+ * instead. For a custom header, compose `CodeBlock.Header` with
+ * `CodeBlock.Title` / `CodeBlock.Language` / `CodeBlock.Copy`.
+ */
 const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
   (
     {

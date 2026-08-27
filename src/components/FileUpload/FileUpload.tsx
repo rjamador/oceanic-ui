@@ -7,11 +7,22 @@ import { Text } from '../Text'
 
 export interface FileUploadProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size' | 'onChange'> {
+  /**
+   * Dropzone prompt text (also the file input's accessible name).
+   * @default Drop files here, or click to browse
+   */
   label?: string
+  /** Secondary line under the box (accepted types, size limit…), linked via `aria-describedby`. */
   helperText?: string
+  /** Called with the selected/dropped files. `multiple` and `accept` are forwarded to the native input. */
   onFiles?: (files: File[]) => void
 }
 
+/**
+ * A click-or-drop file picker: a dashed dropzone wrapping a visually hidden
+ * `<input type="file">`. Presentational — it hands you `File[]` via
+ * `onFiles` and does not upload or track state itself.
+ */
 export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
   (
     {
