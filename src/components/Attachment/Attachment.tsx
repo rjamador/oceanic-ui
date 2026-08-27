@@ -51,6 +51,9 @@ const AttachmentRoot = forwardRef<HTMLDivElement, AttachmentProps>(
         data-state={state}
         data-size={size}
         data-orientation={orientation}
+        // Announce a transition into the error state; the failure detail
+        // is carried by Attachment.Description.
+        role={state === 'error' ? 'status' : undefined}
         className={cn(attachmentVariants({ size, orientation }), className)}
         {...rest}
       />

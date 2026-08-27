@@ -249,6 +249,7 @@ const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
         }}
         id={ctx.contentId}
         role="menu"
+        tabIndex={-1}
         aria-labelledby={ctx.triggerId}
         className={cn(menuContentVariants({ side, align: resolvedAlign }), className)}
         onKeyDown={handleKeyDown}

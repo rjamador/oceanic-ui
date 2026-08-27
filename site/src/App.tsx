@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { PmProvider } from './lib/pm'
+import { PmProvider } from './lib/pm-provider'
 import { TopBar } from './sections/TopBar'
 import { Hero } from './sections/Hero'
 import { Facts } from './sections/Facts'

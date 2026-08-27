@@ -13,7 +13,6 @@ import {
   useMemo,
   useRef,
   type HTMLAttributes,
-  type KeyboardEvent,
   type MouseEvent,
   type ReactElement,
   type ReactNode,
@@ -157,7 +156,7 @@ export interface PopoverContentProps
     VariantProps<typeof popoverContentVariants> {}
 
 const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
-  ({ className, side = 'bottom', align = 'start', onKeyDown, ...rest }, ref) => {
+  ({ className, side = 'bottom', align = 'start', ...rest }, ref) => {
     const ctx = usePopoverContext('Content')
     const localRef = useRef<HTMLDivElement | null>(null)
     const resolvedAlign = useEdgeAlign(ctx.open, localRef, align ?? 'start')
@@ -169,13 +168,7 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
 
     if (!ctx.open) return null
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDown?.(event)
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        ctx.setOpen(false)
-      }
-    }
+    // Escape is handled by useDismissable (document-level) on the root.
 
     return (
       <div
@@ -189,7 +182,6 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         tabIndex={-1}
         aria-labelledby={ctx.triggerId}
         className={cn(popoverContentVariants({ side, align: resolvedAlign }), className)}
-        onKeyDown={handleKeyDown}
         {...rest}
       />
     )

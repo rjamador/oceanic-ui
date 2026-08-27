@@ -24,6 +24,18 @@ describe('Alert', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Upload failed')
   })
 
+  it('keeps a warning alert polite (overridable via role)', () => {
+    const { rerender } = render(<Alert variant="warning">Unsaved changes</Alert>)
+    expect(screen.getByRole('status')).toBeInTheDocument()
+
+    rerender(
+      <Alert variant="warning" role="alert">
+        Unsaved changes
+      </Alert>,
+    )
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+  })
+
   it('dismisses from the keyboard', async () => {
     const user = userEvent.setup()
     const onDismiss = vi.fn()
