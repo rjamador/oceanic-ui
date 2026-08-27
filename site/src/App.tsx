@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { PmProvider } from './lib/pm'
 import { TopBar } from './sections/TopBar'
 import { Hero } from './sections/Hero'
@@ -10,7 +11,7 @@ import { Footer } from './sections/Footer'
 
 /** Full-bleed tinted band with hairline top/bottom — used to seat the
     "workspace" sections (the ones framed in an application window). */
-function Band({ children }: { children: React.ReactNode }) {
+function Band({ children }: { children: ReactNode }) {
   return (
     <div className="border-y border-[var(--line)] bg-[var(--panel-surface,#f7fcff)]">{children}</div>
   )

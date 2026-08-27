@@ -16,6 +16,10 @@ export default defineConfig({
       { find: 'oceanic-ui/styles.css', replacement: lib('styles.css') },
       { find: /^oceanic-ui$/, replacement: lib('index.js') },
     ],
+    // The aliased library resolves `react` from the repo-root node_modules
+    // while the site resolves its own — two copies, which breaks hooks in
+    // the production bundle ("reading 'useState' of null"). Force one.
+    dedupe: ['react', 'react-dom'],
   },
   server: { port: 5174 },
 })
