@@ -264,6 +264,7 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
             aria-label={commandsLabel}
           >
             {commandMatches.map((command, index) => (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/interactive-supports-focus -- listbox options in an aria-activedescendant combobox are managed from the textarea, not individually focusable; the click handler is a pointer convenience on top of the textarea's arrow/Enter keyboard handling.
               <div
                 key={command.name}
                 id={optionId(index)}

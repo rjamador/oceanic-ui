@@ -573,6 +573,7 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
           <pre
             id={contentId}
             dir="ltr"
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- the source well scrolls; a keyboard user must be able to focus it to scroll long/wide code.
             tabIndex={0}
             className={cn(
               'aero-code-block-body p-3',

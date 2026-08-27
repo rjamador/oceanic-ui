@@ -21,6 +21,19 @@ describe('Attachment', () => {
     expect(screen.getByText('notes.txt')).toBeInTheDocument()
   })
 
+  it('announces the error state', () => {
+    render(
+      <Attachment state="error">
+        <Attachment.Content>
+          <Attachment.Title>photo.png</Attachment.Title>
+          <Attachment.Description>Upload failed</Attachment.Description>
+        </Attachment.Content>
+      </Attachment>,
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent('Upload failed')
+  })
+
   it('invokes the remove action from the keyboard', async () => {
     const user = userEvent.setup()
     const onRemove = vi.fn()

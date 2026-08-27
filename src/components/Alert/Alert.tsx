@@ -42,6 +42,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     return (
       <div
         ref={ref}
+        // `danger` interrupts (assertive); `warning`/`info`/`success` are
+        // polite. Pass `role` yourself to override for a specific case.
         role={variant === 'danger' ? 'alert' : 'status'}
         className={cn(alertVariants({ variant }), className)}
         {...rest}
