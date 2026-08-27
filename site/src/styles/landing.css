@@ -139,11 +139,11 @@ main {
   margin: 0;
   color: var(--ink);
 }
+/* type (size + colour) comes from <Text variant="bodyLarge" color="muted"> */
 .hero__sub {
+  display: block;
   max-width: 40rem;
   margin: 22px auto 0;
-  color: var(--muted);
-  font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem);
 }
 .hero__cta {
   display: flex;
@@ -341,17 +341,12 @@ main {
   padding-top: 20px;
   border-top: 2px solid var(--ink);
 }
+/* type comes from <Text variant="headingSmall"> / <Text variant="bodyMedium" color="muted"> */
 .principles h3 {
-  font-family: var(--font-display, 'Baloo 2', sans-serif);
-  font-weight: 600;
-  font-size: 1.2rem;
   margin: 16px 0 8px;
-  color: var(--ink);
 }
 .principles p {
   margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
 }
 .principles code {
   font-size: 0.85em;
@@ -471,10 +466,10 @@ main {
 .quickstart__switch {
   margin-bottom: 18px;
 }
+/* type comes from <Text variant="bodySmall" color="muted"> */
 .quickstart__note {
+  display: block;
   margin: 16px 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
 }
 .quickstart__note code {
   font-size: 0.85em;

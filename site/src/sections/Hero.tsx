@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react'
-import { Button, SegmentedControl } from 'oceanic-ui'
+import { Button, SegmentedControl, Text } from 'oceanic-ui'
 import { PM_ADD, PMS, usePm, type Pm } from '../lib/pm'
 import { scrollToHash } from '../lib/constants'
 
@@ -24,12 +24,11 @@ export function Hero() {
         <br />
         rebuilt for the web.
       </h1>
-      <p className="hero__sub reveal" style={step(3)}>
-        26 accessible React components in the spirit of Java Swing&rsquo;s Ocean
-        theme &mdash; cool near&#8288;-&#8288;white gradients, restrained rounding,
-        a soft glow instead of gloss. Precompiled CSS, tree&#8288;-&#8288;shakeable,
-        WCAG&nbsp;AA contrast.
-      </p>
+      <Text variant="bodyLarge" color="muted" className="hero__sub reveal" style={step(3)}>
+        26 accessible React components in the spirit of Java Swing&rsquo;s Ocean theme &mdash; cool
+        near&#8288;-&#8288;white gradients, restrained rounding, a soft glow instead of gloss.
+        Precompiled CSS, tree&#8288;-&#8288;shakeable, WCAG&nbsp;AA contrast.
+      </Text>
       <div className="hero__cta reveal" style={step(4)}>
         <Button size="lg" onClick={() => scrollToHash('#start')}>
           Get started
