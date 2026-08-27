@@ -6,6 +6,28 @@ afterEach(() => {
   cleanup()
 })
 
+// jsdom ships neither of these; Floating UI's autoUpdate reaches for both
+// (and degrades quietly when they throw, but the noise isn't worth it).
+if (!('ResizeObserver' in globalThis)) {
+  globalThis.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  } as unknown as typeof ResizeObserver
+}
+if (!('matchMedia' in window)) {
+  window.matchMedia = ((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  })) as unknown as typeof window.matchMedia
+}
+
 // jsdom doesn't implement <dialog>'s showModal()/close() (they require
 // layout, which jsdom deliberately skips) — polyfill just enough of the
 // behavior Dialog.tsx relies on: toggling `open` and firing the `close`

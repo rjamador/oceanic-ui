@@ -44,7 +44,7 @@ A fast checklist for reviewing or building UI in this library. Read
 |---|---|
 | Keep a component presentational — props in, JSX out | Fetch data, read a router, or reach for app-level state inside a library component |
 | Support controlled *and* uncontrolled usage when a component has internal state | Force a consumer into one state-management style |
-| Ask before reaching for a new dependency | Add a library for something CSS or a native HTML element already covers |
+| Ask before reaching for a new dependency (exception: `@floating-ui/react` for any positioned layer) | Add a library for something CSS or a native HTML element already covers; hand-roll overlay positioning instead of using Floating UI |
 
 ## The one-line version
 

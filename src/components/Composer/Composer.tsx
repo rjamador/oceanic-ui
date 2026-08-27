@@ -323,7 +323,7 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
         <div className="flex items-center justify-between gap-2 px-2.5 pb-2.5">
           <div className="relative z-20 flex min-w-0 items-center gap-1 overflow-visible">
             {resolvedAddMenu.length > 0 ? (
-              <Menu>
+              <Menu side="top" align="start">
                 <Menu.Trigger>
                   <IconButton
                     type="button"
@@ -333,7 +333,7 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
                     icon={<PlusIcon />}
                   />
                 </Menu.Trigger>
-                <Menu.Content side="top" align="start">
+                <Menu.Content>
                   {resolvedAddMenu.map((item) => (
                     <Menu.Item key={item.label} onSelect={item.onSelect}>
                       {item.icon}

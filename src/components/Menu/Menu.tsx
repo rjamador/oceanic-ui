@@ -8,36 +8,58 @@ import {
   forwardRef,
   isValidElement,
   useContext,
-  useEffect,
   useId,
   useMemo,
   useRef,
   useState,
-  useCallback,
   type ButtonHTMLAttributes,
   type HTMLAttributes,
-  type KeyboardEvent,
   type MouseEvent,
+  type MutableRefObject,
   type ReactElement,
   type ReactNode,
+  type Ref,
 } from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
+
+import {
+  FloatingFocusManager,
+  FloatingList,
+  FloatingPortal,
+  autoUpdate,
+  flip,
+  offset,
+  shift,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+  useListItem,
+  useListNavigation,
+  useMergeRefs,
+  useRole,
+  useTypeahead,
+} from '@floating-ui/react'
 
 import { useControllableState } from '@/hooks/useControllableState'
-import { useDismissable } from '@/hooks/useDismissable'
-import { useEdgeAlign } from '@/hooks/useEdgeAlign'
 import { cn } from '@/lib/cn'
+import { toPlacement, type OverlayAlign, type OverlaySide } from '@/lib/placement'
 
-export type MenuSide = 'top' | 'bottom'
-export type MenuAlign = 'start' | 'end'
+export type MenuSide = OverlaySide
+export type MenuAlign = OverlayAlign
 
 interface MenuContextValue {
   open: boolean
   setOpen: (open: boolean) => void
-  triggerId: string
-  contentId: string
-  highlighted: number
-  setHighlighted: (index: number) => void
+  labelId: string
+  activeIndex: number | null
+  refs: ReturnType<typeof useFloating>['refs']
+  floatingStyles: ReturnType<typeof useFloating>['floatingStyles']
+  context: ReturnType<typeof useFloating>['context']
+  elementsRef: MutableRefObject<Array<HTMLButtonElement | null>>
+  labelsRef: MutableRefObject<Array<string | null>>
+  getReferenceProps: ReturnType<typeof useInteractions>['getReferenceProps']
+  getFloatingProps: ReturnType<typeof useInteractions>['getFloatingProps']
+  getItemProps: ReturnType<typeof useInteractions>['getItemProps']
 }
 
 const MenuContext = createContext<MenuContextValue | null>(null)
@@ -54,212 +76,150 @@ export interface MenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
+  side?: MenuSide
+  align?: MenuAlign
   children: ReactNode
 }
 
-const MenuRoot = forwardRef<HTMLDivElement, MenuProps>(
-  ({ open, defaultOpen = false, onOpenChange, className, children, ...rest }, ref) => {
-    const [current, setCurrent] = useControllableState({
-      value: open,
-      defaultValue: defaultOpen,
-      onChange: onOpenChange,
-    })
-    const [highlighted, setHighlighted] = useState(0)
-    const triggerId = useId()
-    const contentId = useId()
-    const rootRef = useRef<HTMLDivElement | null>(null)
-    const wasOpen = useRef(false)
+function MenuRoot({
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  side = 'bottom',
+  align = 'start',
+  className,
+  children,
+  ...rest
+}: MenuProps) {
+  const [current, setCurrent] = useControllableState({
+    value: open,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  })
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const labelId = useId()
+  const elementsRef = useRef<Array<HTMLButtonElement | null>>([])
+  const labelsRef = useRef<Array<string | null>>([])
 
-    const setOpen = useCallback(
-      (next: boolean) => {
-        if (next) setHighlighted(0)
-        setCurrent(next)
-      },
-      [setCurrent],
-    )
+  const floating = useFloating({
+    open: current,
+    onOpenChange: (next) => {
+      setCurrent(next)
+      if (!next) setActiveIndex(null)
+    },
+    placement: toPlacement(side, align),
+    whileElementsMounted: autoUpdate,
+    middleware: [offset(8), flip({ padding: 8 }), shift({ padding: 8 })],
+  })
 
-    useDismissable({
+  const click = useClick(floating.context)
+  const dismiss = useDismiss(floating.context)
+  const role = useRole(floating.context, { role: 'menu' })
+  const listNavigation = useListNavigation(floating.context, {
+    listRef: elementsRef,
+    activeIndex,
+    onNavigate: setActiveIndex,
+    loop: true,
+    focusItemOnOpen: true,
+  })
+  const typeahead = useTypeahead(floating.context, {
+    listRef: labelsRef,
+    activeIndex,
+    onMatch: current ? setActiveIndex : undefined,
+  })
+
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
+    click,
+    dismiss,
+    role,
+    listNavigation,
+    typeahead,
+  ])
+
+  const contextValue = useMemo<MenuContextValue>(
+    () => ({
       open: current,
-      onDismiss: () => setOpen(false),
-      rootRef,
-    })
+      setOpen: setCurrent,
+      labelId,
+      activeIndex,
+      refs: floating.refs,
+      floatingStyles: floating.floatingStyles,
+      context: floating.context,
+      elementsRef,
+      labelsRef,
+      getReferenceProps,
+      getFloatingProps,
+      getItemProps,
+    }),
+    [
+      current,
+      setCurrent,
+      labelId,
+      activeIndex,
+      floating.refs,
+      floating.floatingStyles,
+      floating.context,
+      getReferenceProps,
+      getFloatingProps,
+      getItemProps,
+    ],
+  )
 
-    useEffect(() => {
-      if (wasOpen.current && !current) {
-        // Restore focus to the trigger only when the close left focus
-        // inside the menu (Escape, Tab, selecting an item) — not when the
-        // user clicked another control on the page.
-        const active = document.activeElement
-        if (!active || active === document.body || rootRef.current?.contains(active)) {
-          document.getElementById(triggerId)?.focus()
-        }
-      }
-      wasOpen.current = current
-    }, [current, triggerId])
-
-    const contextValue = useMemo<MenuContextValue>(
-      () => ({ open: current, setOpen, triggerId, contentId, highlighted, setHighlighted }),
-      [current, setOpen, triggerId, contentId, highlighted],
-    )
-
-    return (
-      <MenuContext.Provider value={contextValue}>
-        <div
-          ref={(node) => {
-            rootRef.current = node
-            if (typeof ref === 'function') ref(node)
-            else if (ref) ref.current = node
-          }}
-          className={cn('relative inline-flex', className)}
-          {...rest}
-        >
-          {children}
-        </div>
-      </MenuContext.Provider>
-    )
-  },
-)
+  return (
+    <MenuContext.Provider value={contextValue}>
+      <div className={cn('contents', className)} {...rest}>
+        {children}
+      </div>
+    </MenuContext.Provider>
+  )
+}
 MenuRoot.displayName = 'Menu'
 
+type TriggerChildProps = { ref?: Ref<HTMLElement>; id?: string }
+
 export interface MenuTriggerProps {
-  children: ReactElement<{
-    id?: string
-    onClick?: (event: MouseEvent<HTMLElement>) => void
-    'aria-expanded'?: boolean
-    'aria-haspopup'?: boolean | 'menu'
-    'aria-controls'?: string
-  }>
+  children: ReactElement<TriggerChildProps>
 }
 
 function MenuTrigger({ children }: MenuTriggerProps) {
   const ctx = useMenuContext('Trigger')
+  const childRef = isValidElement(children)
+    ? (children as ReactElement<TriggerChildProps>).props.ref
+    : undefined
+  const ref = useMergeRefs([ctx.refs.setReference, childRef])
+
   if (!isValidElement(children)) return children
 
   return cloneElement(children, {
-    id: children.props.id ?? ctx.triggerId,
-    'aria-expanded': ctx.open,
-    'aria-haspopup': 'menu',
-    'aria-controls': ctx.open ? ctx.contentId : undefined,
-    onClick: (event: MouseEvent<HTMLElement>) => {
-      children.props.onClick?.(event)
-      if (!event.defaultPrevented) ctx.setOpen(!ctx.open)
-    },
+    ...ctx.getReferenceProps(children.props),
+    ref,
+    id: children.props.id ?? ctx.labelId,
   })
 }
 
-const menuContentVariants = cva('aero-popover-panel flex flex-col', {
-  variants: {
-    side: {
-      top: 'bottom-[calc(100%+8px)]',
-      bottom: 'top-[calc(100%+8px)]',
-    },
-    align: {
-      start: 'left-0',
-      end: 'right-0',
-    },
-  },
-  defaultVariants: {
-    side: 'bottom',
-    align: 'start',
-  },
-})
+export type MenuContentProps = HTMLAttributes<HTMLDivElement>
 
-export interface MenuContentProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof menuContentVariants> {}
+function MenuContent({ className, ...rest }: MenuContentProps) {
+  const ctx = useMenuContext('Content')
 
-const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(
-  ({ className, side = 'bottom', align = 'start', onKeyDown, children, ...rest }, ref) => {
-    const ctx = useMenuContext('Content')
-    const localRef = useRef<HTMLDivElement | null>(null)
-    const resolvedAlign = useEdgeAlign(ctx.open, localRef, align ?? 'start')
-    const typeahead = useRef({ buffer: '', timer: 0 })
+  if (!ctx.open) return null
 
-    useEffect(() => {
-      if (!ctx.open) return
-      const first = localRef.current?.querySelector<HTMLButtonElement>(
-        '[role="menuitem"]:not(:disabled)',
-      )
-      first?.focus()
-    }, [ctx.open])
-
-    if (!ctx.open) return null
-
-    const itemsOf = (root: HTMLElement) =>
-      Array.from(root.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)'))
-
-    const focusItem = (items: HTMLButtonElement[], index: number) => {
-      ctx.setHighlighted(index)
-      items[index]?.focus()
-    }
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDown?.(event)
-      const items = itemsOf(event.currentTarget)
-      if (items.length === 0) return
-
-      switch (event.key) {
-        case 'ArrowDown':
-        case 'ArrowUp': {
-          event.preventDefault()
-          const step = event.key === 'ArrowDown' ? 1 : -1
-          focusItem(items, (ctx.highlighted + step + items.length) % items.length)
-          return
-        }
-        case 'Home':
-          event.preventDefault()
-          focusItem(items, 0)
-          return
-        case 'End':
-          event.preventDefault()
-          focusItem(items, items.length - 1)
-          return
-        case 'Tab':
-          // APG: Tab closes the menu. Focus returns to the trigger.
-          event.preventDefault()
-          ctx.setOpen(false)
-          return
-        case 'Escape':
-          event.preventDefault()
-          ctx.setOpen(false)
-          return
-      }
-
-      // Type-ahead: jump to the next item whose label starts with what was typed.
-      if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
-        const state = typeahead.current
-        window.clearTimeout(state.timer)
-        state.buffer += event.key.toLowerCase()
-        state.timer = window.setTimeout(() => {
-          state.buffer = ''
-        }, 500)
-        const match = items.findIndex((item) =>
-          (item.textContent ?? '').trim().toLowerCase().startsWith(state.buffer),
-        )
-        if (match >= 0) focusItem(items, match)
-      }
-    }
-
-    return (
-      <div
-        ref={(node) => {
-          localRef.current = node
-          if (typeof ref === 'function') ref(node)
-          else if (ref) ref.current = node
-        }}
-        id={ctx.contentId}
-        role="menu"
-        tabIndex={-1}
-        aria-labelledby={ctx.triggerId}
-        className={cn(menuContentVariants({ side, align: resolvedAlign }), className)}
-        onKeyDown={handleKeyDown}
-        {...rest}
-      >
-        {children}
-      </div>
-    )
-  },
-)
+  return (
+    <FloatingPortal>
+      <FloatingFocusManager context={ctx.context} modal={false} returnFocus>
+        <FloatingList elementsRef={ctx.elementsRef} labelsRef={ctx.labelsRef}>
+          <div
+            ref={ctx.refs.setFloating}
+            aria-labelledby={ctx.labelId}
+            style={ctx.floatingStyles}
+            className={cn('aero-popover-panel flex flex-col', className)}
+            {...ctx.getFloatingProps(rest)}
+          />
+        </FloatingList>
+      </FloatingFocusManager>
+    </FloatingPortal>
+  )
+}
 MenuContent.displayName = 'Menu.Content'
 
 export interface MenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -267,8 +227,11 @@ export interface MenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
-  ({ className, disabled, onClick, onSelect, onMouseEnter, children, ...rest }, ref) => {
+  ({ className, disabled, onClick, onSelect, children, ...rest }, forwardedRef) => {
     const ctx = useMenuContext('Item')
+    const item = useListItem()
+    const ref = useMergeRefs([item.ref, forwardedRef])
+    const isActive = ctx.activeIndex === item.index
 
     return (
       <button
@@ -276,23 +239,17 @@ const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
         type="button"
         role="menuitem"
         disabled={disabled}
+        tabIndex={isActive ? 0 : -1}
         className={cn('aero-menu-item', className)}
-        onMouseEnter={(event) => {
-          onMouseEnter?.(event)
-          const menu = event.currentTarget.closest('[role="menu"]')
-          if (!menu) return
-          const items = Array.from(
-            menu.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)'),
-          )
-          ctx.setHighlighted(items.indexOf(event.currentTarget))
-        }}
-        onClick={(event) => {
-          onClick?.(event)
-          if (event.defaultPrevented || disabled) return
-          onSelect?.()
-          ctx.setOpen(false)
-        }}
-        {...rest}
+        {...ctx.getItemProps({
+          ...rest,
+          onClick: (event: MouseEvent<HTMLButtonElement>) => {
+            onClick?.(event)
+            if (event.defaultPrevented || disabled) return
+            onSelect?.()
+            ctx.setOpen(false)
+          },
+        })}
       >
         {children}
       </button>
