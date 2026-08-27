@@ -71,6 +71,15 @@ export {
   InfoIcon,
   WarningIcon,
   CopyIcon,
+  SearchIcon,
+  ClockIcon,
+  FolderIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  SlidersIcon,
+  TerminalIcon,
+  GlobeIcon,
+  NodesIcon,
 } from './components/Icon'
 export type { IconProps } from './components/Icon'
 
@@ -199,3 +208,30 @@ export type {
   CodeBlockLineSpec,
   CodeBlockToken,
 } from './components/CodeBlock'
+
+export { Pulse } from './components/Pulse'
+export type { PulseProps, PulseSize } from './components/Pulse'
+
+export { Thinking } from './components/Thinking'
+export type { ThinkingProps } from './components/Thinking'
+
+export { ToolCall } from './components/ToolCall'
+export type {
+  ToolCallProps,
+  ToolCallStatus,
+  ToolCallGroupProps,
+} from './components/ToolCall'
+
+export { Sidebar } from './components/Sidebar'
+export type {
+  SidebarProps,
+  SidebarHeaderProps,
+  SidebarBodyProps,
+  SidebarFooterProps,
+  SidebarNavProps,
+  SidebarNavItemProps,
+  SidebarSectionProps,
+  SidebarSectionHeaderProps,
+  SidebarGroupProps,
+  SidebarItemProps,
+} from './components/Sidebar'

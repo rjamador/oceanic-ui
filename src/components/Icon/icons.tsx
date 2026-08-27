@@ -173,3 +173,83 @@ export function CopyIcon(props: IconProps) {
     </Icon>
   )
 }
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </Icon>
+  )
+}
+
+export function ClockIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </Icon>
+  )
+}
+
+export function FolderIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M3 7a1 1 0 011-1h5l2 2h9a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1z" />
+    </Icon>
+  )
+}
+
+export function ChevronsLeftIcon(props: IconProps) {
+  return (
+    <Icon strokeWidth={2.5} {...props}>
+      <path d="M11 6l-6 6 6 6M19 6l-6 6 6 6" />
+    </Icon>
+  )
+}
+
+export function ChevronsRightIcon(props: IconProps) {
+  return (
+    <Icon strokeWidth={2.5} {...props}>
+      <path d="M13 6l6 6-6 6M5 6l6 6-6 6" />
+    </Icon>
+  )
+}
+
+export function SlidersIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 6h16M4 12h16M4 18h16" />
+      <path d="M9 4v4M15 10v4M11 16v4" />
+    </Icon>
+  )
+}
+
+export function TerminalIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 17l6-5-6-5M12 19h8" />
+    </Icon>
+  )
+}
+
+export function GlobeIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
+    </Icon>
+  )
+}
+
+export function NodesIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="6" cy="7" r="2.5" />
+      <circle cx="18" cy="7" r="2.5" />
+      <circle cx="12" cy="17" r="2.5" />
+      <path d="M8 8.5l2.5 6.5M16 8.5l-2.5 6.5M8.5 7h7" />
+    </Icon>
+  )
+}

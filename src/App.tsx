@@ -15,7 +15,7 @@ import { Dialog } from './components/Dialog'
 import { Divider } from './components/Divider'
 import { Empty } from './components/Empty'
 import { FileUpload } from './components/FileUpload'
-import { FolderOpenIcon, CheckIcon, CloseIcon, FileIcon, GearIcon } from './components/Icon'
+import { FolderOpenIcon, CheckIcon, CloseIcon, FileIcon, GearIcon, PencilIcon, SearchIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { List } from './components/List'
@@ -23,9 +23,11 @@ import { Marker } from './components/Marker'
 import { Message } from './components/Message'
 import { Pagination } from './components/Pagination'
 import { Progress } from './components/Progress'
+import { Pulse } from './components/Pulse'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
+import { Sidebar } from './components/Sidebar'
 import { Skeleton } from './components/Skeleton'
 import { Slider } from './components/Slider'
 import { Spinner } from './components/Spinner'
@@ -33,6 +35,8 @@ import { Switch } from './components/Switch'
 import { Tabs } from './components/Tabs'
 import { Text, type TextVariant } from './components/Text'
 import { Textarea } from './components/Textarea'
+import { Thinking } from './components/Thinking'
+import { ToolCall } from './components/ToolCall'
 import { Tooltip } from './components/Tooltip'
 import { useToast } from './components/Toast'
 
@@ -126,6 +130,65 @@ function App() {
           <Alert title="Composer">
             Slash commands, attachments, and a send/stop swap — Ocean chrome, zest layout.
           </Alert>
+        </section>
+
+        <section
+          style={{
+            display: 'flex',
+            height: 420,
+            overflow: 'hidden',
+            border: '1px solid var(--hairline)',
+            borderRadius: 'var(--radius-lg)',
+            background: 'var(--panel-surface-strong)',
+          }}
+        >
+          <Sidebar aria-label="Chat history" style={{ height: '100%' }}>
+            <Sidebar.Header />
+            <Sidebar.Body>
+              <Sidebar.Nav>
+                <Sidebar.NavItem icon={<PencilIcon size={16} />}>New chat</Sidebar.NavItem>
+                <Sidebar.NavItem icon={<SearchIcon size={16} />}>Search</Sidebar.NavItem>
+              </Sidebar.Nav>
+              <Sidebar.Section>
+                <Sidebar.SectionHeader>Recent</Sidebar.SectionHeader>
+                <Sidebar.Item active avatar={<Avatar name="Ocean" size="sm" />} meta="8m">
+                  Hi
+                </Sidebar.Item>
+                <Sidebar.Item avatar={<Avatar name="Ocean" size="sm" />} meta={<Pulse size="xs" active aria-hidden />}>
+                  Wire the composer
+                </Sidebar.Item>
+              </Sidebar.Section>
+            </Sidebar.Body>
+            <Sidebar.Footer>
+              <Sidebar.Item
+                avatar={<Avatar name="You" size="sm" />}
+                description="oceanic-ui"
+              >
+                You
+              </Sidebar.Item>
+            </Sidebar.Footer>
+          </Sidebar>
+          <div
+            style={{
+              display: 'flex',
+              minWidth: 0,
+              flex: 1,
+              flexDirection: 'column',
+              gap: 'var(--space-3)',
+              padding: 'var(--space-4)',
+            }}
+          >
+            <Thinking streaming>The composer already owns send and stop.</Thinking>
+            <ToolCall name="read_file" target="src/components/Composer/Composer.tsx">
+              {`export function Composer() { … }`}
+            </ToolCall>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <Pulse active label="Thinking" />
+              <Text as="span" variant="labelMedium">
+                Working
+              </Text>
+            </div>
+          </div>
         </section>
 
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>

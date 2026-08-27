@@ -44,6 +44,10 @@ lands or a new one gets added to the plan — it's the source of truth for
 - ~~Marker~~
 - ~~IconSwap~~
 - ~~CodeBlock~~
+- ~~Pulse~~ (thinking mark)
+- ~~Thinking~~ (reasoning disclosure)
+- ~~ToolCall~~ / ~~ToolCall.Group~~
+- ~~Sidebar~~ (chat history rail)
 
 ## Planned
 

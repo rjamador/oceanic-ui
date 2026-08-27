@@ -15,4 +15,9 @@
   --radius-md: 6px;
   --radius-lg: 10px;
   --radius-full: 999px;
+
+  /* Chat sidebar rail — open vs icon-only. Not on the spacing scale
+     because they describe a layout region, not padding. */
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 44px;
 }

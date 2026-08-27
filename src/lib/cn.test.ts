@@ -15,6 +15,10 @@ describe('cn', () => {
     expect(cn('aero-btn-primary', 'bg-red-500')).toBe('bg-red-500')
   })
 
+  it('lets a consumer bg-* class fully replace aero-pulse', () => {
+    expect(cn('aero-pulse', 'bg-red-500')).toBe('bg-red-500')
+  })
+
   it('keeps the bubble-content base but drops its variant modifier when overridden', () => {
     expect(cn('aero-bubble-content aero-bubble-content-user', 'bg-red-500')).toBe(
       'aero-bubble-content bg-red-500',

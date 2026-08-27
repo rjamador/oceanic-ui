@@ -21,14 +21,20 @@ import {
   Marker,
   Menu,
   Message,
+  PencilIcon,
   Popover,
   Progress,
+  Pulse,
+  SearchIcon,
   SegmentedControl,
   Select,
+  Sidebar,
   Slider,
   Switch,
   Tabs,
   Text,
+  Thinking,
+  ToolCall,
   Tooltip,
   useToast,
 } from 'oceanic-ui'
@@ -107,6 +113,37 @@ export const Example = () => (
                     <Empty.Description>Ask about this project to get started.</Empty.Description>
                   </Empty.Header>
                 </Empty>
+              </Demo>
+              <Demo code='<Pulse active /> · <Thinking streaming>'>
+                <div className="flex w-full flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <Pulse active label="Thinking" />
+                    <Avatar name="Ocean" size="sm" />
+                  </div>
+                  <Thinking streaming>The composer already owns send and stop.</Thinking>
+                </div>
+              </Demo>
+              <Demo code='<ToolCall name="read_file" target="…" />'>
+                <ToolCall name="read_file" target="src/lib/cn.ts" defaultOpen>
+                  export function cn() {'{'} … {'}'}
+                </ToolCall>
+              </Demo>
+              <Demo code='<Sidebar> — Zest layout, Ocean chrome'>
+                <Sidebar className="h-72" aria-label="Chat history">
+                  <Sidebar.Header />
+                  <Sidebar.Body>
+                    <Sidebar.Nav>
+                      <Sidebar.NavItem icon={<PencilIcon size={16} />}>New chat</Sidebar.NavItem>
+                      <Sidebar.NavItem icon={<SearchIcon size={16} />}>Search</Sidebar.NavItem>
+                    </Sidebar.Nav>
+                    <Sidebar.Section>
+                      <Sidebar.SectionHeader>Recent</Sidebar.SectionHeader>
+                      <Sidebar.Item active avatar={<Avatar name="Ocean" size="sm" />} meta="8m">
+                        Hi
+                      </Sidebar.Item>
+                    </Sidebar.Section>
+                  </Sidebar.Body>
+                </Sidebar>
               </Demo>
             </div>
           </Tabs.Panel>
