@@ -9,15 +9,6 @@ export function Example() {
 }
 `
 
-const DIFF = `--- a/Button.tsx
-+++ b/Button.tsx
-@@ -1,6 +1,7 @@
- export function Button() {
--  return <button>Save</button>
-+  return <button type="button">Save</button>
- }
-`
-
 const LONG = Array.from({ length: 16 }, (_, index) => `line ${index + 1} — const value = ${index}`).join(
   '\n',
 )
@@ -57,13 +48,27 @@ export const Highlighted: Story = {
   },
 }
 
-export const Diff: Story = {
+export const CustomTokens: Story = {
   args: {
-    code: DIFF,
-    language: 'diff',
-    title: 'Button.tsx',
-    showLineNumbers: true,
+    code: 'SELECT * FROM ocean WHERE depth > 100',
+    title: 'query.sql',
   },
+  render: (args) => (
+    <CodeBlock
+      {...args}
+      tokens={[
+        [
+          { content: 'SELECT', kind: 'keyword' },
+          { content: ' * ' },
+          { content: 'FROM', kind: 'keyword' },
+          { content: ' ocean ' },
+          { content: 'WHERE', kind: 'keyword' },
+          { content: ' depth > ' },
+          { content: '100', kind: 'number' },
+        ],
+      ]}
+    />
+  ),
 }
 
 export const PinnedCopy: Story = {

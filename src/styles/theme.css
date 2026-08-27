@@ -1156,61 +1156,51 @@
   border: 1px solid transparent;
 }
 
-@utility aero-bubble-user {
-  & [data-slot='bubble-content'] {
-    background: linear-gradient(
-      180deg,
-      var(--control-primary-top) 0%,
-      var(--control-primary-mid) 48%,
-      var(--control-primary-bottom) 100%
-    );
-    color: var(--text);
-    border-color: var(--control-primary-border);
-    box-shadow:
-      inset 0 1px 0 var(--control-highlight),
-      0 2px 4px var(--recessed-shadow);
-  }
+@utility aero-bubble-content-user {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  color: var(--text);
+  border-color: var(--control-primary-border);
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight),
+    0 2px 4px var(--recessed-shadow);
 }
 
-@utility aero-bubble-assistant {
-  & [data-slot='bubble-content'] {
-    background: linear-gradient(
-      180deg,
-      var(--control-secondary-top) 0%,
-      var(--control-secondary-mid) 48%,
-      var(--control-secondary-bottom) 100%
-    );
-    color: var(--text);
-    border-color: var(--control-secondary-border);
-    box-shadow:
-      inset 0 1px 0 var(--control-highlight-strong),
-      0 2px 4px var(--recessed-shadow);
-  }
+@utility aero-bubble-content-assistant {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-mid) 48%,
+    var(--control-secondary-bottom) 100%
+  );
+  color: var(--text);
+  border-color: var(--control-secondary-border);
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight-strong),
+    0 2px 4px var(--recessed-shadow);
 }
 
-@utility aero-bubble-outline {
-  & [data-slot='bubble-content'] {
-    background: var(--panel-surface);
-    color: var(--text);
-    border-color: var(--control-secondary-border);
-  }
+@utility aero-bubble-content-outline {
+  background: var(--panel-surface);
+  color: var(--text);
+  border-color: var(--control-secondary-border);
 }
 
-@utility aero-bubble-ghost {
-  & [data-slot='bubble-content'] {
-    background: transparent;
-    border-color: transparent;
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-  }
+@utility aero-bubble-content-ghost {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
-@utility aero-bubble-danger {
-  & [data-slot='bubble-content'] {
-    background: var(--danger-tint);
-    border-color: var(--danger);
-  }
+@utility aero-bubble-content-danger {
+  background: var(--danger-tint);
+  border-color: var(--danger);
 }
 
 /* IconSwap — two stacked icon layers, only one visible at a time. */

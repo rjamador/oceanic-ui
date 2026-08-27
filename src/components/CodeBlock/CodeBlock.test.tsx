@@ -68,6 +68,20 @@ describe('CodeBlock', () => {
     expect(lines[0]).not.toHaveClass('aero-code-block-line-highlight')
   })
 
+  it('renders consumer-supplied tokens instead of the built-in tokenizer', () => {
+    render(
+      <CodeBlock
+        code={'let x = 1'}
+        language="rust"
+        tokens={[[{ content: 'let ', kind: 'regex' }, { content: 'x = 1' }]]}
+      />,
+    )
+
+    const custom = document.querySelector('[data-kind="regex"]')
+    expect(custom).toHaveTextContent('let')
+    expect(document.querySelector('[data-kind="keyword"]')).toBeNull()
+  })
+
   it('reveals collapsed lines from the keyboard', async () => {
     const user = userEvent.setup()
     render(

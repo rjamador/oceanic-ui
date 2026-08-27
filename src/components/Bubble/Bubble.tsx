@@ -2,31 +2,33 @@
    compound component (Bubble.Content/Reactions), which by convention
    (see "Compound components" in docs/creating-components.md) lives in one
    file per component folder. */
-import { forwardRef, type HTMLAttributes } from 'react'
+import { createContext, forwardRef, useContext, type HTMLAttributes } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/cn'
 
-const bubbleVariants = cva(
-  'group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1 data-[align=end]:self-end',
-  {
-    variants: {
-      variant: {
-        user: 'aero-bubble-user',
-        assistant: 'aero-bubble-assistant',
-        outline: 'aero-bubble-outline',
-        ghost: 'aero-bubble-ghost',
-        danger: 'aero-bubble-danger',
-      },
-    },
-    defaultVariants: {
-      variant: 'assistant',
+const bubbleContentVariants = cva('aero-bubble-content', {
+  variants: {
+    variant: {
+      user: 'aero-bubble-content-user',
+      assistant: 'aero-bubble-content-assistant',
+      outline: 'aero-bubble-content-outline',
+      ghost: 'aero-bubble-content-ghost',
+      danger: 'aero-bubble-content-danger',
     },
   },
-)
+  defaultVariants: {
+    variant: 'assistant',
+  },
+})
 
-export type BubbleVariant = NonNullable<VariantProps<typeof bubbleVariants>['variant']>
+export type BubbleVariant = NonNullable<VariantProps<typeof bubbleContentVariants>['variant']>
 export type BubbleAlign = 'start' | 'end'
+
+// The variant surface is styled on Bubble.Content itself (not via a
+// descendant selector from the root) so a consumer's className on Content
+// still wins through tailwind-merge.
+const BubbleVariantContext = createContext<BubbleVariant>('assistant')
 
 export type BubbleGroupProps = HTMLAttributes<HTMLDivElement>
 
@@ -44,23 +46,27 @@ const BubbleGroup = forwardRef<HTMLDivElement, BubbleGroupProps>(
 )
 BubbleGroup.displayName = 'Bubble.Group'
 
-export interface BubbleProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof bubbleVariants> {
+export interface BubbleProps extends HTMLAttributes<HTMLDivElement> {
+  variant?: BubbleVariant
   align?: BubbleAlign
 }
 
 const BubbleRoot = forwardRef<HTMLDivElement, BubbleProps>(
   ({ variant = 'assistant', align = 'start', className, ...rest }, ref) => {
     return (
-      <div
-        ref={ref}
-        data-slot="bubble"
-        data-variant={variant}
-        data-align={align}
-        className={cn(bubbleVariants({ variant }), className)}
-        {...rest}
-      />
+      <BubbleVariantContext.Provider value={variant}>
+        <div
+          ref={ref}
+          data-slot="bubble"
+          data-variant={variant}
+          data-align={align}
+          className={cn(
+            'group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1 data-[align=end]:self-end',
+            className,
+          )}
+          {...rest}
+        />
+      </BubbleVariantContext.Provider>
     )
   },
 )
@@ -70,11 +76,16 @@ export type BubbleContentProps = HTMLAttributes<HTMLDivElement>
 
 const BubbleContent = forwardRef<HTMLDivElement, BubbleContentProps>(
   ({ className, ...rest }, ref) => {
+    const variant = useContext(BubbleVariantContext)
     return (
       <div
         ref={ref}
         data-slot="bubble-content"
-        className={cn('aero-bubble-content group-data-[align=end]/bubble:self-end', className)}
+        className={cn(
+          bubbleContentVariants({ variant }),
+          'group-data-[align=end]/bubble:self-end',
+          className,
+        )}
         {...rest}
       />
     )

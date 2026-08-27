@@ -29,7 +29,13 @@ export type CodeBlockLineSpec = number[] | string
 
 export interface CodeBlockToken {
   content: string
-  kind?: 'keyword' | 'string' | 'comment' | 'number'
+  /**
+   * Rendered as `data-kind` on the token span. The built-in tokenizer only
+   * emits `keyword` / `string` / `comment` / `number` (the kinds `theme.css`
+   * styles), but a consumer passing their own `tokens` may use any string
+   * and target it with their own CSS.
+   */
+  kind?: 'keyword' | 'string' | 'comment' | 'number' | (string & {})
 }
 
 type CodeBlockContextValue = {
@@ -445,6 +451,13 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ti
   startLine?: number
   highlightedLines?: CodeBlockLineSpec
   wrap?: boolean
+  /**
+   * Pre-tokenized source, one entry per line of `code`, to render instead
+   * of the built-in tokenizer — pipe Shiki / Prism / Highlight.js output
+   * through this. `code` is still required (used for copy, line numbers,
+   * and collapse); a length mismatch just renders those lines untokenized.
+   */
+  tokens?: CodeBlockToken[][]
   maxLines?: number
   expanded?: boolean
   defaultExpanded?: boolean
@@ -469,6 +482,7 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
       startLine = 1,
       highlightedLines,
       wrap = false,
+      tokens,
       maxLines,
       expanded: expandedProp,
       defaultExpanded = false,
@@ -497,8 +511,8 @@ const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockProps>(
     const source = useMemo(() => normalizeCode(code), [code])
     const allLines = useMemo(() => source.split('\n'), [source])
     const tokenizedLines = useMemo(
-      () => allLines.map((line) => tokenizeLine(line, resolvedLanguage)),
-      [allLines, resolvedLanguage],
+      () => tokens ?? allLines.map((line) => tokenizeLine(line, resolvedLanguage)),
+      [tokens, allLines, resolvedLanguage],
     )
     const highlighted = useMemo(() => parseLineSpec(highlightedLines), [highlightedLines])
     const collapsible = Boolean(maxLines && allLines.length > maxLines)
