@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Keep in sync with index.html canonical if the deploy URL changes.
+Sitemap: https://oceanic-ui.netlify.app/sitemap.xml

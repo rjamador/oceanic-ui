@@ -3,18 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      SEO / social. Deploy URL is https://oceanic-ui.netlify.app — if it ever
+      changes, update it here plus public/robots.txt and public/sitemap.xml.
+    -->
     <title>oceanic-ui — the Ocean look &amp; feel, for React</title>
     <meta
       name="description"
       content="oceanic-ui is a small, accessible React component library in the spirit of Java Swing's Ocean theme: 26 components, cool near-white gradients, a soft glow instead of gloss, precompiled CSS, tree-shakeable, WCAG AA."
     />
+    <link rel="canonical" href="https://oceanic-ui.netlify.app/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Roberto Amador" />
+    <meta name="theme-color" content="#eaf6ff" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="oceanic-ui" />
+    <meta property="og:title" content="oceanic-ui — the Ocean look & feel, for React" />
+    <meta
+      property="og:description"
+      content="A small, accessible React component library in the spirit of Java Swing's Ocean theme. 26 components, precompiled CSS, tree-shakeable, WCAG AA."
+    />
+    <meta property="og:url" content="https://oceanic-ui.netlify.app/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://oceanic-ui.netlify.app/logo.png" />
+    <meta property="og:image:width" content="256" />
+    <meta property="og:image:height" content="256" />
+    <meta property="og:image:alt" content="oceanic-ui logo — a stylized blue ocean wave" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="oceanic-ui — the Ocean look & feel, for React" />
+    <meta
+      name="twitter:description"
+      content="A small, accessible React component library in the spirit of Java Swing's Ocean theme. 26 components, precompiled CSS, tree-shakeable, WCAG AA."
+    />
+    <meta name="twitter:image" content="https://oceanic-ui.netlify.app/logo.png" />
+
     <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Sora:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://oceanic-ui.netlify.app/#website",
+            "url": "https://oceanic-ui.netlify.app/",
+            "name": "oceanic-ui",
+            "description": "The Ocean look & feel from Java Swing, rebuilt for React.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "oceanic-ui",
+            "description": "A small, accessible React component library in the spirit of Java Swing's Ocean theme.",
+            "codeRepository": "https://github.com/rjamador/oceanic-ui",
+            "programmingLanguage": ["TypeScript", "CSS"],
+            "runtimePlatform": "React 19",
+            "license": "https://opensource.org/licenses/MIT",
+            "author": { "@type": "Person", "name": "Roberto Amador" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
