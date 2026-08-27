@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react'
-import { Button, SegmentedControl } from 'oceanic-ui'
+import { Button, SegmentedControl, Text } from 'oceanic-ui'
 import { PM_ADD, PMS, usePm, type Pm } from '../lib/pm'
 import { scrollToHash } from '../lib/constants'
 
@@ -22,14 +22,18 @@ export function Hero() {
       <h1 className="reveal" style={step(2)}>
         The Ocean look&nbsp;&amp;&nbsp;feel,
         <br />
-        rebuilt for the web.
+        rebuilt for the&nbsp;web.
       </h1>
-      <p className="hero__sub reveal" style={step(3)}>
-        26 accessible React components in the spirit of Java Swing&rsquo;s Ocean
-        theme &mdash; cool near&#8288;-&#8288;white gradients, restrained rounding,
-        a soft glow instead of gloss. Precompiled CSS, tree&#8288;-&#8288;shakeable,
-        WCAG&nbsp;AA contrast.
-      </p>
+      <Text
+        variant="bodyLarge"
+        color="muted"
+        className="reveal mx-auto mt-[22px] block max-w-[40rem]"
+        style={step(3)}
+      >
+        26 accessible React components in the spirit of Java Swing&rsquo;s Ocean theme &mdash; cool
+        near&#8288;-&#8288;white gradients, restrained rounding, a soft glow instead of gloss.
+        Precompiled CSS, tree&#8288;-&#8288;shakeable, WCAG&nbsp;AA contrast.
+      </Text>
       <div className="hero__cta reveal" style={step(4)}>
         <Button size="lg" onClick={() => scrollToHash('#start')}>
           Get started
@@ -63,10 +67,12 @@ function InstallStrip() {
         ))}
       </SegmentedControl>
       <div className="install__cmd">
-        <span className="install__prompt" aria-hidden="true">
-          $
+        <span className="install__scroll">
+          <span className="install__prompt" aria-hidden="true">
+            $
+          </span>
+          <code>{PM_ADD[pm]}</code>
         </span>
-        <code>{PM_ADD[pm]}</code>
         <button
           className="install__copy"
           onClick={() => {

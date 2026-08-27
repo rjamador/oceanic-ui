@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { SegmentedControl } from 'oceanic-ui'
+import { SegmentedControl, Text } from 'oceanic-ui'
 import { usePm, PM_ADD } from '../lib/pm'
 import { Window } from '../components/Window'
 import { SectionHead } from '../components/SectionHead'
@@ -41,7 +41,7 @@ export function Quickstart() {
   return (
     <section className="section" id="start">
       <SectionHead n="03" title="Add the stylesheet once" note="whichever fits your setup" />
-      <div className="quickstart__switch">
+      <div className="mb-[18px]">
         <SegmentedControl
           defaultValue="entry"
           aria-label="Where to import the styles"
@@ -53,10 +53,10 @@ export function Quickstart() {
       </div>
       <Window title={isEntry ? 'app/main.tsx' : 'src/index.css'}>
         <CodePane lines={isEntry ? entry : css} />
-        <p className="quickstart__note">
+        <Text variant="bodySmall" color="muted" className="quickstart__note mt-4 block">
           <code>styles.css</code> ships precompiled &mdash; every class the components use is already
           real CSS, so nothing has to scan <code>node_modules</code>. Bring your own preflight.
-        </p>
+        </Text>
       </Window>
     </section>
   )
