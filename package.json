@@ -23,6 +23,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:lib": "vite build --config vite.lib.config.ts && tailwindcss -i src/styles/build-entry.css -o dist/styles.css && node scripts/build-styles.mjs",
+    "build:site": "bun run build:lib && cd site && bun install && bun run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
