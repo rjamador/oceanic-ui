@@ -994,3 +994,491 @@
       0 0 0 3px var(--aero-accent-glow);
   }
 }
+
+/* Composer — recessed well (type here), so raised chips/buttons sit on
+   it instead of blending into another panel. */
+
+@utility aero-composer-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  border-radius: var(--radius-lg);
+  background: var(--control-secondary-bottom);
+  border: 1px solid var(--control-primary-border);
+  box-shadow:
+    inset 0 2px 6px var(--recessed-shadow),
+    inset 0 1px 0 var(--control-highlight-soft);
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:has(.aero-composer-input:focus-visible) {
+    border-color: var(--aero-accent);
+    box-shadow:
+      0 0 0 3px var(--aero-accent-glow),
+      inset 0 2px 6px var(--recessed-shadow);
+  }
+}
+
+@utility aero-composer-input {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  resize: none;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  line-height: 1.45;
+  caret-color: var(--text);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@utility aero-composer-command {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: background 0.15s ease;
+
+  &:hover,
+  &[data-active='true'] {
+    background: var(--hover-wash);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+/* Attachment chips — raised secondary controls, not another white panel. */
+
+@utility aero-attachment {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  background: var(--control-secondary-top);
+  border: 1px solid var(--control-primary-border);
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight-strong),
+    0 2px 6px var(--recessed-shadow);
+
+  &[data-state='idle'] {
+    border-style: dashed;
+    background: var(--recessed-surface);
+    box-shadow: inset 0 1px 3px var(--recessed-shadow);
+  }
+
+  &[data-state='error'] {
+    background: var(--danger-tint);
+    border-color: var(--danger);
+    box-shadow: none;
+  }
+
+  &:focus-within {
+    border-color: var(--aero-accent-strong);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 0 0 3px var(--aero-accent-glow),
+      0 2px 6px var(--recessed-shadow);
+  }
+}
+
+@utility aero-attachment-media {
+  position: relative;
+  display: flex;
+  aspect-ratio: 1;
+  width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  color: var(--sky-800);
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 48%,
+    var(--control-primary-bottom) 100%
+  );
+  border: 1px solid var(--control-primary-border);
+  box-shadow:
+    inset 0 1px 0 var(--control-highlight),
+    0 1px 2px var(--recessed-shadow);
+
+  &[data-variant='image'] img {
+    aspect-ratio: 1;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Chat bubbles — raised user (primary gradient) vs recessed assistant. */
+
+@utility aero-bubble-content {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  border: 1px solid transparent;
+}
+
+@utility aero-bubble-user {
+  & [data-slot='bubble-content'] {
+    background: linear-gradient(
+      180deg,
+      var(--control-primary-top) 0%,
+      var(--control-primary-mid) 48%,
+      var(--control-primary-bottom) 100%
+    );
+    color: var(--text);
+    border-color: var(--control-primary-border);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight),
+      0 2px 4px var(--recessed-shadow);
+  }
+}
+
+@utility aero-bubble-assistant {
+  & [data-slot='bubble-content'] {
+    background: linear-gradient(
+      180deg,
+      var(--control-secondary-top) 0%,
+      var(--control-secondary-mid) 48%,
+      var(--control-secondary-bottom) 100%
+    );
+    color: var(--text);
+    border-color: var(--control-secondary-border);
+    box-shadow:
+      inset 0 1px 0 var(--control-highlight-strong),
+      0 2px 4px var(--recessed-shadow);
+  }
+}
+
+@utility aero-bubble-outline {
+  & [data-slot='bubble-content'] {
+    background: var(--panel-surface);
+    color: var(--text);
+    border-color: var(--control-secondary-border);
+  }
+}
+
+@utility aero-bubble-ghost {
+  & [data-slot='bubble-content'] {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@utility aero-bubble-destructive {
+  & [data-slot='bubble-content'] {
+    background: var(--danger-tint);
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+}
+
+/* Popover / Menu — opaque panel with a real edge, never frosted glass. */
+
+@utility aero-popover-panel {
+  position: absolute;
+  z-index: var(--z-popover);
+  min-width: 180px;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--panel-surface);
+  border: 1px solid var(--control-secondary-border);
+  box-shadow: var(--panel-shadow);
+  color: var(--text);
+}
+
+@utility aero-menu-item {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+  gap: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+
+  &:hover,
+  &[data-highlighted='true'] {
+    background: var(--hover-wash);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+/* Alert / Banner — persistent counterpart to Toast. */
+
+@utility aero-alert {
+  display: flex;
+  width: 100%;
+  gap: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+}
+
+@utility aero-alert-info {
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 100%
+  );
+  border-color: var(--control-primary-border);
+}
+
+@utility aero-alert-success {
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-mid) 100%
+  );
+  border-color: var(--control-secondary-border);
+}
+
+@utility aero-alert-warning {
+  background: var(--control-primary-mid);
+  border-color: var(--control-primary-border);
+}
+
+@utility aero-alert-danger {
+  background: var(--danger-tint);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Empty state */
+
+@utility aero-empty {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--control-primary-border);
+  background: var(--sky-100);
+  box-shadow: inset 0 2px 6px var(--recessed-shadow);
+  padding: var(--space-6);
+  text-align: center;
+}
+
+@utility aero-empty-media {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--sky-700);
+  background: linear-gradient(
+    180deg,
+    var(--control-primary-top) 0%,
+    var(--control-primary-mid) 100%
+  );
+  border: 1px solid var(--control-primary-border);
+}
+
+/* File upload dropzone — recessed well, dashed until files land. */
+
+@utility aero-file-upload {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--control-primary-border);
+  background: var(--sky-100);
+  box-shadow: inset 0 2px 6px var(--recessed-shadow);
+  padding: var(--space-8) var(--space-4);
+  color: var(--text);
+  font-family: var(--font-body);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+
+  &:hover:not([data-disabled='true']) {
+    border-style: solid;
+    border-color: var(--aero-accent-strong);
+    color: var(--text);
+    box-shadow:
+      inset 0 1px 3px var(--recessed-shadow),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+
+  &[data-active='true'] {
+    border-style: solid;
+    border-color: var(--aero-accent-strong);
+    background: var(--control-primary-top);
+  }
+
+  &[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      inset 0 1px 3px var(--recessed-shadow),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+/* Code block — raised panel with a recessed source well (read, don't type). */
+
+@utility aero-code-block {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--panel-surface);
+  border: 1px solid var(--control-primary-border);
+  box-shadow: var(--panel-shadow);
+  color: var(--text);
+}
+
+@utility aero-code-block-header {
+  display: flex;
+  min-height: var(--space-8);
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--control-secondary-border);
+  background: linear-gradient(
+    180deg,
+    var(--control-secondary-top) 0%,
+    var(--control-secondary-bottom) 100%
+  );
+}
+
+@utility aero-code-block-language {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--control-primary-border);
+  background: var(--control-primary-mid);
+  padding: var(--space-1) var(--space-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+@utility aero-code-block-body {
+  position: relative;
+  margin: 0;
+  overflow: auto;
+  background: var(--recessed-surface);
+  box-shadow: inset 0 1px 3px var(--recessed-shadow);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--type-label-md);
+  line-height: 1.6;
+  tab-size: 2;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      inset 0 1px 3px var(--recessed-shadow),
+      0 0 0 3px var(--aero-accent-glow);
+  }
+}
+
+@utility aero-code-block-line-highlight {
+  background: color-mix(in srgb, var(--sky-300) 32%, transparent);
+  box-shadow: inset 3px 0 0 var(--sky-500);
+}
+
+@utility aero-code-block-diff-add {
+  background: color-mix(in srgb, var(--sky-400) 20%, transparent);
+}
+
+@utility aero-code-block-diff-remove {
+  background: var(--danger-tint);
+  color: var(--danger);
+}
+
+@utility aero-code-block-token {
+  &[data-kind='keyword'] {
+    color: var(--sky-800);
+    font-weight: var(--weight-medium);
+  }
+
+  &[data-kind='string'] {
+    color: var(--sky-700);
+  }
+
+  &[data-kind='comment'] {
+    color: var(--text-muted);
+  }
+
+  &[data-kind='number'] {
+    color: var(--sky-600);
+  }
+}
