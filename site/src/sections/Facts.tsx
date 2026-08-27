@@ -1,7 +1,9 @@
+import { COMPONENTS } from '../lib/constants'
+
 const FACTS = [
-  ['0', 'runtime dependencies'],
+  [String(COMPONENTS.length), 'components'],
   ['1', 'stylesheet, precompiled'],
-  ['26', 'components'],
+  ['~19 kB', 'gzipped, tree-shaken'],
   ['AA', 'WCAG contrast'],
   ['MIT', 'open source'],
 ]

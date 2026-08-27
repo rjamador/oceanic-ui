@@ -5,7 +5,11 @@ import { SectionHead } from '../components/SectionHead'
 export function ComponentIndex() {
   return (
     <section className="section" id="components">
-      <SectionHead n="04" title="Twenty-six components" note="one small entry point each" />
+      <SectionHead
+        n="04"
+        title={`${COMPONENTS.length} components`}
+        note="one small entry point each"
+      />
       <ul className="chips">
         {COMPONENTS.map((name) => (
           <li key={name}>
