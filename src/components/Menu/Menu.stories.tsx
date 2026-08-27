@@ -28,7 +28,28 @@ export const Default: Story = {
           <FolderOpenIcon size={16} />
           Open folder
         </Menu.Item>
+        <Menu.Item disabled>Paste from clipboard</Menu.Item>
       </Menu.Content>
     </Menu>
+  ),
+}
+
+/** Opens upward, right-aligned — arrow keys and first-letter type-ahead both work. */
+export const AlignEnd: Story = {
+  args: { children: null },
+  render: () => (
+    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: 200 }}>
+      <Menu side="top" align="end">
+        <Menu.Trigger>
+          <Button variant="secondary">Actions</Button>
+        </Menu.Trigger>
+        <Menu.Content>
+          <Menu.Item>Rename</Menu.Item>
+          <Menu.Item>Duplicate</Menu.Item>
+          <Menu.Item>Archive</Menu.Item>
+          <Menu.Item>Delete</Menu.Item>
+        </Menu.Content>
+      </Menu>
+    </div>
   ),
 }

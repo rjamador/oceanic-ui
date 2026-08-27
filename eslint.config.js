@@ -21,4 +21,13 @@ export default defineConfig([globalIgnores(['dist']), {
   languageOptions: {
     globals: globals.browser,
   },
+}, {
+  // Popover/Menu compose Floating UI's hooks, which hand back ref-shaped
+  // objects (`refs`, `context`) that are safe to read during render — that
+  // is the library's designed, compiler-checked usage. The new
+  // react-hooks/refs heuristic can't tell them apart from a bare useRef.
+  files: ['src/components/Popover/**', 'src/components/Menu/**'],
+  rules: {
+    'react-hooks/refs': 'off',
+  },
 }, ...storybook.configs["flat/recommended"]])

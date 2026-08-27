@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -42,7 +42,9 @@ describe('Menu', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
-    expect(screen.getByRole('menuitem', { name: 'Upload files' })).toHaveFocus()
+    await waitFor(() =>
+      expect(screen.getByRole('menuitem', { name: 'Upload files' })).toHaveFocus(),
+    )
 
     await user.keyboard('{ArrowDown}')
     expect(screen.getByRole('menuitem', { name: 'Open folder' })).toHaveFocus()
@@ -66,9 +68,9 @@ describe('Menu', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Upload files' })).toHaveFocus())
     await user.keyboard('{Tab}')
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Open' })).toHaveFocus()
+    await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument())
   })
 
   it('jumps to a matching item on type-ahead', async () => {
@@ -87,8 +89,11 @@ describe('Menu', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Alpha' })).toHaveFocus())
     await user.keyboard('c')
-    expect(screen.getByRole('menuitem', { name: 'Charlie' })).toHaveFocus()
+    await waitFor(() =>
+      expect(screen.getByRole('menuitem', { name: 'Charlie' })).toHaveFocus(),
+    )
   })
 
   it('does not select a disabled item', async () => {

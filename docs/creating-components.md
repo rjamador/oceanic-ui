@@ -230,10 +230,27 @@ export function TrashIcon(props: IconProps) {
 `icon` props on components (`IconButton`, etc.) take a rendered element,
 not a component reference — `icon={<CheckIcon />}`, not `icon={CheckIcon}`.
 
+## Floating / positioned components
+
+Anything that positions a layer against a trigger — `Popover`, `Menu`, and
+the planned `DatePicker` — builds on **`@floating-ui/react`** (a runtime
+`dependency`, not a peer). Don't hand-roll positioning, a collision/flip
+pass, outside-click dismissal, focus return, or roving-focus keyboard
+handling: compose Floating UI's hooks (`useFloating`, `useInteractions`,
+`useDismiss`, `useRole`, `useListNavigation`, `useTypeahead`) and its
+`FloatingPortal` / `FloatingFocusManager`. `Popover` is the reference.
+
+The public API stays ours: a `side` (`top`/`bottom`/`left`/`right`) +
+`align` (`start`/`center`/`end`) pair on the root, mapped to a Floating UI
+`placement` by `src/lib/placement.ts`. Floating UI is the one sanctioned
+exception to "ask before a new dependency" for this problem — reach for it,
+not a second positioning implementation.
+
 ## Reference implementation
 
 `Input` (recessed field) and `Button` (raised control) are the two
 canonical examples for a typical control — read those two before building
 a new component, they establish every pattern above in practice. For a
 compound component, see `Tabs`; for a provider/hook pair, see `Toast`; for
-the typography/icon primitives themselves, see `Text` and `Icon`.
+the typography/icon primitives themselves, see `Text` and `Icon`; for a
+floating layer, see `Popover` and `Menu`.

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
@@ -38,7 +38,7 @@ describe('Popover', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
-    expect(screen.getByRole('group', { name: 'Open' })).toHaveFocus()
+    await waitFor(() => expect(screen.getByRole('dialog', { name: 'Open' })).toHaveFocus())
   })
 
   it('does not yank focus back to the trigger when dismissed by an outside click', async () => {
