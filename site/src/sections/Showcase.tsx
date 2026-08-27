@@ -119,7 +119,7 @@ export function Showcase() {
                 </Card>
               </Demo>
               <Demo code='<Accordion.Item title="…" />'>
-                <Accordion className="demo-accordion">
+                <Accordion className="w-full">
                   <Accordion.Item title="What ships in the box" defaultOpen>
                     ESM, types, and one precompiled stylesheet.
                   </Accordion.Item>

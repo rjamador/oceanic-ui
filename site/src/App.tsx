@@ -13,7 +13,7 @@ import { Footer } from './sections/Footer'
     "workspace" sections (the ones framed in an application window). */
 function Band({ children }: { children: ReactNode }) {
   return (
-    <div className="border-y border-[var(--line)] bg-[var(--panel-surface,#f7fcff)]">{children}</div>
+    <div className="border-y border-[var(--line)] bg-[var(--panel-surface)]">{children}</div>
   )
 }
 

@@ -1,0 +1,7 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "tailwindCSS.experimental.configFile": {
+    "src/index.css": "src/**",
+    "site/src/styles/landing.css": "site/**"
+  }
+}

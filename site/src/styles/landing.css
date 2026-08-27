@@ -141,12 +141,6 @@ main {
   color: var(--ink);
   text-wrap: balance;
 }
-/* type (size + colour) comes from <Text variant="bodyLarge" color="muted"> */
-.hero__sub {
-  display: block;
-  max-width: 40rem;
-  margin: 22px auto 0;
-}
 .hero__cta {
   display: flex;
   gap: 12px;
@@ -331,34 +325,7 @@ main {
   gap: 16px;
   margin-top: 22px;
 }
-.demo {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 20px;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md, 6px);
-  background: var(--panel-surface, #f7fcff);
-}
-.demo__stage {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  min-height: 44px;
-  flex: 1;
-}
-.demo__code {
-  font-size: 11.5px;
-  color: var(--muted);
-  border-top: 1px dashed var(--line);
-  padding-top: 10px;
-  word-break: break-word;
-}
-.demo-accordion,
-.demo .demo__stage > * {
-  max-width: 100%;
-}
+/* .demo / .demo__stage / .demo__code now live as utilities in components/Demo.tsx */
 
 /* ---- principles -------------------------------------------------- */
 .principles {
@@ -366,11 +333,7 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 28px;
 }
-.principles article {
-  padding-top: 20px;
-  border-top: 2px solid var(--ink);
-}
-/* type comes from <Text variant="headingSmall"> / <Text variant="bodyMedium" color="muted"> */
+/* type + card spacing are on the <Text>/<article> in sections/Principles.tsx */
 .principles h3 {
   margin: 16px 0 8px;
 }
@@ -491,14 +454,6 @@ main {
 }
 .c-str {
   color: #1c7a54;
-}
-.quickstart__switch {
-  margin-bottom: 18px;
-}
-/* type comes from <Text variant="bodySmall" color="muted"> */
-.quickstart__note {
-  display: block;
-  margin: 16px 0 0;
 }
 .quickstart__note code {
   font-size: 0.85em;

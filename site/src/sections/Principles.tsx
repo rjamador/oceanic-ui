@@ -6,7 +6,7 @@ export function Principles() {
     <section className="section">
       <SectionHead n="02" title="A short design language" note="the whole thing fits on a napkin" />
       <div className="principles">
-        <article>
+        <article className="border-t-2 border-[var(--ink)] pt-5">
           <div className="pr-visual pr-glow">
             <span />
           </div>
@@ -18,7 +18,7 @@ export function Principles() {
             no sweep animations, nothing sitting on top of a control.
           </Text>
         </article>
-        <article>
+        <article className="border-t-2 border-[var(--ink)] pt-5">
           <div className="pr-visual pr-depth">
             <span className="raised" />
             <span className="recessed" />
@@ -31,7 +31,7 @@ export function Principles() {
             here&rdquo; from &ldquo;type here&rdquo; before you read a word.
           </Text>
         </article>
-        <article>
+        <article className="border-t-2 border-[var(--ink)] pt-5">
           <div className="pr-visual pr-opaque">
             <span className="a" />
             <span className="b" />

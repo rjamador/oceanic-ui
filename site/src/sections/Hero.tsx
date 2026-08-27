@@ -24,7 +24,12 @@ export function Hero() {
         <br />
         rebuilt for the&nbsp;web.
       </h1>
-      <Text variant="bodyLarge" color="muted" className="hero__sub reveal" style={step(3)}>
+      <Text
+        variant="bodyLarge"
+        color="muted"
+        className="reveal mx-auto mt-[22px] block max-w-[40rem]"
+        style={step(3)}
+      >
         26 accessible React components in the spirit of Java Swing&rsquo;s Ocean theme &mdash; cool
         near&#8288;-&#8288;white gradients, restrained rounding, a soft glow instead of gloss.
         Precompiled CSS, tree&#8288;-&#8288;shakeable, WCAG&nbsp;AA contrast.
