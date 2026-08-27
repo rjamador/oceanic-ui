@@ -8,7 +8,7 @@ export function TopBar() {
         <a className="brand" href="#top">
           <img src="/logo.png" alt="" width={26} height={26} />
           <span>oceanic&#8288;-&#8288;ui</span>
-          <Badge className="topbar__badge">v0.0.3</Badge>
+          <Badge className="topbar__badge">v0.0.4</Badge>
         </a>
         <nav className="topbar__nav">
           <a href="#components">Components</a>
