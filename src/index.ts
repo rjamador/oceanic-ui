@@ -58,6 +58,19 @@ export {
   ChevronLeftIcon,
   GearIcon,
   UserIcon,
+  PlusIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+  SquareIcon,
+  FileIcon,
+  FileTextIcon,
+  FolderOpenIcon,
+  ImageIcon,
+  PencilIcon,
+  TrashIcon,
+  InfoIcon,
+  WarningIcon,
+  CopyIcon,
 } from './components/Icon'
 export type { IconProps } from './components/Icon'
 
@@ -84,3 +97,105 @@ export type { AvatarProps, AvatarSize } from './components/Avatar'
 
 export { Pagination } from './components/Pagination'
 export type { PaginationProps } from './components/Pagination'
+
+export { Alert } from './components/Alert'
+export type { AlertProps, AlertVariant } from './components/Alert'
+
+export { Popover } from './components/Popover'
+export type {
+  PopoverProps,
+  PopoverSide,
+  PopoverAlign,
+  PopoverTriggerProps,
+  PopoverContentProps,
+} from './components/Popover'
+
+export { Menu } from './components/Menu'
+export type {
+  MenuProps,
+  MenuSide,
+  MenuAlign,
+  MenuTriggerProps,
+  MenuContentProps,
+  MenuItemProps,
+} from './components/Menu'
+
+export { Breadcrumb } from './components/Breadcrumb'
+export type { BreadcrumbProps, BreadcrumbItemProps } from './components/Breadcrumb'
+
+export { FileUpload } from './components/FileUpload'
+export type { FileUploadProps } from './components/FileUpload'
+
+export { Attachment } from './components/Attachment'
+export type {
+  AttachmentProps,
+  AttachmentSize,
+  AttachmentOrientation,
+  AttachmentState,
+  AttachmentMediaProps,
+  AttachmentContentProps,
+  AttachmentTitleProps,
+  AttachmentDescriptionProps,
+  AttachmentActionsProps,
+  AttachmentActionProps,
+  AttachmentGroupProps,
+} from './components/Attachment'
+
+export { Message } from './components/Message'
+export type {
+  MessageProps,
+  MessageAlign,
+  MessageGroupProps,
+  MessageAvatarProps,
+  MessageContentProps,
+  MessageHeaderProps,
+  MessageFooterProps,
+} from './components/Message'
+
+export { Bubble } from './components/Bubble'
+export type {
+  BubbleProps,
+  BubbleVariant,
+  BubbleAlign,
+  BubbleGroupProps,
+  BubbleContentProps,
+  BubbleReactionsProps,
+} from './components/Bubble'
+
+export { Empty } from './components/Empty'
+export type {
+  EmptyProps,
+  EmptyHeaderProps,
+  EmptyMediaProps,
+  EmptyMediaVariant,
+  EmptyTitleProps,
+  EmptyDescriptionProps,
+  EmptyContentProps,
+} from './components/Empty'
+
+export { Marker } from './components/Marker'
+export type { MarkerProps, MarkerVariant, MarkerIconProps, MarkerContentProps } from './components/Marker'
+
+export { IconSwap } from './components/IconSwap'
+export type { IconSwapProps } from './components/IconSwap'
+
+export { Composer } from './components/Composer'
+export type {
+  ComposerProps,
+  ComposerAttachmentItem,
+  ComposerAttachmentKind,
+  ComposerAttachmentStatus,
+  ComposerCommand,
+  ComposerAddMenuItem,
+} from './components/Composer'
+
+export { CodeBlock } from './components/CodeBlock'
+export type {
+  CodeBlockProps,
+  CodeBlockHeaderProps,
+  CodeBlockTitleProps,
+  CodeBlockLanguageProps,
+  CodeBlockCopyProps,
+  CodeBlockLineSpec,
+  CodeBlockToken,
+} from './components/CodeBlock'

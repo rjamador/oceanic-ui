@@ -1,17 +1,26 @@
 import { useState } from 'react'
 
 import { Accordion } from './components/Accordion'
+import { Alert } from './components/Alert'
 import { Avatar } from './components/Avatar'
 import { Badge } from './components/Badge'
+import { Breadcrumb } from './components/Breadcrumb'
+import { Bubble } from './components/Bubble'
 import { Button } from './components/Button'
 import { Card } from './components/Card'
 import { Checkbox } from './components/Checkbox'
+import { CodeBlock } from './components/CodeBlock'
+import { Composer, type ComposerAttachmentItem } from './components/Composer'
 import { Dialog } from './components/Dialog'
 import { Divider } from './components/Divider'
-import { CheckIcon, CloseIcon, GearIcon } from './components/Icon'
+import { Empty } from './components/Empty'
+import { FileUpload } from './components/FileUpload'
+import { FolderOpenIcon, CheckIcon, CloseIcon, FileIcon, GearIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { List } from './components/List'
+import { Marker } from './components/Marker'
+import { Message } from './components/Message'
 import { Pagination } from './components/Pagination'
 import { Progress } from './components/Progress'
 import { Radio } from './components/Radio'
@@ -44,6 +53,12 @@ const TEXT_VARIANTS: TextVariant[] = [
 function App() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [page, setPage] = useState(4)
+  const [composerValue, setComposerValue] = useState('')
+  const [composerSending, setComposerSending] = useState(false)
+  const [composerAttachments, setComposerAttachments] = useState<ComposerAttachmentItem[]>([
+    { id: 'demo-notes', name: 'notes.txt', detail: '12 KB', kind: 'file' },
+  ])
+  const [thread, setThread] = useState<string[]>(['Hi'])
   const toast = useToast()
 
   return (
@@ -99,6 +114,113 @@ function App() {
         >
           oceanic-ui <Badge variant="accent">Beta</Badge>
         </Text>
+
+        <section>
+          <Breadcrumb>
+            <Breadcrumb.Item href="#top">Home</Breadcrumb.Item>
+            <Breadcrumb.Item current>Playground</Breadcrumb.Item>
+          </Breadcrumb>
+        </section>
+
+        <section>
+          <Alert title="Composer">
+            Slash commands, attachments, and a send/stop swap — Ocean chrome, zest layout.
+          </Alert>
+        </section>
+
+        <Card padding="md" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+          {thread.length === 0 ? (
+            <Empty>
+              <Empty.Header>
+                <Empty.Media variant="icon">
+                  <FileIcon />
+                </Empty.Media>
+                <Empty.Title>No messages yet</Empty.Title>
+                <Empty.Description>Ask about this project to get started.</Empty.Description>
+              </Empty.Header>
+            </Empty>
+          ) : (
+            <Message.Group>
+              <Marker variant="separator">
+                <Marker.Content>Today</Marker.Content>
+              </Marker>
+              {thread.map((text, index) => (
+                <Message key={`${text}-${index}`} align="end">
+                  <Message.Avatar>
+                    <Avatar name="You" size="sm" />
+                  </Message.Avatar>
+                  <Message.Content>
+                    <Message.Header>You</Message.Header>
+                    <Bubble variant="user" align="end">
+                      <Bubble.Content>{text}</Bubble.Content>
+                    </Bubble>
+                  </Message.Content>
+                </Message>
+              ))}
+            </Message.Group>
+          )}
+          <Composer
+            value={composerValue}
+            onChange={setComposerValue}
+            sending={composerSending}
+            attachments={composerAttachments}
+            onRemoveAttachment={(id) =>
+              setComposerAttachments((items) => items.filter((item) => item.id !== id))
+            }
+            onAttachFiles={() =>
+              setComposerAttachments((items) => [
+                ...items,
+                { id: String(Date.now()), name: 'notes.txt', detail: '12 KB', kind: 'file' },
+              ])
+            }
+            commands={[
+              { name: 'plan', description: 'Write a step-by-step plan' },
+              { name: 'review', description: 'Review the current file' },
+            ]}
+            footer={
+              <>
+                <Text as="span" variant="labelMedium" className="inline-flex items-center gap-1.5">
+                  <FolderOpenIcon size={16} />
+                  oceanic-ui
+                </Text>
+                <Text as="span" variant="labelMedium" color="muted">
+                  Enter to send
+                </Text>
+              </>
+            }
+            onSubmit={() => {
+              const next = composerValue.trim()
+              if (!next && composerAttachments.length === 0) return
+              setComposerSending(true)
+              window.setTimeout(() => {
+                if (next) setThread((messages) => [...messages, next])
+                setComposerValue('')
+                setComposerAttachments([])
+                setComposerSending(false)
+              }, 800)
+            }}
+            onStop={() => setComposerSending(false)}
+          />
+        </Card>
+
+        <section style={{ maxWidth: 460 }}>
+          <FileUpload helperText="PNG, JPG, or PDF up to 10MB." />
+        </section>
+
+        <section>
+          <CodeBlock
+            code={`import { Button } from 'oceanic-ui'
+
+export function Example() {
+  return <Button variant="primary">Send</Button>
+}
+`}
+            language="tsx"
+            title="Example.tsx"
+            showLineNumbers
+            highlightedLines="3-4"
+          />
+        </section>
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
           {TEXT_VARIANTS.map((variant) => (

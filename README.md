@@ -119,15 +119,16 @@ layering is wired.
 
 ## What's in the box
 
-26 components today. [`docs/roadmap.md`](docs/roadmap.md) tracks what's
-built and what's next (Popover, Menu, Table, DatePicker…).
+39 components today. [`docs/roadmap.md`](docs/roadmap.md) tracks what's
+built and what's next (Table, DatePicker…).
 
 | Group | Components |
 |---|---|
-| **Actions & navigation** | `Button` · `IconButton` · `SegmentedControl` · `Pagination` |
-| **Forms & inputs** | `Input` · `Textarea` · `Select` · `Checkbox` · `Radio` · `Switch` · `Slider` |
-| **Feedback & status** | `Dialog` · `Tooltip` · `Toast` · `Progress` · `Spinner` · `Skeleton` · `Badge` |
-| **Layout & display** | `Card` · `Divider` · `List` · `Accordion` · `Tabs` · `Avatar` |
+| **Actions & navigation** | `Button` · `IconButton` · `SegmentedControl` · `Pagination` · `Breadcrumb` · `Menu` |
+| **Forms & inputs** | `Input` · `Textarea` · `Select` · `Checkbox` · `Radio` · `Switch` · `Slider` · `FileUpload` · `Composer` |
+| **Feedback & status** | `Dialog` · `Popover` · `Tooltip` · `Toast` · `Alert` · `Progress` · `Spinner` · `Skeleton` · `Badge` |
+| **Chat** | `Composer` · `Message` · `Bubble` · `Attachment` · `Empty` · `Marker` · `IconSwap` |
+| **Layout & display** | `Card` · `Divider` · `List` · `Accordion` · `Tabs` · `Avatar` · `CodeBlock` |
 | **Primitives** | `Text` · `Icon` |
 
 Browse every one — with live controls — at

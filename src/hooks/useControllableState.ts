@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export interface UseControllableStateProps<T> {
   value?: T
@@ -21,14 +21,22 @@ export function useControllableState<T>({
   const isControlled = value !== undefined
   const current = isControlled ? value : uncontrolled
 
+  // Keep a stable setter identity even when the consumer passes an inline
+  // onChange — components that add/remove global listeners keyed on the
+  // setter (Menu, Popover) would otherwise re-subscribe on every render.
+  const onChangeRef = useRef(onChange)
+  useEffect(() => {
+    onChangeRef.current = onChange
+  })
+
   const setValue = useCallback(
     (next: T) => {
       if (!isControlled) {
         setUncontrolled(next)
       }
-      onChange?.(next)
+      onChangeRef.current?.(next)
     },
-    [isControlled, onChange],
+    [isControlled],
   )
 
   return [current, setValue]
