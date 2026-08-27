@@ -28,8 +28,20 @@ export type MarkerVariant = NonNullable<VariantProps<typeof markerVariants>['var
 
 export interface MarkerProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof markerVariants> {}
+    VariantProps<typeof markerVariants> {
+  /**
+   * `separator` centres the label between two rules; `border` underlines it;
+   * `default` is a plain inline row.
+   * @default default
+   */
+  variant?: MarkerVariant
+}
 
+/**
+ * A row-level label inside a scrolling list — a day divider in a chat
+ * thread ("Today"), a "New messages" line, a section heading between
+ * groups. Compose `Marker.Icon` + `Marker.Content`.
+ */
 const MarkerRoot = forwardRef<HTMLDivElement, MarkerProps>(
   ({ className, variant = 'default', ...rest }, ref) => {
     return (

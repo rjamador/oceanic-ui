@@ -3,6 +3,9 @@ import type { Preview } from '@storybook/react-vite'
 import '../src/index.css'
 
 const preview: Preview = {
+  // Every component gets an auto-generated Docs page (prop table from its
+  // TS types + JSDoc, plus all its stories).
+  tags: ['autodocs'],
   parameters: {
     controls: {
       matchers: {

@@ -27,9 +27,19 @@ const MessageGroup = forwardRef<HTMLDivElement, MessageGroupProps>(
 MessageGroup.displayName = 'Message.Group'
 
 export interface MessageProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * `end` flips the row (avatar on the right) for the current user's own
+   * messages.
+   * @default start
+   */
   align?: MessageAlign
 }
 
+/**
+ * One turn in a conversation: an avatar column plus a content column
+ * (`Message.Header`, one or more `Bubble`s, `Message.Footer`). Wrap a run
+ * of them in `Message.Group`. Layout only — it doesn't render the bubble.
+ */
 const MessageRoot = forwardRef<HTMLDivElement, MessageProps>(
   ({ className, align = 'start', ...rest }, ref) => {
     return (

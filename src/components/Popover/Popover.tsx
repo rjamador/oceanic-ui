@@ -59,14 +59,37 @@ function usePopoverContext(component: string) {
 }
 
 export interface PopoverProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** Controlled open state. Pair with `onOpenChange`. */
   open?: boolean
+  /**
+   * Uncontrolled initial open state.
+   * @default false
+   */
   defaultOpen?: boolean
+  /** Fires whenever the layer wants to open or close (trigger click, outside press, Escape). */
   onOpenChange?: (open: boolean) => void
+  /**
+   * Edge of the trigger the panel opens from. Flips automatically if it
+   * would overflow the viewport.
+   * @default bottom
+   */
   side?: PopoverSide
+  /**
+   * Alignment along that edge.
+   * @default start
+   */
   align?: PopoverAlign
   children: ReactNode
 }
 
+/**
+ * A floating panel anchored to a trigger — for a small chunk of secondary
+ * content (a form, a detail card, a colour picker). Compose
+ * `Popover.Trigger` (wraps any focusable element) and `Popover.Content`.
+ * Positioning, viewport collision, outside-press / Escape dismissal, and
+ * focus handling come from Floating UI; the panel renders in a portal so it
+ * is never clipped.
+ */
 function PopoverRoot({
   open,
   defaultOpen = false,
@@ -157,10 +180,15 @@ function PopoverTrigger({ children }: PopoverTriggerProps) {
 }
 
 export interface PopoverContentProps extends HTMLAttributes<HTMLDivElement> {
-  /** Trap focus and mark the panel modal — default false (a non-modal group). */
+  /**
+   * Trap focus inside the panel and mark it `aria-modal` until it closes.
+   * Leave off for a lightweight non-modal panel.
+   * @default false
+   */
   modal?: boolean
 }
 
+/** The floating panel. Renders (in a portal) only while the Popover is open. */
 function PopoverContent({ className, modal = false, ...rest }: PopoverContentProps) {
   const ctx = usePopoverContext('Content')
 

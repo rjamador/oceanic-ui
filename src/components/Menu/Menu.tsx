@@ -73,14 +73,35 @@ function useMenuContext(component: string) {
 }
 
 export interface MenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** Controlled open state. Pair with `onOpenChange`. */
   open?: boolean
+  /**
+   * Uncontrolled initial open state.
+   * @default false
+   */
   defaultOpen?: boolean
+  /** Fires whenever the menu wants to open or close. */
   onOpenChange?: (open: boolean) => void
+  /**
+   * Edge of the trigger the menu opens from. Flips to stay on screen.
+   * @default bottom
+   */
   side?: MenuSide
+  /**
+   * Alignment along that edge.
+   * @default start
+   */
   align?: MenuAlign
   children: ReactNode
 }
 
+/**
+ * A button-triggered action menu. Compose `Menu.Trigger` (wraps a button),
+ * `Menu.Content`, and `Menu.Item`s. Full keyboard support — arrows, Home /
+ * End, first-letter type-ahead, Escape and Tab to close — plus roving
+ * focus, portal rendering, and viewport collision, via Floating UI. For a
+ * non-action floating panel use `Popover` instead.
+ */
 function MenuRoot({
   open,
   defaultOpen = false,
@@ -199,6 +220,7 @@ function MenuTrigger({ children }: MenuTriggerProps) {
 
 export type MenuContentProps = HTMLAttributes<HTMLDivElement>
 
+/** The floating `role="menu"` container. Renders (in a portal) only while open. */
 function MenuContent({ className, ...rest }: MenuContentProps) {
   const ctx = useMenuContext('Content')
 
@@ -223,9 +245,11 @@ function MenuContent({ className, ...rest }: MenuContentProps) {
 MenuContent.displayName = 'Menu.Content'
 
 export interface MenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Runs on activation (click or Enter/Space), then the menu closes. `disabled` items are skipped by keyboard nav and never fire. */
   onSelect?: () => void
 }
 
+/** One `role="menuitem"` — a real `<button>`. */
 const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
   ({ className, disabled, onClick, onSelect, children, ...rest }, forwardedRef) => {
     const ctx = useMenuContext('Item')

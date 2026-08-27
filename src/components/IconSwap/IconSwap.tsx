@@ -5,7 +5,9 @@ import { cn } from '@/lib/cn'
 export interface IconSwapProps {
   /** Show `swapped` when true, `initial` when false. */
   active: boolean
+  /** Rendered element for the inactive state (e.g. `<ArrowUpIcon />`). */
   initial: ReactNode
+  /** Rendered element for the active state (e.g. `<SquareIcon />`). */
   swapped: ReactNode
   className?: string
 }

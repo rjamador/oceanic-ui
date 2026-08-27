@@ -52,18 +52,29 @@ export interface ComposerAddMenuItem {
 
 export interface ComposerProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSubmit'> {
+  /** Current textarea value (fully controlled). */
   value: string
   onChange: (value: string) => void
+  /** Fires on Enter (without Shift) or the send button, when there's something to send. */
   onSubmit: () => void
+  /** When set, the send button becomes a stop button while `sending`. */
   onStop?: () => void
+  /** In-flight state — swaps send→stop and announces `busyLabel`. */
   sending?: boolean
+  /** @default Write a message… */
   placeholder?: string
   disabled?: boolean
+  /** Attachment chips shown above the textarea. */
   attachments?: ComposerAttachmentItem[]
+  /** Shows a remove button on each chip. */
   onRemoveAttachment?: (id: string) => void
+  /** Adds an "Upload files" item to the add-context (`+`) menu. */
   onAttachFiles?: () => void
+  /** Called with image files pasted into the textarea. */
   onPasteImages?: (files: File[]) => void
+  /** Slash-command definitions — typing `/` opens a combobox that filters these. */
   commands?: ComposerCommand[]
+  /** Custom items for the add-context (`+`) menu (replaces the `onAttachFiles` default). */
   addMenu?: ComposerAddMenuItem[]
   /** Slot rendered above the input frame — e.g. a consumer-owned queued-message list. */
   above?: ReactNode

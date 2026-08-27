@@ -36,9 +36,27 @@ export type AttachmentState = 'idle' | 'uploading' | 'processing' | 'error' | 'd
 export interface AttachmentProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'size'>,
     VariantProps<typeof attachmentVariants> {
+  /**
+   * Upload lifecycle. `error` also turns the chip into a `role="status"`
+   * region so a transition into it is announced.
+   * @default done
+   */
   state?: AttachmentState
+  /** @default md */
+  size?: AttachmentSize
+  /**
+   * `vertical` is a fixed-width thumbnail card; `horizontal` is a chip.
+   * @default horizontal
+   */
+  orientation?: AttachmentOrientation
 }
 
+/**
+ * A file chip — a preview thumbnail (`Attachment.Media`), name + detail
+ * (`Attachment.Content` → `Attachment.Title` / `Attachment.Description`),
+ * and optional buttons (`Attachment.Actions` → `Attachment.Action`). Row
+ * up several with `Attachment.Group`, which scrolls horizontally.
+ */
 const AttachmentRoot = forwardRef<HTMLDivElement, AttachmentProps>(
   (
     { className, state = 'done', size = 'md', orientation = 'horizontal', ...rest },

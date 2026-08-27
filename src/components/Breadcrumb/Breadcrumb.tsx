@@ -10,9 +10,18 @@ import { ChevronRightIcon } from '../Icon'
 import { Text } from '../Text'
 
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
+  /**
+   * Accessible name for the surrounding `<nav>`.
+   * @default Breadcrumb
+   */
   label?: string
 }
 
+/**
+ * A navigation trail. Renders `<nav><ol>` and takes `Breadcrumb.Item`
+ * children; a long trail scrolls horizontally rather than wrapping or
+ * truncating to nothing. Mark the last item `current`.
+ */
 const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
   ({ className, label = 'Breadcrumb', children, ...rest }, ref) => {
     return (
@@ -32,10 +41,13 @@ const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbProps>(
 BreadcrumbRoot.displayName = 'Breadcrumb'
 
 export interface BreadcrumbItemProps extends HTMLAttributes<HTMLLIElement> {
+  /** Makes the crumb a link. Omit (or set `current`) for the last crumb. */
   href?: string
+  /** The page the user is on — renders as plain `aria-current="page"` text, no link, no trailing chevron. */
   current?: boolean
 }
 
+/** One crumb. `<a>` when `href` is set and not `current`, plain text otherwise. */
 const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
   ({ className, href, current, children, ...rest }, ref) => {
     return (
