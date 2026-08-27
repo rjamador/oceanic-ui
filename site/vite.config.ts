@@ -16,10 +16,19 @@ export default defineConfig({
       { find: 'oceanic-ui/styles.css', replacement: lib('styles.css') },
       { find: /^oceanic-ui$/, replacement: lib('index.js') },
     ],
-    // The aliased library resolves `react` from the repo-root node_modules
-    // while the site resolves its own — two copies, which breaks hooks in
-    // the production bundle ("reading 'useState' of null"). Force one.
-    dedupe: ['react', 'react-dom'],
+    // The aliased library resolves its imports (`react`, and now
+    // `@floating-ui/react` that Popover/Menu pull in) from wherever they
+    // sit — two copies breaks hooks ("Cannot read properties of null").
+    // `@floating-ui/react` is a direct devDependency of the site so this
+    // dedupe has one target to point everything at.
+    dedupe: ['react', 'react-dom', '@floating-ui/react'],
+  },
+  // `oceanic-ui` is aliased to a file outside this project, so vite's
+  // dependency scan never sees what it imports. Pre-bundle those here or
+  // vite discovers them at request time and thrashes the optimizer
+  // (repeated full reloads, transient duplicate React).
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', '@floating-ui/react'],
   },
   server: { port: 5174 },
 })

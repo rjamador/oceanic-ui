@@ -12,6 +12,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@floating-ui/react": "^0.27.20",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.0",
     "tailwindcss": "^4.3.3",
