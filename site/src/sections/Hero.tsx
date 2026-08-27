@@ -22,7 +22,7 @@ export function Hero() {
       <h1 className="reveal" style={step(2)}>
         The Ocean look&nbsp;&amp;&nbsp;feel,
         <br />
-        rebuilt for the web.
+        rebuilt for the&nbsp;web.
       </h1>
       <Text variant="bodyLarge" color="muted" className="hero__sub reveal" style={step(3)}>
         26 accessible React components in the spirit of Java Swing&rsquo;s Ocean theme &mdash; cool
@@ -62,10 +62,12 @@ function InstallStrip() {
         ))}
       </SegmentedControl>
       <div className="install__cmd">
-        <span className="install__prompt" aria-hidden="true">
-          $
+        <span className="install__scroll">
+          <span className="install__prompt" aria-hidden="true">
+            $
+          </span>
+          <code>{PM_ADD[pm]}</code>
         </span>
-        <code>{PM_ADD[pm]}</code>
         <button
           className="install__copy"
           onClick={() => {

@@ -129,15 +129,17 @@ main {
   letter-spacing: 0.04em;
   color: var(--aero-accent-strong, #12b8c4);
   margin: 0 0 20px;
+  text-wrap: balance;
 }
 .hero h1 {
   font-family: var(--font-display, 'Baloo 2', sans-serif);
   font-weight: 700;
-  font-size: clamp(2.4rem, 1.6rem + 4vw, 4.1rem);
+  font-size: clamp(2.1rem, 1.4rem + 3.6vw, 4.1rem);
   line-height: 1.08;
   letter-spacing: -0.015em;
   margin: 0;
   color: var(--ink);
+  text-wrap: balance;
 }
 /* type (size + colour) comes from <Text variant="bodyLarge" color="muted"> */
 .hero__sub {
@@ -173,24 +175,36 @@ main {
   box-shadow: inset 0 2px 4px var(--recessed-shadow, rgba(13, 61, 120, 0.12));
   font-size: 14px;
   max-width: 100%;
+}
+/* only the command scrolls — the copy button stays pinned and visible */
+.install__scroll {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   overflow-x: auto;
+  scrollbar-width: none;
+}
+.install__scroll::-webkit-scrollbar {
+  display: none;
 }
 .install__prompt {
   color: var(--aero-accent-strong, #12b8c4);
   font-family: var(--font-mono, monospace);
 }
-.install__cmd code {
+.install__scroll code {
   color: var(--ink);
   white-space: nowrap;
 }
 .install__copy {
+  flex-shrink: 0;
   font-family: var(--font-mono, monospace);
   font-size: 12px;
   color: var(--muted);
   background: linear-gradient(180deg, #ffffff, #eef4fb);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm, 3px);
-  padding: 4px 10px;
+  padding: 7px 12px;
   cursor: pointer;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
@@ -296,7 +310,22 @@ main {
 .demo-tabs {
   width: 100%;
 }
-.grid {
+/* the library's Tabs.List is flex/nowrap and the window clips overflow —
+   let the tab strip scroll so every panel stays reachable on narrow screens */
+.demo-tabs [role='tablist'] {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.demo-tabs [role='tablist']::-webkit-scrollbar {
+  display: none;
+}
+.demo-tabs [role='tab'] {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.demo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 16px;
@@ -357,7 +386,7 @@ main {
   padding: 1px 4px;
 }
 .pr-visual {
-  height: 92px;
+  height: clamp(72px, 18vw, 92px);
   border-radius: var(--radius-md, 6px);
   border: 1px solid var(--line);
   background: linear-gradient(180deg, #ffffff, #eef6ff);
@@ -482,13 +511,15 @@ main {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 10px;
 }
 .chips a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
   padding: 11px 12px;
   border-radius: var(--radius-sm, 3px);
   border: 1px solid var(--line);
@@ -498,11 +529,17 @@ main {
   color: var(--ink);
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
+.chips a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .chips a:hover {
   border-color: var(--aero-accent-strong, #12b8c4);
   box-shadow: 0 0 0 3px var(--aero-accent-glow, rgba(51, 214, 224, 0.55));
 }
 .chips svg {
+  flex-shrink: 0;
   color: var(--muted);
 }
 
@@ -529,8 +566,34 @@ main {
   }
 }
 
+/* ---- mobile ------------------------------------------------- */
 @media (max-width: 640px) {
   .topbar__nav a:nth-child(1) {
+    display: none;
+  }
+  /* bigger tap targets */
+  .topbar__nav a {
+    padding: 10px 6px;
+  }
+  .aero-segmented-option {
+    min-height: 40px;
+  }
+}
+
+/* hero CTA: stack full-width so the two buttons match, not ragged */
+@media (max-width: 520px) {
+  .hero__cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero__cta > button {
+    width: 100%;
+  }
+}
+
+/* smallest phones: the version badge collides with the nav — drop it */
+@media (max-width: 380px) {
+  .topbar__badge {
     display: none;
   }
 }

@@ -36,7 +36,7 @@ export function Showcase() {
           </Tabs.List>
 
           <Tabs.Panel value="actions">
-            <div className="grid">
+            <div className="demo-grid">
               <Demo code='<Button variant="primary | secondary | ghost" />'>
                 <Button>Primary</Button>
                 <Button variant="secondary">Secondary</Button>
@@ -59,7 +59,7 @@ export function Showcase() {
           </Tabs.Panel>
 
           <Tabs.Panel value="forms">
-            <div className="grid">
+            <div className="demo-grid">
               <Demo code='<Input label="Email" />'>
                 <Input label="Email" type="email" placeholder="ada@oceanic.dev" />
               </Demo>
@@ -81,7 +81,7 @@ export function Showcase() {
           </Tabs.Panel>
 
           <Tabs.Panel value="feedback">
-            <div className="grid">
+            <div className="demo-grid">
               <Demo code='<Progress value={64} label="Sync" />'>
                 <Progress value={64} label="Sync" className="w-full" />
               </Demo>
@@ -95,14 +95,14 @@ export function Showcase() {
               </Demo>
               <Demo code='<Tooltip content="…" />'>
                 <Tooltip content="Anchored, dismissible, keyboard-safe">
-                  <Button variant="secondary">Hover or focus me</Button>
+                  <Button variant="secondary">Hover me</Button>
                 </Tooltip>
               </Demo>
             </div>
           </Tabs.Panel>
 
           <Tabs.Panel value="display">
-            <div className="grid">
+            <div className="demo-grid">
               <Demo code='<Avatar name="Ada Lovelace" />'>
                 <Avatar name="Ada Lovelace" size="sm" />
                 <Avatar name="Grace Hopper" size="md" />

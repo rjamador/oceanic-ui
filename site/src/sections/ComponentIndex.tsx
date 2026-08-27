@@ -10,7 +10,7 @@ export function ComponentIndex() {
         {COMPONENTS.map((name) => (
           <li key={name}>
             <a href={REPO}>
-              {name}
+              <span>{name}</span>
               <ChevronRightIcon size={16} />
             </a>
           </li>
