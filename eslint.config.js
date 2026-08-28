@@ -26,7 +26,8 @@ export default defineConfig([globalIgnores(['dist']), {
   // objects (`refs`, `context`) that are safe to read during render — that
   // is the library's designed, compiler-checked usage. The new
   // react-hooks/refs heuristic can't tell them apart from a bare useRef.
-  files: ['src/components/Popover/**', 'src/components/Menu/**'],
+  // Sidebar's <Slot> merges refs with the same `useMergeRefs` helper.
+  files: ['src/components/Popover/**', 'src/components/Menu/**', 'src/components/Sidebar/**'],
   rules: {
     'react-hooks/refs': 'off',
   },

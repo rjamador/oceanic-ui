@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { CheckIcon, ChevronDownIcon, ChevronRightIcon, CloseIcon, CopyIcon, GearIcon } from './icons'
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  CopyIcon,
+  GearIcon,
+  HomeIcon,
+  PanelLeftIcon,
+  SearchIcon,
+} from './icons'
 
 const meta = {
   title: 'Components/Icon',
@@ -16,6 +26,9 @@ const ICONS = [
   { name: 'ChevronDownIcon', Component: ChevronDownIcon },
   { name: 'GearIcon', Component: GearIcon },
   { name: 'CopyIcon', Component: CopyIcon },
+  { name: 'HomeIcon', Component: HomeIcon },
+  { name: 'SearchIcon', Component: SearchIcon },
+  { name: 'PanelLeftIcon', Component: PanelLeftIcon },
 ]
 
 export const Gallery: Story = {

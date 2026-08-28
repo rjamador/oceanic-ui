@@ -16,6 +16,7 @@ import {
   FileUpload,
   FolderOpenIcon,
   GearIcon,
+  HomeIcon,
   IconButton,
   Input,
   Marker,
@@ -26,6 +27,7 @@ import {
   Pulse,
   SegmentedControl,
   Select,
+  Sidebar,
   Slider,
   Switch,
   Tabs,
@@ -270,6 +272,38 @@ export const Example = () => (
                     Only if you want to override with utilities. Otherwise no.
                   </Accordion.Item>
                 </Accordion>
+              </Demo>
+              <Demo code='<Sidebar.Provider> — nav or chat history, collapsible'>
+                <div className="flex h-64 w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--hairline)]">
+                  <Sidebar.Provider collapsible="icon">
+                    <Sidebar aria-label="Demo navigation">
+                      <Sidebar.Rail />
+                      <Sidebar.Body>
+                        <Sidebar.Group label="Workspace">
+                          <Sidebar.Menu>
+                            <Sidebar.Item icon={<HomeIcon size={16} />} active label="Overview">
+                              Overview
+                            </Sidebar.Item>
+                            <Sidebar.Item icon={<FileIcon size={16} />} label="Documents" badge="24">
+                              Documents
+                            </Sidebar.Item>
+                            <Sidebar.Item icon={<GearIcon size={16} />} label="Settings">
+                              Settings
+                            </Sidebar.Item>
+                          </Sidebar.Menu>
+                        </Sidebar.Group>
+                      </Sidebar.Body>
+                    </Sidebar>
+                    <Sidebar.Main>
+                      <div className="flex items-center gap-2 border-b border-[var(--hairline)] px-3 py-2">
+                        <Sidebar.Trigger />
+                        <Text as="span" variant="labelMedium">
+                          Overview
+                        </Text>
+                      </div>
+                    </Sidebar.Main>
+                  </Sidebar.Provider>
+                </div>
               </Demo>
             </div>
           </Tabs.Panel>

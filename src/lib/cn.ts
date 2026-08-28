@@ -75,6 +75,9 @@ const twMerge = extendTailwindMerge({
         // structural 'aero-tool-call' base — which is NOT registered, so a
         // consumer's bg-* still wins here without dropping row layout.
         'aero-tool-call-error',
+        // Active-item tint modifier — like aero-tabs-tab-selected. The
+        // structural 'aero-sidebar-item' base is NOT registered.
+        'aero-sidebar-item-active',
       ],
     },
   },

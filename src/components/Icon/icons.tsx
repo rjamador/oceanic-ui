@@ -173,3 +173,30 @@ export function CopyIcon(props: IconProps) {
     </Icon>
   )
 }
+
+export function PanelLeftIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M9 4v16" />
+    </Icon>
+  )
+}
+
+export function HomeIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 11l8-7 8 7" />
+      <path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" />
+    </Icon>
+  )
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </Icon>
+  )
+}

@@ -63,6 +63,17 @@ file per part:
   file with a `-- reason:` comment, don't split the file to satisfy the
   linter.
 
+**When one file gets too big.** Most compound components fit in one file
+and should stay there. A large one (roughly: more than a screen or two of
+parts, like `Sidebar` — a provider + hook + ~12 parts + drawer logic) may
+split **within its folder** — `context.tsx` for the provider and its hook,
+one file per cluster of parts (`Sidebar.tsx`, `SidebarMenu.tsx`), and
+`index.ts` does the `Object.assign` assembly and re-exports the types. The
+context still lives in exactly one place; the split is by part-cluster,
+not per-part. Keep the `-- reason:` `eslint-disable` on whichever files
+export more than one component. `Tabs` (small) stays one file; `Sidebar`
+(large) is the reference for the split.
+
 ## Naming
 
 | Thing | Convention |

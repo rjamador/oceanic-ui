@@ -15,4 +15,9 @@
   --radius-md: 6px;
   --radius-lg: 10px;
   --radius-full: 999px;
+
+  /* Sidebar rail — expanded vs. collapsed-to-icons. Layout regions, not
+     padding, so they sit apart from the --space-* scale. */
+  --sidebar-width: 260px;
+  --sidebar-width-icon: 52px;
 }
