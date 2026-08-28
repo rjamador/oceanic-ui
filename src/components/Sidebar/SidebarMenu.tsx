@@ -212,16 +212,25 @@ const SidebarItem = forwardRef<HTMLElement, SidebarItemProps>(
       </Slot>
     )
 
+    const row =
+      iconRail && accessibleName ? (
+        <Tooltip content={accessibleName} side="right">
+          {control}
+        </Tooltip>
+      ) : !iconRail && action ? (
+        // action sits in the flow beside the button, not overlapping the
+        // badge — it just fades in on hover/focus
+        <div className="aero-sidebar-item-row">
+          {control}
+          <div className="aero-sidebar-item-action">{action}</div>
+        </div>
+      ) : (
+        control
+      )
+
     return (
       <li className="aero-sidebar-menu-item" data-slot="sidebar-item" {...rest}>
-        {iconRail && accessibleName ? (
-          <Tooltip content={accessibleName} side="right">
-            {control}
-          </Tooltip>
-        ) : (
-          control
-        )}
-        {!iconRail && action ? <div className="aero-sidebar-item-action">{action}</div> : null}
+        {row}
         {hasSub && subOpen && !iconRail ? (
           <div id={subId} className="aero-sidebar-submenu">
             {subMenu}
