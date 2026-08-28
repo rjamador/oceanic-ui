@@ -299,33 +299,136 @@ main {
   padding: clamp(18px, 3vw, 30px);
   background: linear-gradient(180deg, #ffffff, #f6fbff);
 }
+.window__body--flush {
+  padding: 0;
+}
 
-/* tabs + demo grid */
-.demo-tabs {
-  width: 100%;
+/* ---- workspace: a rail (the library Sidebar) + a stage ------------- */
+/* Desktop: the Sidebar is the scene picker, fixed height, the stage body
+   scrolls on its own. Mobile (<=768): the rail is hidden and a <Select> in
+   the bar takes over; the whole thing flows into the page. The provider
+   runs mobileBreakpoint={0} so the rail never becomes a full-screen drawer
+   mid-page. */
+.workspace {
+  --sidebar-width: 232px;
+  height: clamp(460px, 72vh, 660px);
+  display: flex;
 }
-/* the library's Tabs.List is flex/nowrap and the window clips overflow —
-   let the tab strip scroll so every panel stays reachable on narrow screens */
-.demo-tabs [role='tablist'] {
-  overflow-x: auto;
-  scrollbar-width: none;
+.workspace .aero-sidebar-layout {
+  flex: 1;
+  min-width: 0;
 }
-.demo-tabs [role='tablist']::-webkit-scrollbar {
-  display: none;
+.ws-rail {
+  background: linear-gradient(180deg, #fbfdff, #f2f8ff);
 }
-.demo-tabs [role='tab'] {
-  flex: 0 0 auto;
-  display: inline-flex;
+
+.ws-stage {
+  min-width: 0;
+  background: linear-gradient(180deg, #ffffff, #f6fbff);
+}
+.ws-stage__bar {
+  flex: none;
+  display: flex;
   align-items: center;
-  min-height: 44px;
+  gap: 10px;
+  height: 46px;
+  padding: 0 12px 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #ffffff, #eef6ff);
 }
-.demo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 16px;
-  margin-top: 22px;
+.ws-stage__picker {
+  display: none; /* desktop: the rail is the picker */
 }
-/* .demo / .demo__stage / .demo__code now live as utilities in components/Demo.tsx */
+.ws-stage__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-display, 'Baloo 2', sans-serif);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.ws-stage__spacer {
+  flex: 1;
+}
+.ws-stage__bar .aero-segmented-root {
+  flex: 0 0 auto; /* keep its width, let the title absorb the shrink */
+}
+.ws-stage__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: clamp(18px, 3.5vw, 40px);
+}
+
+/* the canvas gives every scene the same comfortable measure, centered —
+   complex components finally get room instead of a 300px cell */
+.ws-canvas {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ws-canvas--wide {
+  max-width: 860px;
+}
+
+/* an inset sub-frame used when a scene needs its own window (Sidebar) */
+.ws-frame {
+  --sidebar-width: 200px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 6px);
+  overflow: hidden;
+  background: var(--panel-surface-strong, #fbfdff);
+}
+.ws-frame .aero-sidebar-layout {
+  height: 100%;
+}
+.ws-playground-hint {
+  display: none;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .workspace {
+    height: auto;
+  }
+  /* scoped to the rail — the nested .ws-frame sidebar must survive */
+  .workspace .ws-rail {
+    display: none;
+  }
+  /* the library's <main> is overflow:auto; let the page own the scroll here */
+  .workspace .aero-sidebar-main {
+    overflow: visible;
+  }
+  .ws-stage__body {
+    flex: none;
+    min-height: 0;
+    overflow: visible;
+  }
+  .ws-stage__picker {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .ws-stage__title,
+  .ws-stage__spacer {
+    display: none;
+  }
+}
+
+/* the interactive Sidebar playground doesn't fit a phone — swap it for a
+   one-line pointer at the real rail overhead */
+@media (max-width: 640px) {
+  .ws-playground {
+    display: none;
+  }
+  .ws-playground-hint {
+    display: block;
+  }
+}
 
 /* ---- principles -------------------------------------------------- */
 .principles {

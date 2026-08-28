@@ -1,380 +1,115 @@
-import { useState } from 'react'
-import {
-  Accordion,
-  Alert,
-  Avatar,
-  Badge,
-  Breadcrumb,
-  Bubble,
-  Button,
-  Card,
-  Checkbox,
-  CodeBlock,
-  Composer,
-  Empty,
-  FileIcon,
-  FileUpload,
-  FolderOpenIcon,
-  GearIcon,
-  HomeIcon,
-  IconButton,
-  Input,
-  Marker,
-  Menu,
-  Message,
-  Popover,
-  Progress,
-  Pulse,
-  SegmentedControl,
-  Select,
-  Sidebar,
-  Slider,
-  Switch,
-  Tabs,
-  Text,
-  Thinking,
-  ToolCall,
-  Tooltip,
-  useToast,
-} from 'oceanic-ui'
+import { useMemo, useState } from 'react'
+import { CodeBlock, SegmentedControl, Select, Sidebar, Text } from 'oceanic-ui'
 import { Window } from '../components/Window'
 import { SectionHead } from '../components/SectionHead'
-import { Demo } from '../components/Demo'
+import { ENTRIES, GROUPS } from './workspace'
+
+type Mode = 'preview' | 'source'
 
 export function Showcase() {
+  const [activeId, setActiveId] = useState(ENTRIES[0].id)
+  const [mode, setMode] = useState<Mode>('preview')
+
+  const entry = useMemo(
+    () => ENTRIES.find((e) => e.id === activeId) ?? ENTRIES[0],
+    [activeId],
+  )
+  const { Scene } = entry
+
   return (
     <section className="section showcase">
-      <SectionHead n="01" title="Live components" note="every demo below is the real package" />
-      <Window title="oceanic-ui — components.tsx">
-        <Tabs defaultValue="chat" className="demo-tabs">
-          <Tabs.List>
-            <Tabs.Tab value="chat">Chat</Tabs.Tab>
-            <Tabs.Tab value="actions">Actions</Tabs.Tab>
-            <Tabs.Tab value="forms">Forms</Tabs.Tab>
-            <Tabs.Tab value="feedback">Feedback</Tabs.Tab>
-            <Tabs.Tab value="display">Display</Tabs.Tab>
-          </Tabs.List>
+      <SectionHead
+        n="01"
+        title="Components at work"
+        note="pick one from the rail — every scene is the real package"
+      />
+      <Window title="oceanic-ui — workspace" flush>
+        <div className="workspace">
+          <Sidebar.Provider collapsible="icon" mobileBreakpoint={0}>
+            <Sidebar aria-label="Component scenes" className="ws-rail">
+              <Sidebar.Rail />
+              <Sidebar.Body>
+                {GROUPS.map((group) => (
+                  <Sidebar.Group key={group} label={group}>
+                    <Sidebar.Menu>
+                      {ENTRIES.filter((e) => e.group === group).map((e) => (
+                        <Sidebar.Item
+                          key={e.id}
+                          label={e.label}
+                          active={e.id === activeId}
+                          aria-current={e.id === activeId ? 'true' : undefined}
+                          onClick={() => {
+                            setActiveId(e.id)
+                            setMode('preview')
+                          }}
+                        >
+                          {e.label}
+                        </Sidebar.Item>
+                      ))}
+                    </Sidebar.Menu>
+                  </Sidebar.Group>
+                ))}
+              </Sidebar.Body>
+            </Sidebar>
 
-          <Tabs.Panel value="chat">
-            <div className="demo-grid">
-              <Demo code='<Message> · <Bubble> · <Marker>'>
-                <Message.Group className="w-full">
-                  <Marker variant="separator">
-                    <Marker.Content>Today</Marker.Content>
-                  </Marker>
-                  <Message>
-                    <Message.Avatar>
-                      <Avatar name="Ocean" size="sm" />
-                    </Message.Avatar>
-                    <Message.Content>
-                      <Bubble variant="assistant">
-                        <Bubble.Content>How can I help with this project?</Bubble.Content>
-                      </Bubble>
-                    </Message.Content>
-                  </Message>
-                  <Message align="end">
-                    <Message.Avatar>
-                      <Avatar name="Ada" size="sm" />
-                    </Message.Avatar>
-                    <Message.Content>
-                      <Bubble variant="user" align="end">
-                        <Bubble.Content>Wire up the composer.</Bubble.Content>
-                      </Bubble>
-                    </Message.Content>
-                  </Message>
-                </Message.Group>
-              </Demo>
-              <Demo code='<Composer value onChange onSubmit commands={…} />'>
-                <ComposerDemo />
-              </Demo>
-              <Demo code='<CodeBlock code language showLineNumbers />'>
-                <CodeBlock
-                  className="w-full"
-                  title="Example.tsx"
-                  language="tsx"
-                  showLineNumbers
-                  highlightedLines="3"
-                  code={`import { Button } from 'oceanic-ui'
+            <Sidebar.Main className="ws-stage">
+              <div className="ws-stage__bar">
+                {/* the rail is the picker on desktop; on mobile it's hidden and
+                    this Select takes over */}
+                <div className="ws-stage__picker">
+                  <Select
+                    aria-label="Scene"
+                    value={activeId}
+                    onChange={(event) => {
+                      setActiveId(event.target.value)
+                      setMode('preview')
+                    }}
+                  >
+                    {GROUPS.map((group) => (
+                      <optgroup key={group} label={group}>
+                        {ENTRIES.filter((e) => e.group === group).map((e) => (
+                          <option key={e.id} value={e.id}>
+                            {e.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </Select>
+                </div>
+                <span className="ws-stage__title">{entry.label}</span>
+                <span className="ws-stage__spacer" />
+                <SegmentedControl
+                  key={entry.id}
+                  defaultValue="preview"
+                  aria-label="Preview or source"
+                  onValueChange={(v) => setMode(v as Mode)}
+                >
+                  <SegmentedControl.Option value="preview">Preview</SegmentedControl.Option>
+                  <SegmentedControl.Option value="source">Source</SegmentedControl.Option>
+                </SegmentedControl>
+              </div>
 
-export const Example = () => (
-  <Button variant="primary">Send</Button>
-)
-`}
-                />
-              </Demo>
-              <Demo code='<Empty> — placeholder for an unfilled view'>
-                <Empty>
-                  <Empty.Header>
-                    <Empty.Media variant="icon">
-                      <FileIcon />
-                    </Empty.Media>
-                    <Empty.Title>No messages yet</Empty.Title>
-                    <Empty.Description>Ask about this project to get started.</Empty.Description>
-                  </Empty.Header>
-                </Empty>
-              </Demo>
-              <Demo code='<Thinking streaming> · <Pulse active />'>
-                <div className="flex w-full flex-col gap-3">
-                  <Thinking streaming>Weigh the two layouts, then commit.</Thinking>
-                  <div className="flex items-center gap-2">
-                    <Pulse active />
-                    <Text as="span" variant="labelMedium">
-                      Working
+              <div className="ws-stage__body" data-mode={mode}>
+                {mode === 'preview' ? (
+                  <Scene key={entry.id} />
+                ) : (
+                  <div className="ws-canvas">
+                    <CodeBlock
+                      className="w-full"
+                      title={`${entry.label} — JSX`}
+                      language="tsx"
+                      code={entry.code}
+                    />
+                    <Text variant="bodySmall" color="muted" className="m-0">
+                      Trimmed for the page — full source in the repo.
                     </Text>
                   </div>
-                </div>
-              </Demo>
-              <Demo code='<ToolCall label="Read" target="…" />'>
-                <div className="flex w-full flex-col gap-2">
-                  <ToolCall label="Read" target="src/lib/cn.ts" defaultOpen>
-                    export function cn() {'{'} … {'}'}
-                  </ToolCall>
-                  <ToolCall label="Run" target="npm run test" status="running" />
-                </div>
-              </Demo>
-            </div>
-          </Tabs.Panel>
-
-          <Tabs.Panel value="actions">
-            <div className="demo-grid">
-              <Demo code='<Button variant="primary | secondary | ghost" />'>
-                <Button>Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button disabled>Disabled</Button>
-              </Demo>
-              <Demo code='<IconButton icon={<GearIcon />} aria-label="Settings" />'>
-                <IconButton icon={<GearIcon />} aria-label="Settings" />
-                <IconButton variant="primary" icon={<GearIcon />} aria-label="Settings" />
-                <IconButton variant="secondary" icon={<GearIcon />} aria-label="Settings" />
-              </Demo>
-              <Demo code='<Menu> · <Menu.Item>'>
-                <Menu>
-                  <Menu.Trigger>
-                    <Button variant="secondary">Add context</Button>
-                  </Menu.Trigger>
-                  <Menu.Content>
-                    <Menu.Item>
-                      <FileIcon size={16} />
-                      Upload files
-                    </Menu.Item>
-                    <Menu.Item>
-                      <FolderOpenIcon size={16} />
-                      Open folder
-                    </Menu.Item>
-                    <Menu.Item disabled>Paste from clipboard</Menu.Item>
-                  </Menu.Content>
-                </Menu>
-              </Demo>
-              <Demo code='<Breadcrumb> · <Breadcrumb.Item>'>
-                <Breadcrumb>
-                  <Breadcrumb.Item href="#top">Home</Breadcrumb.Item>
-                  <Breadcrumb.Item href="#components">Components</Breadcrumb.Item>
-                  <Breadcrumb.Item current>Menu</Breadcrumb.Item>
-                </Breadcrumb>
-              </Demo>
-              <Demo code='<SegmentedControl defaultValue="grid" />'>
-                <SegmentedControl defaultValue="grid" aria-label="View">
-                  <SegmentedControl.Option value="list">List</SegmentedControl.Option>
-                  <SegmentedControl.Option value="grid">Grid</SegmentedControl.Option>
-                  <SegmentedControl.Option value="cols">Columns</SegmentedControl.Option>
-                </SegmentedControl>
-              </Demo>
-            </div>
-          </Tabs.Panel>
-
-          <Tabs.Panel value="forms">
-            <div className="demo-grid">
-              <Demo code='<Input label="Email" />'>
-                <Input label="Email" type="email" placeholder="ada@oceanic.dev" />
-              </Demo>
-              <Demo code='<Select label="Region" />'>
-                <Select label="Region" defaultValue="ni">
-                  <option value="ni">Nicaragua</option>
-                  <option value="mx">M&eacute;xico</option>
-                  <option value="es">Espa&ntilde;a</option>
-                </Select>
-              </Demo>
-              <Demo code='<FileUpload onFiles={…} />'>
-                <FileUpload helperText="PNG, JPG, or PDF up to 10MB." />
-              </Demo>
-              <Demo code='<Slider label="Depth" />'>
-                <Slider label="Depth" defaultValue={62} className="w-full" />
-              </Demo>
-              <Demo code='<Checkbox /> · <Switch />'>
-                <Checkbox label="Remember me" defaultChecked />
-                <Switch label="Sonar ping" defaultChecked />
-              </Demo>
-            </div>
-          </Tabs.Panel>
-
-          <Tabs.Panel value="feedback">
-            <div className="demo-grid">
-              <Demo code='<Alert variant="info | success | warning | danger" />'>
-                <Alert variant="warning" title="Unsaved changes" className="w-full">
-                  Your last edit hasn&rsquo;t been written to disk.
-                </Alert>
-              </Demo>
-              <Demo code='<Popover> · <Popover.Content>'>
-                <Popover>
-                  <Popover.Trigger>
-                    <Button variant="secondary">Open popover</Button>
-                  </Popover.Trigger>
-                  <Popover.Content>
-                    <p style={{ margin: 8, width: 180 }}>
-                      Portalled, collision-aware, focus-managed.
-                    </p>
-                  </Popover.Content>
-                </Popover>
-              </Demo>
-              <Demo code='<Progress value={64} label="Sync" />'>
-                <Progress value={64} label="Sync" className="w-full" />
-              </Demo>
-              <Demo code='<Badge variant="default | accent | danger" />'>
-                <Badge>Stable</Badge>
-                <Badge variant="accent">Beta</Badge>
-                <Badge variant="danger">Deprecated</Badge>
-              </Demo>
-              <Demo code='useToast().toast({ ... })'>
-                <ToastDemo />
-              </Demo>
-              <Demo code='<Tooltip content="…" />'>
-                <Tooltip content="Anchored, dismissible, keyboard-safe">
-                  <Button variant="secondary">Hover me</Button>
-                </Tooltip>
-              </Demo>
-            </div>
-          </Tabs.Panel>
-
-          <Tabs.Panel value="display">
-            <div className="demo-grid">
-              <Demo code='<Avatar name="Ada Lovelace" />'>
-                <Avatar name="Ada Lovelace" size="sm" />
-                <Avatar name="Grace Hopper" size="md" />
-                <Avatar name="Radia Perlman" size="lg" />
-              </Demo>
-              <Demo code='<Card padding="md" />'>
-                <Card>
-                  <Text variant="labelLarge" as="h4">
-                    Opaque by rule
-                  </Text>
-                  <Text variant="bodySmall" color="muted">
-                    No backdrop-filter anywhere &mdash; same as real Ocean.
-                  </Text>
-                </Card>
-              </Demo>
-              <Demo code='<Accordion.Item title="…" />'>
-                <Accordion className="w-full">
-                  <Accordion.Item title="What ships in the box" defaultOpen>
-                    ESM, types, and one precompiled stylesheet.
-                  </Accordion.Item>
-                  <Accordion.Item title="Do I need Tailwind">
-                    Only if you want to override with utilities. Otherwise no.
-                  </Accordion.Item>
-                </Accordion>
-              </Demo>
-              <Demo code='<Sidebar.Provider> — nav or chat history, collapsible'>
-                <div className="flex h-64 w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--hairline)]">
-                  <Sidebar.Provider collapsible="icon">
-                    <Sidebar aria-label="Demo navigation">
-                      <Sidebar.Rail />
-                      <Sidebar.Body>
-                        <Sidebar.Group label="Workspace">
-                          <Sidebar.Menu>
-                            <Sidebar.Item icon={<HomeIcon size={16} />} active label="Overview">
-                              Overview
-                            </Sidebar.Item>
-                            <Sidebar.Item icon={<FileIcon size={16} />} label="Documents" badge="24">
-                              Documents
-                            </Sidebar.Item>
-                            <Sidebar.Item icon={<GearIcon size={16} />} label="Settings">
-                              Settings
-                            </Sidebar.Item>
-                          </Sidebar.Menu>
-                        </Sidebar.Group>
-                      </Sidebar.Body>
-                    </Sidebar>
-                    <Sidebar.Main>
-                      <div className="flex items-center gap-2 border-b border-[var(--hairline)] px-3 py-2">
-                        <Sidebar.Trigger />
-                        <Text as="span" variant="labelMedium">
-                          Overview
-                        </Text>
-                      </div>
-                    </Sidebar.Main>
-                  </Sidebar.Provider>
-                </div>
-              </Demo>
-            </div>
-          </Tabs.Panel>
-        </Tabs>
+                )}
+              </div>
+            </Sidebar.Main>
+          </Sidebar.Provider>
+        </div>
       </Window>
     </section>
-  )
-}
-
-function ComposerDemo() {
-  const [value, setValue] = useState('')
-  const [sending, setSending] = useState(false)
-  const [attachments, setAttachments] = useState([
-    { id: 'notes', name: 'notes.txt', detail: '12 KB', kind: 'file' as const },
-  ])
-  const toast = useToast()
-
-  return (
-    <Composer
-      className="w-full"
-      value={value}
-      onChange={setValue}
-      sending={sending}
-      attachments={attachments}
-      onRemoveAttachment={(id) => setAttachments((a) => a.filter((x) => x.id !== id))}
-      commands={[
-        { name: 'plan', description: 'Write a step-by-step plan' },
-        { name: 'review', description: 'Review the current file' },
-      ]}
-      onAttachFiles={() => toast({ title: 'Attach', description: 'Wire this to a file picker.' })}
-      footer={
-        <>
-          <Text as="span" variant="labelMedium" className="inline-flex items-center gap-1.5">
-            <FolderOpenIcon size={16} />
-            oceanic-ui
-          </Text>
-          <Text as="span" variant="labelMedium" color="muted">
-            Enter to send
-          </Text>
-        </>
-      }
-      onSubmit={() => {
-        if (!value.trim()) return
-        setSending(true)
-        window.setTimeout(() => {
-          setSending(false)
-          setValue('')
-        }, 1200)
-      }}
-      onStop={() => setSending(false)}
-    />
-  )
-}
-
-function ToastDemo() {
-  const toast = useToast()
-  return (
-    <>
-      <Button
-        onClick={() => toast({ title: 'Saved', description: 'Your changes were written to disk.' })}
-      >
-        Show toast
-      </Button>
-      <Button
-        variant="secondary"
-        onClick={() =>
-          toast({ title: 'Upload failed', description: 'File exceeds 10MB.', variant: 'danger' })
-        }
-      >
-        Error toast
-      </Button>
-    </>
   )
 }
