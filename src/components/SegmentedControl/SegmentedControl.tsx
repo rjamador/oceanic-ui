@@ -9,7 +9,7 @@ import { cva } from 'class-variance-authority'
 import { useControllableState } from '@/hooks/useControllableState'
 import { cn } from '@/lib/cn'
 
-const optionVariants = cva('aero-segmented-option inline-flex items-center text-sm font-medium', {
+const optionVariants = cva('aero-segmented-option inline-flex shrink-0 items-center text-sm font-medium', {
   variants: {
     selected: {
       true: 'aero-segmented-option-selected',
@@ -63,7 +63,7 @@ function SegmentedControlRoot({
     <SegmentedContext.Provider value={{ name, value: current, setValue: setCurrent }}>
       <div
         role="radiogroup"
-        className={cn('aero-segmented-root inline-flex overflow-hidden', className)}
+        className={cn('aero-segmented-root inline-flex max-w-full overflow-x-auto', className)}
         {...rest}
       >
         {children}

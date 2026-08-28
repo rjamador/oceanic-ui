@@ -106,6 +106,45 @@ describe('Sidebar', () => {
     expect(home).toHaveFocus()
   })
 
+  it('lays a badge and a hover action side by side, not stacked', () => {
+    const { container } = render(
+      <Sidebar.Provider>
+        <Sidebar aria-label="Main">
+          <Sidebar.Body>
+            <Sidebar.Menu>
+              <Sidebar.Item
+                badge="8m"
+                action={
+                  <button type="button" aria-label="Delete">
+                    x
+                  </button>
+                }
+              >
+                Thread A
+              </Sidebar.Item>
+            </Sidebar.Menu>
+          </Sidebar.Body>
+        </Sidebar>
+      </Sidebar.Provider>,
+    )
+
+    // both are present
+    expect(screen.getByText('8m')).toBeInTheDocument()
+    const del = screen.getByRole('button', { name: 'Delete' })
+
+    // the action wrapper is a flow sibling of the item button inside the row,
+    // so it can't be an absolute overlay on top of the badge
+    const row = container.querySelector<HTMLElement>('.aero-sidebar-item-row')
+    expect(row).toBeInTheDocument()
+    const button = container.querySelector<HTMLElement>('[data-sidebar-item]')
+    const actionWrap = del.closest<HTMLElement>('.aero-sidebar-item-action')
+    expect(row).toContainElement(button)
+    expect(row).toContainElement(actionWrap)
+    expect(actionWrap?.previousElementSibling).toBe(button)
+    // the badge is inside the button, i.e. to the left of the action
+    expect(button).toContainElement(screen.getByText('8m'))
+  })
+
   it('collapses a group section', async () => {
     const user = userEvent.setup()
     render(

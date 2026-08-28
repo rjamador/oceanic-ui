@@ -146,6 +146,13 @@
     background 0.15s ease,
     transform 0.1s ease;
 
+  /* WCAG 2.5.8 — the visual box can stay compact, the tap target can't.
+     Applies to Sidebar.Trigger and every other icon-only control. */
+  @media (pointer: coarse) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
   &:active:not(:disabled) {
     transform: translateY(1px);
   }
@@ -843,6 +850,13 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--hairline);
   background: var(--control-secondary-top);
+  /* scrolls (no wrap — the segments are one connected strip) when a narrow
+     container would otherwise clip an option */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility aero-segmented-option {
@@ -1922,6 +1936,7 @@
   position: relative;
   display: flex;
   width: 100%;
+  min-width: 0;
   min-height: 32px;
   align-items: center;
   gap: var(--space-2);
@@ -2003,21 +2018,22 @@
   font-variant-numeric: tabular-nums;
 }
 
-@utility aero-sidebar-item-action {
-  position: absolute;
-  inset-inline-end: var(--space-1);
-  top: 50%;
+/* the button + its trailing action, side by side; the action reserves its
+   space even while hidden so nothing shifts on hover */
+@utility aero-sidebar-item-row {
   display: flex;
+  min-width: 0;
   align-items: center;
   gap: var(--space-1);
-  transform: translateY(-50%);
+}
+
+@utility aero-sidebar-item-action {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
   opacity: 0;
   transition: opacity 0.12s ease;
-
-  .aero-sidebar-menu-item:hover &,
-  .aero-sidebar-menu-item:focus-within & {
-    opacity: 1;
-  }
 
   @media (pointer: coarse) {
     opacity: 1;
@@ -2026,6 +2042,14 @@
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
+}
+
+/* Reveal on hover/focus. A plain rule, not nested inside the @utility —
+   Tailwind's @utility doesn't reliably flatten an ancestor-state selector
+   (`.row:hover &`), but a standalone descendant selector just works. */
+.aero-sidebar-item-row:hover .aero-sidebar-item-action,
+.aero-sidebar-item-row:focus-within .aero-sidebar-item-action {
+  opacity: 1;
 }
 
 @utility aero-sidebar-submenu {

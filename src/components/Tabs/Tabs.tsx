@@ -35,9 +35,12 @@ function useTabsContext(component: string) {
 }
 
 const tabsRootVariants = cva('flex flex-col')
-const tabsListVariants = cva('flex gap-1 px-2 border-b border-[var(--hairline)]')
+// wrap rather than clip when the strip is wider than its column — a scroll
+// container would cut the tabs' focus ring; a wrapped row keeps every tab
+// reachable and fully visible.
+const tabsListVariants = cva('flex flex-wrap gap-1 px-2 border-b border-[var(--hairline)]')
 const tabsTabVariants = cva(
-  'aero-tabs-tab [font-family:var(--font-body)] text-sm font-medium',
+  'aero-tabs-tab shrink-0 [font-family:var(--font-body)] text-sm font-medium',
   {
     variants: {
       selected: {
