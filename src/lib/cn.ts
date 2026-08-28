@@ -71,6 +71,10 @@ const twMerge = extendTailwindMerge({
         'aero-code-block',
         'aero-code-block-header',
         'aero-code-block-body',
+        // Pure background modifier (the failure tint), applied on top of the
+        // structural 'aero-tool-call' base — which is NOT registered, so a
+        // consumer's bg-* still wins here without dropping row layout.
+        'aero-tool-call-error',
       ],
     },
   },

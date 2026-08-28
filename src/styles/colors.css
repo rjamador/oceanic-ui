@@ -63,6 +63,10 @@
   --danger: #d43d5c;
   --danger-glow: rgba(212, 61, 92, 0.45);
   --danger-tint: rgba(212, 61, 92, 0.12);
+  /* Darker cut for small danger text — clears WCAG AA (4.5:1) at label sizes
+     on --panel-surface, where --danger itself lands ~4.4:1. Fills, borders,
+     and glows keep --danger. */
+  --danger-text: #c22a49;
 
   /* Scrim — dims the page behind a modal Dialog */
   --scrim: rgba(10, 44, 87, 0.35);

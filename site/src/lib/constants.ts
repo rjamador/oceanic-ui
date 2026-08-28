@@ -5,9 +5,9 @@ export const COMPONENTS = [
   'Accordion', 'Alert', 'Attachment', 'Avatar', 'Badge', 'Breadcrumb', 'Bubble',
   'Button', 'Card', 'Checkbox', 'CodeBlock', 'Composer', 'Dialog', 'Divider', 'Empty',
   'FileUpload', 'Icon', 'IconButton', 'IconSwap', 'Input', 'List', 'Marker',
-  'Menu', 'Message', 'Pagination', 'Popover', 'Progress', 'Radio',
+  'Menu', 'Message', 'Pagination', 'Popover', 'Progress', 'Pulse', 'Radio',
   'SegmentedControl', 'Select', 'Skeleton', 'Slider', 'Spinner', 'Switch',
-  'Tabs', 'Text', 'Textarea', 'Toast', 'Tooltip',
+  'Tabs', 'Text', 'Textarea', 'Thinking', 'ToolCall', 'Toast', 'Tooltip',
 ]
 
 export function scrollToHash(hash: string) {

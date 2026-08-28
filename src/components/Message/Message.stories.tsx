@@ -33,7 +33,7 @@ export const Thread: Story = {
         <Message.Content>
           <Message.Header>You</Message.Header>
           <Bubble variant="user" align="end">
-            <Bubble.Content>Add a composer like zest.</Bubble.Content>
+            <Bubble.Content>Can we add a composer next?</Bubble.Content>
           </Bubble>
         </Message.Content>
       </Message>

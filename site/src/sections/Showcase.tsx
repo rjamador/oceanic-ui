@@ -23,12 +23,15 @@ import {
   Message,
   Popover,
   Progress,
+  Pulse,
   SegmentedControl,
   Select,
   Slider,
   Switch,
   Tabs,
   Text,
+  Thinking,
+  ToolCall,
   Tooltip,
   useToast,
 } from 'oceanic-ui'
@@ -107,6 +110,25 @@ export const Example = () => (
                     <Empty.Description>Ask about this project to get started.</Empty.Description>
                   </Empty.Header>
                 </Empty>
+              </Demo>
+              <Demo code='<Thinking streaming> · <Pulse active />'>
+                <div className="flex w-full flex-col gap-3">
+                  <Thinking streaming>Weigh the two layouts, then commit.</Thinking>
+                  <div className="flex items-center gap-2">
+                    <Pulse active />
+                    <Text as="span" variant="labelMedium">
+                      Working
+                    </Text>
+                  </div>
+                </div>
+              </Demo>
+              <Demo code='<ToolCall label="Read" target="…" />'>
+                <div className="flex w-full flex-col gap-2">
+                  <ToolCall label="Read" target="src/lib/cn.ts" defaultOpen>
+                    export function cn() {'{'} … {'}'}
+                  </ToolCall>
+                  <ToolCall label="Run" target="npm run test" status="running" />
+                </div>
               </Demo>
             </div>
           </Tabs.Panel>
