@@ -146,6 +146,13 @@
     background 0.15s ease,
     transform 0.1s ease;
 
+  /* WCAG 2.5.8 — the visual box can stay compact, the tap target can't.
+     Applies to Sidebar.Trigger and every other icon-only control. */
+  @media (pointer: coarse) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
   &:active:not(:disabled) {
     transform: translateY(1px);
   }
@@ -843,6 +850,13 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--hairline);
   background: var(--control-secondary-top);
+  /* scrolls (no wrap — the segments are one connected strip) when a narrow
+     container would otherwise clip an option */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility aero-segmented-option {
