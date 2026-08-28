@@ -119,15 +119,15 @@ layering is wired.
 
 ## What's in the box
 
-39 components today. [`docs/roadmap.md`](docs/roadmap.md) tracks what's
-built and what's next (Table, DatePicker…).
+42 components today. [`docs/roadmap.md`](docs/roadmap.md) tracks what's
+built and what's next (Sidebar, Table, DatePicker…).
 
 | Group | Components |
 |---|---|
 | **Actions & navigation** | `Button` · `IconButton` · `SegmentedControl` · `Pagination` · `Breadcrumb` · `Menu` |
 | **Forms & inputs** | `Input` · `Textarea` · `Select` · `Checkbox` · `Radio` · `Switch` · `Slider` · `FileUpload` · `Composer` |
 | **Feedback & status** | `Dialog` · `Popover` · `Tooltip` · `Toast` · `Alert` · `Progress` · `Spinner` · `Skeleton` · `Badge` |
-| **Chat** | `Composer` · `Message` · `Bubble` · `Attachment` · `Empty` · `Marker` · `IconSwap` |
+| **Chat & agent** | `Composer` · `Message` · `Bubble` · `Attachment` · `Empty` · `Marker` · `IconSwap` · `Pulse` · `Thinking` · `ToolCall` |
 | **Layout & display** | `Card` · `Divider` · `List` · `Accordion` · `Tabs` · `Avatar` · `CodeBlock` |
 | **Primitives** | `Text` · `Icon` |
 

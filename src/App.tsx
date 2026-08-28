@@ -23,6 +23,7 @@ import { Marker } from './components/Marker'
 import { Message } from './components/Message'
 import { Pagination } from './components/Pagination'
 import { Progress } from './components/Progress'
+import { Pulse } from './components/Pulse'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
@@ -33,6 +34,8 @@ import { Switch } from './components/Switch'
 import { Tabs } from './components/Tabs'
 import { Text, type TextVariant } from './components/Text'
 import { Textarea } from './components/Textarea'
+import { Thinking } from './components/Thinking'
+import { ToolCall } from './components/ToolCall'
 import { Tooltip } from './components/Tooltip'
 import { useToast } from './components/Toast'
 
@@ -124,8 +127,32 @@ function App() {
 
         <section>
           <Alert title="Composer">
-            Slash commands, attachments, and a send/stop swap — Ocean chrome, zest layout.
+            Slash commands, attachments, and a send/stop swap.
           </Alert>
+        </section>
+
+        <section
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--space-3)',
+            padding: 'var(--space-4)',
+            border: '1px solid var(--hairline)',
+            borderRadius: 'var(--radius-lg)',
+            background: 'var(--panel-surface-strong)',
+          }}
+        >
+          <Thinking streaming>Weigh the two layouts, then commit.</Thinking>
+          <ToolCall label="Read" target="src/components/Composer/Composer.tsx">
+            {`export function Composer() { … }`}
+          </ToolCall>
+          <ToolCall label="Run" target="npm run test" status="running" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+            <Pulse active />
+            <Text as="span" variant="labelMedium">
+              Working
+            </Text>
+          </div>
         </section>
 
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>

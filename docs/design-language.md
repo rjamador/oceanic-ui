@@ -152,6 +152,23 @@ overlay instead of a magic number.
   keyframe animation, and always respect
   `@media (prefers-reduced-motion: reduce)`.
 
+### Activity animation
+
+One narrow exception to "nothing loops": a component whose entire job is to
+signal *work in progress* — `Spinner`, and `Pulse` in its `active` state —
+may run a looping keyframe animation. The bar for it:
+
+- It only runs while the activity is actually happening (`active`), never
+  as decoration.
+- It animates `transform` / `opacity` only — no `box-shadow`, `width`, or
+  other properties that force a per-frame repaint or layout. `Pulse`'s ring
+  is a static pseudo-element; only its scale and opacity move.
+- It reduces to a static state under
+  `@media (prefers-reduced-motion: reduce)`.
+
+This is still "glow, not gloss" — a breathing glow ring, not a sweep or a
+shine.
+
 ## Icons
 
 Every icon is built on the `Icon` component (`src/components/Icon/Icon.tsx`)
