@@ -6,7 +6,7 @@ export const COMPONENTS = [
   'Button', 'Card', 'Checkbox', 'CodeBlock', 'Composer', 'Dialog', 'Divider', 'Empty',
   'FileUpload', 'Icon', 'IconButton', 'IconSwap', 'Input', 'List', 'Marker',
   'Menu', 'Message', 'Pagination', 'Popover', 'Progress', 'Pulse', 'Radio',
-  'SegmentedControl', 'Select', 'Skeleton', 'Slider', 'Spinner', 'Switch',
+  'SegmentedControl', 'Select', 'Sidebar', 'Skeleton', 'Slider', 'Spinner', 'Switch',
   'Tabs', 'Text', 'Textarea', 'Thinking', 'ToolCall', 'Toast', 'Tooltip',
 ]
 

@@ -47,6 +47,8 @@ lands or a new one gets added to the plan — it's the source of truth for
 - ~~Pulse~~ (activity mark)
 - ~~Thinking~~ (reasoning disclosure)
 - ~~ToolCall~~ / ~~ToolCall.Group~~ (tool-invocation rows)
+- ~~Sidebar~~ (collapsible side panel — provider + `useSidebar`, icon/offcanvas
+  collapse, built-in mobile drawer)
 
 ## Planned
 
@@ -54,9 +56,6 @@ Roughly ordered by how likely they are to get picked up next — not a
 commitment, just the current sense of priority. Move an item up here
 before starting it if the priority call changes.
 
-- [ ] **Sidebar** — a general-purpose collapsible side panel (navigation,
-      chat history, filters). shadcn-style primitives, built-in mobile
-      drawer. Its own spec.
 - [ ] **Table** — bigger undertaking; a real data grid (sortable headers,
       row selection) rather than a bare `<table>`.
 - [ ] **DatePicker** — calendar-based date input. Complex (positioning,

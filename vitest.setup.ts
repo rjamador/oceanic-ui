@@ -15,7 +15,10 @@ if (!('ResizeObserver' in globalThis)) {
     disconnect() {}
   } as unknown as typeof ResizeObserver
 }
-if (!('matchMedia' in window)) {
+// jsdom either omits matchMedia or ships a stub that throws; give tests a
+// predictable non-matching MediaQueryList. A test can override
+// `window.matchMedia` (or `vi.stubGlobal`) to simulate a match.
+if (typeof window.matchMedia !== 'function') {
   window.matchMedia = ((query: string) => ({
     matches: false,
     media: query,

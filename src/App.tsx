@@ -15,7 +15,7 @@ import { Dialog } from './components/Dialog'
 import { Divider } from './components/Divider'
 import { Empty } from './components/Empty'
 import { FileUpload } from './components/FileUpload'
-import { FolderOpenIcon, CheckIcon, CloseIcon, FileIcon, GearIcon } from './components/Icon'
+import { FolderOpenIcon, CheckIcon, CloseIcon, FileIcon, GearIcon, HomeIcon } from './components/Icon'
 import { IconButton } from './components/IconButton'
 import { Input } from './components/Input'
 import { List } from './components/List'
@@ -27,6 +27,7 @@ import { Pulse } from './components/Pulse'
 import { Radio } from './components/Radio'
 import { SegmentedControl } from './components/SegmentedControl'
 import { Select } from './components/Select'
+import { Sidebar } from './components/Sidebar'
 import { Skeleton } from './components/Skeleton'
 import { Slider } from './components/Slider'
 import { Spinner } from './components/Spinner'
@@ -153,6 +154,53 @@ function App() {
               Working
             </Text>
           </div>
+        </section>
+
+        <section
+          style={{
+            display: 'flex',
+            height: 280,
+            overflow: 'hidden',
+            border: '1px solid var(--hairline)',
+            borderRadius: 'var(--radius-lg)',
+          }}
+        >
+          <Sidebar.Provider collapsible="icon">
+            <Sidebar aria-label="Playground navigation">
+              <Sidebar.Rail />
+              <Sidebar.Body>
+                <Sidebar.Group label="Workspace">
+                  <Sidebar.Menu>
+                    <Sidebar.Item icon={<HomeIcon size={16} />} active label="Overview">
+                      Overview
+                    </Sidebar.Item>
+                    <Sidebar.Item icon={<FileIcon size={16} />} label="Files" badge="12">
+                      Files
+                    </Sidebar.Item>
+                    <Sidebar.Item icon={<GearIcon size={16} />} label="Settings">
+                      Settings
+                    </Sidebar.Item>
+                  </Sidebar.Menu>
+                </Sidebar.Group>
+              </Sidebar.Body>
+            </Sidebar>
+            <Sidebar.Main>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  padding: 'var(--space-2) var(--space-3)',
+                  borderBottom: '1px solid var(--hairline)',
+                }}
+              >
+                <Sidebar.Trigger />
+                <Text as="span" variant="labelMedium">
+                  Overview
+                </Text>
+              </div>
+            </Sidebar.Main>
+          </Sidebar.Provider>
         </section>
 
         <Card padding="md" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>

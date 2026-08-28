@@ -71,6 +71,9 @@ export {
   InfoIcon,
   WarningIcon,
   CopyIcon,
+  PanelLeftIcon,
+  HomeIcon,
+  SearchIcon,
 } from './components/Icon'
 export type { IconProps } from './components/Icon'
 
@@ -208,3 +211,24 @@ export type { ThinkingProps } from './components/Thinking'
 
 export { ToolCall } from './components/ToolCall'
 export type { ToolCallProps, ToolCallStatus, ToolCallGroupProps } from './components/ToolCall'
+
+export { Sidebar, useSidebar } from './components/Sidebar'
+export type {
+  SidebarProviderProps,
+  SidebarSide,
+  SidebarCollapsible,
+  SidebarVariant,
+  SidebarContextValue,
+  SidebarPanelProps,
+  SidebarTriggerProps,
+  SidebarRailProps,
+  SidebarMainProps,
+  SidebarHeaderProps,
+  SidebarBodyProps,
+  SidebarFooterProps,
+  SidebarGroupProps,
+  SidebarGroupLabelProps,
+  SidebarMenuProps,
+  SidebarItemProps,
+  SidebarSeparatorProps,
+} from './components/Sidebar'
